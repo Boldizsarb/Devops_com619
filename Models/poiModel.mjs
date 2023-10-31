@@ -46,13 +46,17 @@ class PointsOfInterestModel {
           throw error;
         }
       }
+
+      // Modify your model to include the `recommendations` field in queries
+// ...
+
     
       // Get a point of interest by ID
       async getPointOfInterestById(pointOfInterestId) {
         try {
           const query = 'SELECT * FROM point_of_interest WHERE id = ?';
           const [rows] = await pool.query(query, [pointOfInterestId]);
-          return rows[0];
+          return rows;
         } catch (error) {
           throw error;
         }

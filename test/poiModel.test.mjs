@@ -79,29 +79,30 @@ describe('Points Of Interest Model Tests', () => {
 
     // Configure the mockQuery function to return a result
     const pool = require('../public/scripts/pool.mjs');
-    pool.query.mockResolvedValueOnce([mockPointOfInterest]);
+    pool.query.mockResolvedValueOnce([mockPointOfInterest]); // Ensure it's an array
+
 
     const result = await pointsOfInterestModel.getPointOfInterestById(1);
 
     expect(pool.query).toHaveBeenCalledWith('SELECT * FROM point_of_interest WHERE id = ?', [1]);
-    expect(result).toEqual([mockPointOfInterest]); // Ensure the result is in an array
+    expect(result).toEqual(mockPointOfInterest); // Ensure the result is in an array
   });
 
   it('should get points of interest by recommendations', async () => {
     const pointsOfInterestModel = new PointsOfInterestModel();
     const mockPointsOfInterest = [
-      { id: 1, name: 'Point A' },
-      { id: 2, name: 'Point B' }
+      { id: 1, name: 'Point A', recommendations: 'test' },
+      { id: 2, name: 'Point B', recommendations: 'test' }
     ];
-    const recommendations = 5; // Adjust with your test recommendations value
-
+  
     // Configure the mockQuery function to return points of interest
     const pool = require('../public/scripts/pool.mjs');
-    pool.query.mockResolvedValueOnce(mockPointsOfInterest); // Ensure it's an array
-
+    pool.query.mockResolvedValueOnce([mockPointsOfInterest]); // Ensure it's an array
+  
+    const recommendations = 'test'; // Adjust with your test recommendations value
     const result = await pointsOfInterestModel.getPointsOfInterestByRecommendations(recommendations);
-
+    console.log(result)
     expect(pool.query).toHaveBeenCalledWith('SELECT * FROM point_of_interest WHERE recommendations = ?', [recommendations]);
-    expect(result).toEqual(mockPointsOfInterest); // Should match the array of points of interest
-  });
+    expect(result).toEqual(mockPointsOfInterest);
+  });  
 });

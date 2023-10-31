@@ -67,7 +67,6 @@ class PointsOfInterestController {
         try {
           const pointsOfInterestModel = new PointsOfInterestModel();
           const pointOfInterest = await pointsOfInterestModel.getPointOfInterestById(pointOfInterestId);
-    
           if (pointOfInterest) {
             res.json(pointOfInterest);
           } else {
