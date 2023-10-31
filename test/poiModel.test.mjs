@@ -101,7 +101,6 @@ describe('Points Of Interest Model Tests', () => {
   
     const recommendations = 'test'; // Adjust with your test recommendations value
     const result = await pointsOfInterestModel.getPointsOfInterestByRecommendations(recommendations);
-    console.log(result)
     expect(pool.query).toHaveBeenCalledWith('SELECT * FROM point_of_interest WHERE recommendations = ?', [recommendations]);
     expect(result).toEqual(mockPointsOfInterest);
   });  
