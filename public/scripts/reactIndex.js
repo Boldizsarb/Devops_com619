@@ -85,7 +85,7 @@ function AppWidget({ title }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(POI),
-        });
+        }); 
         if (response.status == 200) {
             const pos = [POI.lat, POI.lon];
             const marker = L.marker(pos).addTo(map);

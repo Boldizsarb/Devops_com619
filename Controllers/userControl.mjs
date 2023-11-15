@@ -16,7 +16,7 @@ class userController {
     } catch (err) {
       res.status(500).json({ error: err });
     }
-  }
+  } /// users are working!! plus the login !! 
 
   static async addUserController(req, res) {
     const { username, email, password, permission_level } = req.body;
@@ -80,7 +80,7 @@ class userController {
       }
     } catch (error) {
       // console.error('Login error: ', error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error });
     }
   }
 }

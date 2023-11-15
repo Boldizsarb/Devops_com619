@@ -1,7 +1,7 @@
 import express from "express";
 import cors from  'cors';
 import userRoute from '../../routes/userRoute.mjs';
-
+import Poirouter from "../../routes/poiRoute.mjs";
 
 const app = express();
 
@@ -12,6 +12,8 @@ app.use('/user', userRoute);
 app.use(express.static("publid"));
 app.use("/public", express.static('./public/'));
 
+
+app.use("/poi", Poirouter);
 
 app.get("/", (req, res) => {
     res.redirect( "/public/index.html"); // only this one works 
@@ -30,5 +32,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!')
 
 });
+
+
 
 export default app;
