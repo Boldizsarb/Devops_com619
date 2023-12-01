@@ -6,6 +6,8 @@
     "datatables.net-dt": "^1.13.8",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-mysql-session": "^3.0.0",
+    "express-session": "^1.17.3",
     "i18next": "^23.7.6",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-http-backend": "^2.4.1",
@@ -14,7 +16,7 @@
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.4.4",
     "mysql": "^2.18.1",
-    "mysql2": "^3.6.2",
+    "mysql2": "^3.6.5",
     "nodemailer": "^6.9.7",
     "react-i18next": "^13.5.0"
   },

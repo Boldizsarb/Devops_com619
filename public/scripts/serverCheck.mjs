@@ -35,10 +35,21 @@ async function startConnection() {
         lon DECIMAL(10, 6),
         lat DECIMAL(10, 6),
         description TEXT,
-        recommendations TEXT
+        recommendations INT
       )
     `);
     console.log('Checked "point_of_interest" table.');
+
+    // Create "Sessions" table if it does not exist
+    await connection.query(`
+    CREATE TABLE IF NOT EXISTS sessions (
+      session_id VARCHAR(128) NOT NULL,
+      expires BIGINT,
+      data TEXT,
+      PRIMARY KEY (session_id)
+    )
+    `);
+    console.log('Checked "sessions" table.');
 
     connection.release(); // Release the connection back to the pool
 

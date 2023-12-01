@@ -29,7 +29,6 @@ function Profile({ title }) {
   
 
   
-    /////////////////////////////////////////////// (13) till here
   
     return (
       <div>
