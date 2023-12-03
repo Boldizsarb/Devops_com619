@@ -44,10 +44,11 @@ class userModel{
   async getUserByUsername(username) {
     try {
       const query = 'SELECT * FROM users WHERE username = ?';
-      // console.log(pool);
+      //console.log(pool);
       const [rows] = await pool.query(query, [username]);
       return rows.length > 0 ? rows[0]: null;
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }

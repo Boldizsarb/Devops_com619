@@ -110,7 +110,7 @@ class userController {
         formattedVerificationExpires
       );
     } catch (err) {
-      console.error("Error in addUserControllerManual:", err);
+      //console.error("Error in addUserControllerManual:", err);
       res.status(500).json({ error: "Internal server error" });
     }
   }
