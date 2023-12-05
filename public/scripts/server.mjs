@@ -1,41 +1,40 @@
 import express from "express";
-import cors from  'cors';
-import UserRoute from '../../routes/userRoute.mjs';
+import cors from "cors";
+import UserRoute from "../../routes/userRoute.mjs";
 import Poirouter from "../../routes/poiRoute.mjs";
-import path from 'path';
+import path from "path";
 import { fileURLToPath } from "url";
 const __dirname = path.resolve();
 
 const app = express();
 
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/user', UserRoute);
-app.use('/poi', Poirouter);
+app.use("/user", UserRoute);
+app.use("/poi", Poirouter);
 app.use(express.static("publid"));
-app.use("/public", express.static('./public/'));
-
+app.use("/public", express.static("./public/"));
+app.use("/locales", express.static("public/locales"));
 
 app.get("/", (req, res) => {
-    res.redirect( "/public/index.html");
+	res.redirect("/public/index.html");
 });
 
 app.get("/login", (req, res) => {
-    res.redirect( "/public/login.html"); 
+	res.redirect("/public/login.html");
 });
 
-app.get("/verify", (req, res) =>{
-    res.redirect("/public/verify.html");
+app.get("/verify", (req, res) => {
+	res.redirect("/public/verify.html");
 });
 
 app.get("/signup", (req, res) => {
-    res.redirect("/public/signup.html");
+	res.redirect("/public/signup.html");
 });
 
 app.get("/verifyEmail", (req, res) => {
-    res.redirect("/public/verifyEmail.html");
+	res.redirect("/public/verifyEmail.html");
 });
 
 /*app.get("/reset-password", (req, res) => {
@@ -53,31 +52,28 @@ app.get("/verifyEmail", (req, res) => {
     }
 });*/
 
-app.get('/reset-password', (req, res) => {
-    // If there's a token, show the reset password form
-    if (req.query.token) {
-        res.sendFile(path.join(__dirname, 'public', 'reset-password.html'));
-    } else {
-        // If no token, redirect to error or some other page
-        res.redirect('/error.html');
-    }
+app.get("/reset-password", (req, res) => {
+	// If there's a token, show the reset password form
+	if (req.query.token) {
+		res.sendFile(path.join(__dirname, "public", "reset-password.html"));
+	} else {
+		// If no token, redirect to error or some other page
+		res.redirect("/error.html");
+	}
 });
 
-
-
 app.get("/verificationcode", (req, res) => {
-    const verificationCode = req.query.code;
-    res.redirect(`/public/verificationcode.html?code=${verificationCode}`);
+	const verificationCode = req.query.code;
+	res.redirect(`/public/verificationcode.html?code=${verificationCode}`);
 });
 
 app.use((req, res, next) => {
-    res.status(404).send("Sorry can't find that!")
+	res.status(404).send("Sorry can't find that!");
 });
 
 app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).send({ error: err.message || 'Something broke!' });
-
+	console.error(err.stack);
+	res.status(500).send({ error: err.message || "Something broke!" });
 });
 
 export default app;
