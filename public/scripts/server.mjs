@@ -3,16 +3,14 @@ import cors from "cors";
 import UserRoute from "../../routes/userRoute.mjs";
 import Poirouter from "../../routes/poiRoute.mjs";
 import ImageRouter from "../../routes/imageRoute.mjs";
-import path from 'path';
-import session from 'express-session';
-import pool from './pool.mjs';
-import MySQLStore from 'express-mysql-session';
+import path from "path";
+import session from "express-session";
+import pool from "./pool.mjs";
+import MySQLStore from "express-mysql-session";
 import { fileURLToPath } from "url";
-import * as jwtUtils from '../../middleware/jwtUtils.mjs';
+import * as jwtUtils from "../../middleware/jwtUtils.mjs";
 import { DateTime } from "luxon";
 import bodyParser from "body-parser";
-
-
 
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
@@ -21,69 +19,71 @@ const __dirname = path.resolve();
 
 const app = express();
 
-
-const sessionStore = new (MySQLStore(session))({
-    clearExpired: true,
-    expiration: 86400000,
-    checkExpirationInterval: 3600000,
-    createDatabaseTable: true,
-      }, 
-    pool);
+const sessionStore = new (MySQLStore(session))(
+	{
+		clearExpired: true,
+		expiration: 86400000,
+		checkExpirationInterval: 3600000,
+		createDatabaseTable: true,
+	},
+	pool
+);
 // Initialize the session
-app.use(session({
-    name: 'session_name',
-    secret: 'developer',
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore, // Use a store to store session data 
-    cookie: { 
-        maxAge: 3600000, // 1 hour in milliseconds
-        sameSite: true,
-        secure: false, // Set to true if using https
-        httpOnly: true,
-    },
-    credentials: true, // Allows credentials (cookies) to be sent with cross-origin requests
-}));
+app.use(
+	session({
+		name: "session_name",
+		secret: "developer",
+		resave: false,
+		saveUninitialized: true,
+		store: sessionStore, // Use a store to store session data
+		cookie: {
+			maxAge: 3600000, // 1 hour in milliseconds
+			sameSite: true,
+			secure: false, // Set to true if using https
+			httpOnly: true,
+		},
+		credentials: true, // Allows credentials (cookies) to be sent with cross-origin requests
+	})
+);
 
-app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", UserRoute);
 app.use("/poi", Poirouter);
-app.use('/image', ImageRouter);
-app.use(express.static("publid"));
-app.use("/public", express.static('./public/'));
-
+app.use("/image", ImageRouter);
+app.use(express.static("public"));
+app.use("/public", express.static("./public/"));
+app.use("/locales", express.static("public/locales"));
 
 ///// sswagger
 const swaggerOptions = {
-    swaggerDefinition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'API Endpoints testing',
-            description: 'API Information',
-            contact: {
-                name: 'Developer'
-            },
-            licence: {
-                name: 'Apache 2.0',
-                url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
-            },
-            servers: [
-                {url: 'http://localhost:3000'}
-            ]
-        }
-    },
-    //apis: ['../../routes/*.js'] // files containing annotations as above#
-    apis: ['routes/poiRoute.mjs', 'routes/userRoute.mjs', 'routes/imageRoute.mjs']
-    
+	swaggerDefinition: {
+		openapi: "3.0.0",
+		info: {
+			title: "API Endpoints testing",
+			description: "API Information",
+			contact: {
+				name: "Developer",
+			},
+			licence: {
+				name: "Apache 2.0",
+				url: "https://www.apache.org/licenses/LICENSE-2.0.html",
+			},
+			servers: [{ url: "http://localhost:3000" }],
+		},
+	},
+	//apis: ['../../routes/*.js'] // files containing annotations as above#
+	apis: [
+		"routes/poiRoute.mjs",
+		"routes/userRoute.mjs",
+		"routes/imageRoute.mjs",
+	],
 };
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
-
-
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.get("/", (req, res) => {
 	res.redirect("/public/index.html");
@@ -130,17 +130,16 @@ app.get("/reset-password", (req, res) => {
 	}
 });
 
-
 app.get("/login", (req, res) => {
-    res.redirect( "/public/login.html"); 
+	res.redirect("/public/login.html");
 });
 
-app.get("/pois", (req, res) =>{
-    res.redirect("/public/pois.html");
+app.get("/pois", (req, res) => {
+	res.redirect("/public/pois.html");
 });
 
-app.get("/users", (req, res) =>{
-    res.redirect("/public/users.html");
+app.get("/users", (req, res) => {
+	res.redirect("/public/users.html");
 });
 
 app.get("/verificationcode", (req, res) => {
