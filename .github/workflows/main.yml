@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3 # Checkout the repository
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
       - name: Use Node
         uses: actions/setup-node@v1
         with:
@@ -54,11 +58,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          if [ $? -ne 0 ]; then echo "Writing key failed"; exit 1; fi
           chmod 600 ~/.ssh/id_rsa
-          if [ $? -ne 0 ]; then echo "Chmod failed"; exit 1; fi
-          ssh-keyscan -H com619trial.uksouth.cloudapp.azure.com >> ~/.ssh/known_hosts
-          if [ $? -ne 0 ]; then echo "Ssh-keyscan failed"; exit 1; fi
 
       - name: Check SSH Key Line Count
         run: wc -l ~/.ssh/id_rsa
@@ -68,4 +68,4 @@ jobs:
         
       - name: Deploy to Azure VM
         run: |
-          ssh -o StrictHostKeyChecking=no com619@com619trial.uksouth.cloudapp.azure.com 'bash -s' < deploy_script.sh
+          ssh -o StrictHostKeyChecking=no com619@com619devops.uksouth.cloudapp.azure.com 'bash -s' < deploy_script.sh

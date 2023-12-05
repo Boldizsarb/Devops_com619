@@ -3,8 +3,15 @@ function Pois({ title }) {
   const [poi, setPoi] = React.useState([]);
   
   function recommend(id) {
-    fetch(`http://localhost:3000/poi/recommend/${id}`, {
+    const poi = {
+      poi_id: id,
+  };
+    fetch(`http://localhost:3000/poi/recommend`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(poi),
     }).then((response) => {
       if (response.status === 200) {
         alert("Recommendation submitted successfully!");

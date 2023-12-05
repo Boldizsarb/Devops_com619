@@ -63,6 +63,33 @@ class userController {
       res.status(500).json({ error: 'Internal server error' });
     }
   }
+
+  static async addUserControllerManual(username, email, password, permissionLevelFromBody) {
+    try {
+      const userInstance = new userModel();
+      const existingUser = await userInstance.getUserByUsername(username);
+      if (existingUser) {
+        return res.status(409).json({ error: 'Username already exists.' });
+      }
+      const permission_level = permissionLevelFromBody || PERMISSION_LEVELS.USER; // Use provided level or default
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const verificationCode = generateVerificationCode();
+      const verificationExpires = new Date();
+      verificationExpires.setHours(verificationExpires.getHours() + 2);
+      const formattedVerificationExpires = verificationExpires.toISOString().slice(0, 19).replace('T', ' ');
+      await userInstance.addUser(
+        username,
+        email,
+        hashedPassword,
+        permission_level,
+        verificationCode,
+        formattedVerificationExpires
+      );
+    } catch (err) {
+      console.log({ error: 'Internal server error' });
+    }
+  }
+  
     
   static async deleteUserController(req, res) {
     const userId = req.params.userId;
@@ -79,8 +106,33 @@ class userController {
   }
 
   static async logout(req, res) {
-    // Logout logic here
+    if (req.session) {
+      // Log the session object for debugging
+      console.log('Session before destruction:', req.session);
+      // Destroy the session
+      req.session.destroy(err => {
+        if (err) {
+          // Log the error for debugging
+          console.error('Session destruction error:', err);
+          // Respond with an error status
+          res.status(500).json({ message: 'Logout failed, please try again.' });
+        } else {
+          // Clear the session cookie
+          res.clearCookie('session_name');
+          // Log a message indicating successful logout
+          console.log('Session destroyed, user logged out');
+          // Send a success response
+          res.status(200).json({ message: 'Logout successful.' });
+        }
+      });
+    } else {
+      // If the session does not exist, log an error
+      console.error('Logout error: session does not exist.');
+      // Respond with an error status
+      res.status(500).json({ message: 'Logout failed, session not found.' });
+    }
   }
+
   static async getUserByUsernameController(req, res) {
     const username = req.params.username;
     try {
@@ -95,6 +147,22 @@ class userController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  static async doesUserExist(username) {
+    console.log("Checking if user exists")
+    try {
+      const userInstance = new userModel();
+      const user = await userInstance.getUserByUsername(username);
+      if (user == null) {
+        return false;
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+
   static async login(req, res) {
     try {
         const { username, password } = req.body;
@@ -112,6 +180,9 @@ class userController {
         console.log("This is the username:", username);
         console.log("This is the password:", password);
         if (isValid) {
+            // Set the username in the session
+            req.session.username = username;
+            console.log("This is the username Session:", req.session.usernamename);
             // Create token
             console.log(JWT_SECRET);
             console.log(EXPIRES_IN);
@@ -121,10 +192,9 @@ class userController {
             res.status(401).json({ error: 'Wrong username or password!' });
         }
     } catch (error) {
-        console.error('Login error: ', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-}
+  }
 
   
 
@@ -147,14 +217,19 @@ class userController {
       await sendPasswordResetEmail.send(user.email, token, user.username);     
       res.status(200).json({ message: 'Password reset email sent successfully!' });
     } catch (error) {
-      console.error('Forgot password error:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
 
-  static verifyLoguin(req, res) {
-    res.json({ username: req.session.username || null });
+  static verifyLogin(req, res) {
+    if (req.session) {
+      const username = req.session.username;
+      console.log("Session:", req.session);
+      console.log(username);
+      res.json({ username: username });
+    }
   }
+
   static async handlePasswordForm(req, res) {
     const { password, confirmPassword, token } = req.body;
     if (password !== confirmPassword) {
@@ -178,6 +253,7 @@ class userController {
     const { verificationCode } = req.body;
     console.log("Received verification code:", verificationCode);
     try {
+
         const userInstance = new userModel();
         // Retrieve user with the given verification code
         const user = await userInstance.getUserByVerificationCode(verificationCode);
@@ -192,7 +268,6 @@ class userController {
         console.log("Current Time:", currentTime);
         console.log("Verification Expires:", user.verificationExpires);
         if (currentTime > new Date(user.verificationExpires)) {
-          console.log("Verification code has expired");
           return res.status(400).json({ error: "Verification code has expired." });
         }
 
@@ -206,7 +281,6 @@ class userController {
             res.status(400).json({ error: "Failed to verify account." });
         }
     } catch (error) {
-        console.error("Verification error:", error);
         res.status(500).json({ error: 'Internal server error' });
     }
   }

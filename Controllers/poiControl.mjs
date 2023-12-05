@@ -12,8 +12,9 @@ class PointsOfInterestController {
     }
   
     static async addPointOfInterestController(req, res) {
-      const {name, type, country, region, lon, lat, description, recommendations} = req.body
-  
+
+      const {name, type, country, region, lon, lat, description, recommendations, image} = req.body
+
       try {
         const pointsOfInterestModel = new PointsOfInterestModel();
         const pointOfInterestId = await pointsOfInterestModel.addPointOfInterest({
@@ -25,6 +26,7 @@ class PointsOfInterestController {
           lat,
           description,
           recommendations,
+          image
         });
         res.json({ pointOfInterestId });
       } catch (error) {
@@ -96,11 +98,10 @@ class PointsOfInterestController {
     }
 
     static async addRecomendationToPoi(req, res) {
-      const poiID = req.params.id
+      const poiID = req.body.poi_id
   
       try {
-        const pointsOfInterestModel = new PointsOfInterestModel();
-        const pointOfInterestId = await pointsOfInterestModel.addRecomendationToPoi({poiID});
+        const pointOfInterestId = await new PointsOfInterestModel().addRecomendationToPoi(poiID);
         res.json({ pointOfInterestId });
       } catch (error) {
         res.status(500).json({ error: error.message });
