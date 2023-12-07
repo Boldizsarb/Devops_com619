@@ -1,16 +1,9 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 # Navigate to the directory containing your docker-compose.yml file
 cd "$(dirname "$0")"
-#if [ -z "${DOCKER_COMPOSE}" ]; then
-#    DOCKER_COMPOSE="$(which docker-compose)"
-#fi
-# Run the command with sudo if necessary
-#if [ -w "$(dirname "$DOCKER_COMPOSE")" ]; then
-#    DOCKER_COMPOSE="sudo $DOCKER_COMPOSE"
-#fi
 
-git clone https://github.com/Boldizsarb/Devops_com619.git
+# Print the current working directory and list files
 pwd
 ls -la
 
@@ -27,7 +20,6 @@ docker-compose up -d
 sleep 10
 
 # Run Certbot to obtain certificates, if needed
-# Note: Make sure the nginx service is configured to serve the ACME challenge
 docker-compose run --rm certbot certonly --standalone --preferred-challenges http --agree-tos --email 5giwao61@solent.ac.uk -d comdevops.uksouth.cloudapp.azure.com
 
 # Reload NGINX configuration to ensure it uses the obtained certificates
