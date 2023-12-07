@@ -14,7 +14,7 @@ services:
       - mysql-data:/var/lib/mysql
   devops:
     container_name: devops-app
-    image: com619devops.uksouth.cloudapp.azure.com/devops_com619-devops:latest
+    image: comdevops.uksouth.cloudapp.azure.com/devops_com619-devops:latest
     build: .
     ports:
       - "3000:3000"
