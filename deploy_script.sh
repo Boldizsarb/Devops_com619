@@ -24,7 +24,7 @@ docker run -d --name myapp --link myapp-db:mysql -p 80:80 dapsonic/devops_com619
 
 
 # Run Certbot container to obtain certificates
-docker run -it --rm \
+docker run --rm \
     -v "/etc/letsencrypt:/etc/letsencrypt" \
     -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
     -p 80:80 \
