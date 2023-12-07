@@ -2,7 +2,8 @@
 
 # Navigate to the directory containing your docker-compose.yml file
 cd "$(dirname "$0")"
-
+pwd
+ls -la
 # Pull the latest images
 docker-compose pull
 
