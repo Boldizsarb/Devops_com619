@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 # Navigate to the directory containing your docker-compose.yml file
-cd "$(dirname "$0")"
+#cd "$(dirname "$0")"
 
 # Print the current working directory and list files
 pwd
