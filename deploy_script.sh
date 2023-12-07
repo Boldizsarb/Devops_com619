@@ -2,8 +2,18 @@
 
 # Navigate to the directory containing your docker-compose.yml file
 cd "$(dirname "$0")"
+#if [ -z "${DOCKER_COMPOSE}" ]; then
+#    DOCKER_COMPOSE="$(which docker-compose)"
+#fi
+# Run the command with sudo if necessary
+#if [ -w "$(dirname "$DOCKER_COMPOSE")" ]; then
+#    DOCKER_COMPOSE="sudo $DOCKER_COMPOSE"
+#fi
+
+git clone https://github.com/Boldizsarb/Devops_com619.git
 pwd
 ls -la
+
 # Pull the latest images
 docker-compose pull
 
