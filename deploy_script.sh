@@ -24,16 +24,16 @@ sleep 10
 docker stop nginx || true && docker rm nginx || true
 
 # Run Certbot container to obtain certificates
-docker run --rm \
-  -v "/etc/letsencrypt:/etc/letsencrypt" \
-  -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-  -p 80:80 \
-  certbot/certbot certonly \
-  --standalone \
-  --preferred-challenges http \
-  --agree-tos \
-  --email 5giwao61@solent.ac.uk \
-  -d comdevops.uksouth.cloudapp.azure.com
+#docker run --rm \
+#  -v "/etc/letsencrypt:/etc/letsencrypt" \
+#  -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
+#  -p 80:80 \
+#  certbot/certbot certonly \
+#  --standalone \
+#  --preferred-challenges http \
+#  --agree-tos \
+#  --email 5giwao61@solent.ac.uk \
+#  -d comdevops.uksouth.cloudapp.azure.com
 
 # Start Nginx container with mounted volumes for SSL
 docker run -d --name nginx \
