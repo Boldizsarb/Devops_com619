@@ -26,7 +26,7 @@ sleep 10
 docker run --rm -v "/etc/letsencrypt:/etc/letsencrypt" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" -p 80:80 --name certbot certbot/certbot certonly --standalone --preferred-challenges http --agree-tos --email 5giwao61@solent.ac.uk -d comdevops.uksouth.cloudapp.azure.com
 
 # Reload NGINX configuration to ensure it uses the obtained certificates
-docker exec nginx nginx -s reload
+docker exec nginx dapsonic/nginx:latest -s reload
 
 # Reload NGINX configuration to ensure it uses the obtained certificates
 docker exec nginx nginx -s reload
