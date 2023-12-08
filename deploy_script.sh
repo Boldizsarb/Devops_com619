@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash
 
 # Pull the latest version of your application image
 docker pull dapsonic/devops_com619-devops:latest
@@ -23,7 +23,10 @@ docker run -d --name myapp --link myapp-db:mysql -p 80:80 dapsonic/devops_com619
 sleep 10
 
 # Run Certbot to obtain certificates, if needed
-docker run --rm certbot certonly --standalone --preferred-challenges http --agree-tos --email 5giwao61@solent.ac.uk -d comdevops.uksouth.cloudapp.azure.com
+docker run --rm -v "/etc/letsencrypt:/etc/letsencrypt" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" -p 80:80 --name certbot certbot/certbot certonly --standalone --preferred-challenges http --agree-tos --email 5giwao61@solent.ac.uk -d comdevops.uksouth.cloudapp.azure.com
+
+# Reload NGINX configuration to ensure it uses the obtained certificates
+docker exec nginx nginx -s reload
 
 # Reload NGINX configuration to ensure it uses the obtained certificates
 docker exec nginx nginx -s reload
