@@ -28,6 +28,9 @@ jobs:
       - name: Adjust permissions for jest
         run: chmod +x ./node_modules/.bin/jest
 
+      - name: Make deploy script exectuable 
+        run: chmod +x deploy_script.sh
+
       - name: npm test
         run: npm test
 
@@ -45,7 +48,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops_com619-devops:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops_com619-devops:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/devops_com619-devops:latest
           
   deploy:
@@ -68,4 +71,7 @@ jobs:
         
       - name: Deploy to Azure VM
         run: |
-          ssh -o StrictHostKeyChecking=no com619@comdevops.uksouth.cloudapp.azure.com 'bash -s' < deploy_script.sh
+          if ! ssh -o StrictHostKeyChecking=no com619@comdevops.uksouth.cloudapp.azure.com 'bash -s' < deploy_script.sh; then
+            echo "Deploy failed"
+            exit 1
+          fi
