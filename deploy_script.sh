@@ -39,7 +39,7 @@ docker stop nginx || true && docker rm nginx || true
 docker run -d --name nginx \
   -v "/etc/letsencrypt:/etc/letsencrypt" \
   -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-  -v "/home/com619/nginx.config:/etc/nginx/nginx.conf" \
+  -v "/home/com619/nginx.conf:/etc/nginx/nginx.conf" \
   -p 80:80 \
   -p 443:443 \
   nginx:latest
