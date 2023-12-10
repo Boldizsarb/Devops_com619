@@ -2,7 +2,8 @@
 set -e
 
 # Pull the latest version of your application image
-docker pull dapsonic/devops_com619-devops:latest
+docker pull $DOCKER_USERNAME/devops_com619-devops:latest
+docker pull $DOCKER_USERNAME/mynginx:latest
 
 # Pull the MySQL image
 docker pull mysql:5.7
@@ -14,8 +15,11 @@ docker stop myapp || true && docker rm myapp || true
 # Start MySQL container
 docker run -d --name myapp-db -e MYSQL_ROOT_PASSWORD=devops -e MYSQL_DATABASE=myappdb -p 3306:3306 mysql:5.7
 
-# Start your application container
+# Start application container
 docker run -d --name myapp --link myapp-db:mysql -p 3000:3000 dapsonic/devops_com619-devops:latest
+
+# Start the Nginx container
+docker run -d --name nginx -p 80:80 -p 443:443 $DOCKER_USERNAME/nginx:latest
 
 # Wait for the services to start
 sleep 10
