@@ -158,8 +158,6 @@ async function logoutUser(setIsLoggedIn, setCurrentUser) {
 
 function SideBar({verifyLogin, loggedInUser, isLoggedIn}) {
   verifyLogin()
-  console.log(loggedInUser)
-  console.log(isLoggedIn)
   if(isLoggedIn && loggedInUser =="admin"){ 
     return (
       <ul
@@ -345,7 +343,7 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
             .then((response) => {
               if (response.ok) {
                 // If the user was created successfully, redirect to the login page
-                window.location.href = "/login";
+                window.location.href = "/";
               }
             })
             .then(() => {

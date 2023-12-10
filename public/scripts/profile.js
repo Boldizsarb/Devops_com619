@@ -1,68 +1,65 @@
-function Pois({ title }) {
-  let currentUser = [];
-  let currentUserUsername = "";
-
+function Profile({ title }) {
   function editUser(id) {
-    alert("shared");
+    alert("shared", { id });
   }
-    fetch(`http://localhost:3000/user/verifylogin`, {
-      method: "GET",
-    })
-      //.then((response) =>response.json())
-      .then((response) => {
-        if (response.status == 404) {
-          alert("No User logged In");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        fetch(
-          `http://localhost:3000/user/users/username/${data.username}`,
-          {
-            method: "GET",
-          }
+
+  async function getUserDetails() {
+    const username = await (
+      await fetch(`http://localhost:3000/user/verifylogin`)
+    ).json();
+    if (username.username) {
+      const userDetails = await (
+        await fetch(
+          `http://localhost:3000/user/users/username/${username.username}`
         )
-          //.then((response) =>response.json())
-          .then((response) => {
-            if (response.status == 404) {
-              alert("No user information available");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            currentUser = data;
-            console.log(currentUser);
-          });
-      });
-  /////////////////////////////////////////////// (13) till here
+      ).json();
+      if (userDetails) {
+        return userDetails;
+      }
+    } else {
+      alert("You need to be logged in to use this page");
+      window.location.href = "/";
+    }
+  }
+
+  return (
+    <div>
+      <LoadProfile
+        getUserDetails={getUserDetails}
+        title={title}
+        edirUser={editUser}
+      />
+    </div>
+  );
+}
+
+function LoadProfile({ getUserDetails, title, editUser }) {
+  getUserDetails()
+    .then((response) => {
+      if (response.status == 404) {
+        alert("No details available");
+      }
+      return response;
+    })
+    .then((data) => {
+      console.log(data); 
+      document.getElementById("profileContent").innerHTML =
+      `<div key=${data.id}>
+      <p><b>Username:</b> ${data.username}</p>
+      <p><b>Email:</b> ${data.email}</p>
+      <p><b>Level:</b> ${data.permission_level}</p>
+      <p>
+      </p>
+    </div>`
+    });
+
   return (
     <div>
       <h3>{title}</h3>
-      <div className="d-sm-flex align-items-center mb-4">
-        {currentUser.length > 0 ? (
-          currentUser.map((item) => (
-            <div key={item.id}>
-              <p>Username: {item.username}</p>
-              <p>Email: {item.email}</p>
-              <p>Level: {item.permission_level}</p>
-              <p>
-                <button
-                  className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-                  id="recomendbut"
-                  onClick={() => editUser(item.id)}
-                >
-                  Edit
-                </button>
-              </p>
-            </div>
-          ))
-        ) : (
-          <p></p>
-        )}
-      </div>
+      <div className="d-sm-flex align-items-center mb-4" id="profileContent"></div>
     </div>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Pois title="User Information" />);
+root.render(<Profile title="User Information" />);

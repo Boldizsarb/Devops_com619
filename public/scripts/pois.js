@@ -35,6 +35,7 @@ function Pois({ title }) {
       return response.json();
     });
   }
+  
   fetch(`http://localhost:3000/poi/pointsOfInterest`, {
       method: "GET",
     })
@@ -47,6 +48,7 @@ function Pois({ title }) {
       })
       .then((data) => {
         setPoi(data);
+        console.log(poi)
       });
   /////////////////////////////////////////////// (13) till here
   return (
