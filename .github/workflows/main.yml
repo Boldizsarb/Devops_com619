@@ -32,7 +32,7 @@ jobs:
 
       # BUild the NGINX inage
       - name: Build NGINX image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/mynginx:latest -f nginx/Dockerfile ./nginx
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/nginx:latest -f nginx/Dockerfile ./nginx
 
   
       - name: Login to DockerHub
@@ -57,11 +57,11 @@ jobs:
 
 
       #- name: Push NodeJS App Image
-       # run: docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+      #  run: docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
     
       # Push the Nginx image to Docker Hub
-      #- name: Push Nginx Image
-       # run: docker push ${{ secrets.DOCKER_USERNAME }}/mynginx:latest
+      - name: Push Nginx Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/nginx:latest
     
       - name: Deploy to Azure VM
         run: ssh -o StrictHostKeyChecking=no com619@comdevops.uksouth.cloudapp.azure.com 'bash -s' < deploy_script.sh
