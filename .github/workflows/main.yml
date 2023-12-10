@@ -27,8 +27,8 @@ jobs:
         run: npm test
 
 
-      - name: Build Node.js Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp:latest -f Dockerfile.app .
+      #- name: Build Node.js Docker Image
+      # run: docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp:latest -f Dockerfile.app .
 
       # BUild the NGINX inage
       - name: Build NGINX image
