@@ -20,7 +20,7 @@ const router = express.Router();
   router.get('/all',isAdmin, userController.getAllUsersController);
   router.post('/signup', userController.addUserController); 
   router.delete('/users/:userId',isAdmin, userController.deleteUserController); 
-  router.get('/users/username/:username',isAdmin, userController.getUserByUsernameController);
+  router.get('/users/username/:username', userController.getUserByUsernameController);
   router.get('/verifylogin', userController.verifyLogin);
   router.post('/login', userController.login);
   router.post('/logout', userController.logout, isAuthenticated);

@@ -539,6 +539,18 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                     />
+                    <input
+                    type="checkbox"
+                    id="terms" 
+                    name="terms" 
+                    value="Terms"
+                    required
+                    />
+                    <label htmlFor="terms">
+                    Please check the box if you agree with our <a href="/public/terms.html">Terms of Use</a>
+                    </label>
+                    
+
                     <button
                       type="submit"
                       className="btn btn-primary btn-user btn-block"
