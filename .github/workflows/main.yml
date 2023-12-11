@@ -63,7 +63,7 @@ jobs:
 
       - name: Re-tag Nginx Image
         run: |
-          docker tag dapsonic/nginx:latest dapsonic/nginx
+          docker tag dapsonic/nginx:latest dapsonic/nginx:latest
     
       # Push the Nginx image to Docker Hub
       - name: Push Nginx Image
