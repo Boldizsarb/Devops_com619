@@ -1,42 +1,51 @@
 function Cookies() {
+  React.useEffect(() => {
+    const cookieWrapper = document.getElementById("popupWrapper"),
+    cookieButtons = document.querySelectorAll(".cookieButton");
 
-  function acceptCookies(){}
 
-  function cookiesDenied(){}
+    if(document.cookie.includes("devops")){
+      cookieWrapper.style.display = "none"
+    }else{
+      cookieButtons.forEach(cookieButton => {
+        cookieButton.addEventListener("click", () => {
+          cookieWrapper.style.display = "none"
+  
+          if (cookieButton.id == "acceptBtn") {
+            console.log("accept");
+            document.cookie =
+              "cookieBy= devops; max-age=" + 60 * 60 * 24 * 30;
+          }
+        });
+      });
+    }
+
+    
+	}, []);
+  
 
   return (
-    <div 
-    style={{ position: "fixed",
-        bottom: "0",
-        left: "0",
-        right: "0",
-        background: "#2f3640",
-        color: "#f5f6fa",
-        padding: "0 32px",
-        borderRadius: "8px",
-        transition: "400ms" }}>
-            <p>
-            We use cookies in this website to give you the best experience on our site and show you relevant ads. To find out more, read our
-            </p>
-            <button
-              className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-              id="accept"
-              value=""
-              onClick={acceptCookies}
-            >
-                Accept
-            </button>
+    <div class="popupWrapper" id="popupWrapper">
+      <header>
+        <h2>Cookies Consent</h2>
+      </header>
+      
+      <div class="data">
+        <p>
+          We use cookies in this website to give you the best experience on our
+          site.
+        </p>
+      </div>
 
-            <button
-              className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-              id="denie"
-              value=""
-              onClick={cookiesDenied}
-              style={{float: "right"}}
-            >
-                Denie
-            </button>
-        
+      <div class="cookiesButtons">
+        <button class="cookieButton" id="acceptBtn">
+          Accept
+        </button>
+
+        <button class="cookieButton" id="declineBtn" style={{ float: "right" }}>
+          Decline
+        </button>
+      </div>
     </div>
   );
 }
