@@ -2,8 +2,8 @@
 set -e
 
 # Pull the latest version of your application image
-docker pull $DOCKER_USERNAME/devops_com619-devops:latest
-docker pull $DOCKER_USERNAME/mynginx:latest
+docker pull dapsonic/devops_com619-devops:latest
+docker pull dapsonic/mynginx:latest
 
 # Pull the MySQL image
 docker pull mysql:5.7
@@ -19,13 +19,13 @@ docker run -d --name myapp-db -e MYSQL_ROOT_PASSWORD=devops -e MYSQL_DATABASE=my
 docker run -d --name myapp --link myapp-db:mysql -p 3000:3000 dapsonic/devops_com619-devops:latest
 
 # Start the Nginx container
-docker run -d --name nginx -p 80:80 -p 443:443 $DOCKER_USERNAME/nginx:latest
+docker run -d --name nginx -p 80:80 -p 443:443 dapsonic/nginx:latest
 
 # Wait for the services to start
 sleep 10
 
 # Stop Nginx if it's running to free up port 80
-docker stop nginx || true && docker rm nginx || true
+#docker stop nginx || true && docker rm nginx || true
 
 # Run Certbot container to obtain certificates
 #docker run --rm \
@@ -40,11 +40,9 @@ docker stop nginx || true && docker rm nginx || true
 #  -d comdevops.uksouth.cloudapp.azure.com
 
 # Start Nginx container with mounted volumes for SSL
-docker run -d --name nginx \
+docker run -d --name nginx -p 80:80 -p 443:443 \
   -v "/etc/letsencrypt:/etc/letsencrypt" \
   -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
   -v "/home/com619/nginx.conf:/etc/nginx/nginx.conf" \
-  -p 80:80 \
-  -p 443:443 \
   nginx:latest
 
