@@ -330,17 +330,36 @@ function TopBar({
   verifyLogin();
   console.log(loggedInUser);
   console.log(isLoggedIn);
-  if (isLoggedIn) {
-    return (
-      <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <div id="topbarToggleButtonSidebar">
-          <button
-            id="sidebarToggleTop"
-            className="btn btn-link d-md-none rounded-circle mr-3"
-          >
-            <i className="fa fa-bars"></i>
-          </button>
-        </div>
+  document;
+  return (
+    <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+      <div id="topbarToggleButtonSidebar">
+        <button
+          id="sidebarToggleTop"
+          className="btn btn-link d-md-none rounded-circle mr-3"
+        >
+          <i className="fa fa-bars"></i>
+        </button>
+      </div>
+      <label>
+        Select Language:
+        <select
+          id="languageSelector"
+          defaultValue="en"
+          style={{marginLeft: "5px"}}
+          onChange={(e) => changeLanguage(e.target.value)}
+        >
+          <option value="en">English</option>
+          <option value="de">German</option>
+          <option value="fr">French</option>
+          <option value="hu">Hungarian</option>
+          <option value="es">Spanish</option>
+          <option value="pt">Portuguese</option>
+          <option value="pl">Polish</option>
+        </select>
+      </label>
+
+      {isLoggedIn ? (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown no-arrow">
             <a
@@ -377,20 +396,7 @@ function TopBar({
             </div>
           </li>
         </ul>
-      </nav>
-    );
-  } else {
-    return (
-      <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <div id="topbarToggleButtonSidebar">
-          <button
-            id="sidebarToggleTop"
-            className="btn btn-link d-md-none rounded-circle mr-3"
-          >
-            <i className="fa fa-bars"></i>
-          </button>
-        </div>
-
+      ) : (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown no-arrow mx-1">
             <a
@@ -534,9 +540,9 @@ function TopBar({
             </div>
           </li>
         </ul>
-      </nav>
-    );
-  }
+      )}
+    </nav>
+  );
 }
 
 function Footer() {
@@ -552,47 +558,6 @@ function Footer() {
         <i className="fas fa-angle-up"></i>
       </a>
     </footer>
-  );
-}
-
-function Footer() {
-  return (
-    <div style={{ position: "fixed",
-    bottom: "0",
-    left: "0",
-    right: "0",
-    background: "#2f3640",
-    color: "#f5f6fa",
-    padding: "0 32px",
-    borderRadius: "8px",
-    transition: "400ms" }}>
-      <header>
-        <i class="bx bx-cookie"></i>
-        <h2>Cookies Consent</h2>
-      </header>
-      <div calss="data">
-        <p> This website use cookies to help you have a better experience.</p>
-      </div>
-      <div class="buttons">
-        <button
-          className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-          id="accept"
-          value=""
-          onClick={acceptCookies}
-        >
-          Accept
-        </button>
-        <button
-          className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-          id="denie"
-          value=""
-          onClick={cookiesDenied}
-          style={{ float: "right" }}
-        >
-          Decline
-        </button>
-      </div>
-    </div>
   );
 }
 
