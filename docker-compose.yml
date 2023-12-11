@@ -14,18 +14,42 @@ services:
       - mysql-data:/var/lib/mysql
   devops:
     container_name: devops-app
-    build: .
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mysql
+    image: dapsonic/devops_com619-devops:latest
     environment:
       - MYSQL_HOST=mysql
       - MYSQL_DATABASE=devops
       - MYSQL_USER=devops
       - MYSQL_PASSWORD=devops
     command: ["sh", "-c", "while ! timeout 1 bash -c 'cat < /dev/null > /dev/tcp/mysql-devops/3306'; do sleep 1; done; node app.mjs"]
+    depends_on:
+      - mysql
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - certbot-www:/var/www/certbot
+    depends_on:
+      - devops
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 6h & wait $${!}; certbot renew; done;'"
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - certbot-www:/var/www/certbot
+    depends_on:
+      - nginx
+
 
 volumes:
   mysql-data:
-
+  certbot-etc:
+  certbot-var:
+  certbot-www:
