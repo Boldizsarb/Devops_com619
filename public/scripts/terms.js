@@ -1,4 +1,4 @@
-function Profile({ title }) {
+function Terms({ title }) {
   return (
     <div className="container-fluid">
       <h1 className="h3 mb-0 text-gray-800">{title}: Last Updated: 10/12/2023</h1>
@@ -95,4 +95,4 @@ function Profile({ title }) {
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Profile title="Terms of Use" />);
+root.render(<Terms title="Terms of Use" />);

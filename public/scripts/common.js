@@ -243,6 +243,14 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
 			</li>
 
 			<hr className="sidebar-divider" />
+			<li className="nav-item">
+				<a className="nav-link" href="/public/apache.html">
+					<i className="fas fa-fw fa-wrench"></i>
+					<span>Apache Licence</span>
+				</a>
+			</li>
+
+			<hr className="sidebar-divider" />
 			<div
 				className="text-center d-none d-md-inline"
 				id="sidebarButtonToggleSideBar"
