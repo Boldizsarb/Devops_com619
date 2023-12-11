@@ -60,6 +60,10 @@ jobs:
 
       #- name: Push NodeJS App Image
       #  run: docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+
+      - name: Re-tag Nginx Image
+        run: |
+          docker tag dapsonic/nginx:latest dapsonic/nginx
     
       # Push the Nginx image to Docker Hub
       - name: Push Nginx Image
