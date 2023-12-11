@@ -1,5 +1,3 @@
-
-
 i18next.use(i18nextHttpBackend).init({
 	lng: "en", // Initial language
 	fallbackLng: "en", // Fallback language
