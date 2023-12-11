@@ -341,8 +341,10 @@ function TopBar({
 					<i className="fa fa-bars"></i>
 				</button>
 			</div>
-			<label>
-				Select Language:
+			<label id="Main Page" htmlFor="languageSelector">
+					Select Language:
+				</label>
+			
 				<select
 					id="languageSelector"
 					defaultValue="en"
@@ -350,14 +352,14 @@ function TopBar({
 					onChange={(e) => changeLanguage(e.target.value)}
 				>
 					<option value="en">English</option>
-					<option value="de">German</option>
-					<option value="fr">French</option>
-					<option value="hu">Hungarian</option>
-					<option value="es">Spanish</option>
-					<option value="pt">Portuguese</option>
-					<option value="pl">Polish</option>
+					<option value="de">Deutsch</option>
+					<option value="fr">Français</option>
+					<option value="hu">Magyar</option>
+					<option value="es">Español</option>
+					<option value="pt">Português</option>
+					<option value="pl">Polski</option>
 				</select>
-			</label>
+				
 
 			{isLoggedIn ? (
 				<ul className="navbar-nav ml-auto">
@@ -402,7 +404,7 @@ function TopBar({
 						<a
 							className="nav-link dropdown-toggle text-black-50"
 							href="#"
-							id="alertsDropdown"
+							id="Login"
 							role="button"
 							data-toggle="dropdown"
 							aria-haspopup="true"
