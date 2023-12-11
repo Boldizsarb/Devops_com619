@@ -67,84 +67,92 @@ function AppWidget({ area }) {
   const [loggedInUser, setLoggedInUser] = React.useState("");
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-  
   async function verifyLogin(event) {
     const loggeduser = await fetch(`http://localhost:3000/user/verifylogin`);
     const user = await loggeduser.json();
-    if(user.username){
+    if (user.username) {
       //event.preventDefault();
       setLoggedInUser(user.username);
       setIsLoggedIn(true);
-    }else{
+    } else {
       //event.preventDefault();
       setLoggedInUser("");
       setIsLoggedIn(false);
     }
-    
   }
 
   function handleLogin(username, password) {
     const loginDetails = { username, password };
-    fetch('/user/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginDetails),
+    fetch("/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginDetails),
     })
-    .then(response => {
+      .then((response) => {
         console.log(response);
         return response.json();
-    })
-    .then(data => {
+      })
+      .then((data) => {
         if (data.error) {
-            throw new Error(data.error);
+          throw new Error(data.error);
         }
         window.location.reload();
-    })
-    .catch((error) => {
-        console.error('Error during login:', error);
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
         alert(`Login error: ${error.message}`);
-    });
-}
-
-async function logoutUser(setIsLoggedIn, setCurrentUser) {
-  try {
-    const response = await fetch('/user/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include', // if you're using session cookies
-    });
- 
-    if (response.ok) {
-      // Logout successful
-      //setIsLoggedIn(false);
-      //setCurrentUser(null);
-      alert('You have been logged out.');
-      // Optionally redirect to login page or home page
-      window.location.reload();
-      //window.location.href = '/'; // change '/login' to your login route if it's different
-    } else {
-      throw new Error('Logout failed');
-    }
-  } catch (error) {
-    console.error('Logout error:', error);
-    alert('An error occurred during logout. Please try again.');
+      });
   }
-}
+
+  async function logoutUser(setIsLoggedIn, setCurrentUser) {
+    try {
+      const response = await fetch("/user/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // if you're using session cookies
+      });
+
+      if (response.ok) {
+        // Logout successful
+        //setIsLoggedIn(false);
+        //setCurrentUser(null);
+        alert("You have been logged out.");
+        // Optionally redirect to login page or home page
+        window.location.reload();
+        //window.location.href = '/'; // change '/login' to your login route if it's different
+      } else {
+        throw new Error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("An error occurred during logout. Please try again.");
+    }
+  }
 
   if (area == "sidebar") {
     return (
       <div>
-        <SideBar verifyLogin={verifyLogin} loggedInUser={loggedInUser} isLoggedIn={isLoggedIn}/>
+        <SideBar
+          verifyLogin={verifyLogin}
+          loggedInUser={loggedInUser}
+          isLoggedIn={isLoggedIn}
+        />
       </div>
     );
   } else if (area == "topbar") {
     return (
       <div>
-        <TopBar verifyLogin={verifyLogin} loggedInUser={loggedInUser} logoutUser={logoutUser} isLoggedIn={isLoggedIn} handleLogin={handleLogin}/>
+        <TopBar
+          verifyLogin={verifyLogin}
+          loggedInUser={loggedInUser}
+          logoutUser={logoutUser}
+          isLoggedIn={isLoggedIn}
+          handleLogin={handleLogin}
+        />
       </div>
     );
   } else {
@@ -156,145 +164,102 @@ async function logoutUser(setIsLoggedIn, setCurrentUser) {
   }
 }
 
-function SideBar({verifyLogin, loggedInUser, isLoggedIn}) {
-  verifyLogin()
-  if(isLoggedIn && loggedInUser =="admin"){ 
-    return (
-      <ul
-        className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-        id="accordionSidebar"
+function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
+  verifyLogin();
+  return (
+    <ul
+      className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      id="accordionSidebar"
+    >
+      <a
+        className="sidebar-brand d-flex align-items-center justify-content-center"
+        href="index.html"
       >
-        <a
-          className="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
-        >
-          <div className="sidebar-brand-icon rotate-n-15">
-            <i className="fas fa-laugh-wink"></i>
-          </div>
-          <div className="sidebar-brand-text mx-3">Dev Ops</div>
-        </a>
-  
-        <hr className="sidebar-divider my-0" />
-  
-        <li className="nav-item active">
-          <a className="nav-link" href="/">
-            <i className="fas fa-fw fa-tachometer-alt"></i>
-            <span>Main Page</span>
-          </a>
-        </li>
-  
-        <hr className="sidebar-divider" />
-  
-        <li className="nav-item">
-          <a className="nav-link" href="/public/pois.html">
-            <i className="fas fa-fw fa-chart-area"></i>
-            <span>All Poi's</span>
-          </a>
-        </li>
-  
-        <hr className="sidebar-divider" />
-  
-        <li className="nav-item">
-          <a className="nav-link" href="/public/users.html">
-            <i className="fas fa-fw fa-chart-area"></i>
-            <span>Users</span>
-          </a>
-        </li>
-        <hr className="sidebar-divider" />
-        <div
-          className="text-center d-none d-md-inline"
-          id="sidebarButtonToggleSideBar"
-        >
-          <button className="rounded-circle border-0" id="sidebarToggle"></button>
+        <div className="sidebar-brand-icon rotate-n-15">
+          <i className="fas fa-laugh-wink"></i>
         </div>
-      </ul>
-    );
-  }
-  else if(isLoggedIn){
-    return (
-      <ul
-        className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-        id="accordionSidebar"
+        <div className="sidebar-brand-text mx-3">Dev Ops</div>
+      </a>
+
+      <hr className="sidebar-divider my-0" />
+
+      <li className="nav-item active">
+        <a className="nav-link" href="/">
+          <i className="fas fa-fw fa-tachometer-alt"></i>
+          <span>Main Page</span>
+        </a>
+      </li>
+
+      {isLoggedIn && loggedInUser != "admin" ? (
+        <div>
+          <hr className="sidebar-divider" />
+          <li className="nav-item">
+            <a className="nav-link" href="/public/pois.html">
+              <i className="fas fa-fw fa-table"></i>
+              <span>All Poi's</span>
+            </a>
+          </li>
+        </div>
+      ) : (
+        ""
+      )}
+      {isLoggedIn && loggedInUser == "admin" ? (
+        <div>
+          <hr className="sidebar-divider" />
+
+          <li className="nav-item">
+            <a className="nav-link" href="/public/pois.html">
+              <i className="fas fa-fw fa-table"></i>
+              <span>All Poi's</span>
+            </a>
+          </li>
+
+          <hr className="sidebar-divider" />
+
+          <li className="nav-item">
+            <a className="nav-link" href="/public/users.html">
+              <i className="fas fa-fw fa-table"></i>
+              <span>Users</span>
+            </a>
+          </li>
+        </div>
+      ) : (
+        ""
+      )}
+      <hr className="sidebar-divider" />
+      <li className="nav-item">
+        <a className="nav-link" href="/api-docs">
+          <i className="fas fa-fw fa-wrench"></i>
+          <span>Swagger API</span>
+        </a>
+      </li>
+
+      <hr className="sidebar-divider" />
+      <li className="nav-item">
+        <a className="nav-link" href="/api-docs">
+          <i className="fas fa-fw fa-wrench"></i>
+          <span>Monitoring</span>
+        </a>
+      </li>
+
+      <hr className="sidebar-divider" />
+      <div
+        className="text-center d-none d-md-inline"
+        id="sidebarButtonToggleSideBar"
       >
-        <a
-          className="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
-        >
-          <div className="sidebar-brand-icon rotate-n-15">
-            <i className="fas fa-laugh-wink"></i>
-          </div>
-          <div className="sidebar-brand-text mx-3">Dev Ops</div>
-        </a>
-  
-        <hr className="sidebar-divider my-0" />
-  
-        <li className="nav-item active">
-          <a className="nav-link" href="/">
-            <i className="fas fa-fw fa-tachometer-alt"></i>
-            <span>Main Page</span>
-          </a>
-        </li>
-  
-        <hr className="sidebar-divider" />
-  
-        <li className="nav-item">
-          <a className="nav-link" href="/public/pois.html">
-            <i className="fas fa-fw fa-chart-area"></i>
-            <span>All Poi's</span>
-          </a>
-        </li>
-  
-        <hr className="sidebar-divider" />
-        <div
-          className="text-center d-none d-md-inline"
-          id="sidebarButtonToggleSideBar"
-        >
-          <button className="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-      </ul>
-    );
-
-  }else{
-    return (
-      <ul
-        className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-        id="accordionSidebar"
-      >
-        <a
-          className="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
-        >
-          <div className="sidebar-brand-icon rotate-n-15">
-            <i className="fas fa-laugh-wink"></i>
-          </div>
-          <div className="sidebar-brand-text mx-3">Dev Ops</div>
-        </a>
-  
-        <hr className="sidebar-divider my-0" />
-  
-        <li className="nav-item active">
-          <a className="nav-link" href="/">
-            <i className="fas fa-fw fa-tachometer-alt"></i>
-            <span>Main Page</span>
-          </a>
-        </li>
-  
-        <hr className="sidebar-divider" />
-        <div
-          className="text-center d-none d-md-inline"
-          id="sidebarButtonToggleSideBar"
-        >
-          <button className="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-      </ul>
-    );
-
-  }
-
-  
+        <button className="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+    </ul>
+  );
 }
 
-function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogin}) {
+function TopBar({
+  verifyLogin,
+  loggedInUser,
+  logoutUser,
+  isLoggedIn,
+  handleLogin,
+}) {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -362,10 +327,10 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
       });
   };
 
-  verifyLogin()
-  console.log(loggedInUser)
-  console.log(isLoggedIn)
-  if(isLoggedIn){ 
+  verifyLogin();
+  console.log(loggedInUser);
+  console.log(isLoggedIn);
+  if (isLoggedIn) {
     return (
       <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
         <div id="topbarToggleButtonSidebar">
@@ -377,41 +342,44 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
           </button>
         </div>
         <ul className="navbar-nav ml-auto">
-        <li className="nav-item dropdown no-arrow">
-          <a
-            className="nav-link dropdown-toggle"
-            href="#"
-            id="userDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <span className="mr-2 d-lg-inline text-gray-600 small">
-              Welcome {loggedInUser}
-            </span>
-            <img class="img-profile rounded-circle" src="../public/img/undraw_profile.svg"></img>
-          </a>
+          <li className="nav-item dropdown no-arrow">
+            <a
+              className="nav-link dropdown-toggle"
+              href="#"
+              id="userDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span className="mr-2 d-lg-inline text-gray-600 small">
+                Welcome {loggedInUser}
+              </span>
+              <img
+                class="img-profile rounded-circle"
+                src="../public/img/undraw_profile.svg"
+              ></img>
+            </a>
 
-          <div
-            className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-            aria-labelledby="userDropdown"
-          >
-            <a className="dropdown-item" href="profile.html">
-              <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Profile
-            </a>
-            <div className="dropdown-divider"></div>
-            <a className="dropdown-item" onClick={logoutUser}>
-              <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-              Logout
-            </a>
-          </div>
-        </li>
-      </ul>
+            <div
+              className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+              aria-labelledby="userDropdown"
+            >
+              <a className="dropdown-item" href="profile.html">
+                <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                Profile
+              </a>
+              <div className="dropdown-divider"></div>
+              <a className="dropdown-item" onClick={logoutUser}>
+                <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
       </nav>
     );
-  }else{
+  } else {
     return (
       <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
         <div id="topbarToggleButtonSidebar">
@@ -422,9 +390,8 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
             <i className="fa fa-bars"></i>
           </button>
         </div>
-  
+
         <ul className="navbar-nav ml-auto">
-         
           <li className="nav-item dropdown no-arrow mx-1">
             <a
               className="nav-link dropdown-toggle text-black-50"
@@ -437,7 +404,7 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
             >
               LogIn
             </a>
-  
+
             <div
               className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="alertsDropdown"
@@ -475,7 +442,12 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
                   </div>
                 </form>
               </a>
-              <a class="dropdown-item text-center small text-gray-500" href="/public/verify.html">Reset Password</a>
+              <a
+                class="dropdown-item text-center small text-gray-500"
+                href="/public/verify.html"
+              >
+                Reset Password
+              </a>
             </div>
           </li>
           <li className="nav-item dropdown no-arrow mx-1">
@@ -490,7 +462,7 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
             >
               SignUp
             </a>
-  
+
             <div
               className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="alertsDropdown"
@@ -538,16 +510,16 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
                       required
                     />
                     <input
-                    type="checkbox"
-                    id="terms" 
-                    name="terms" 
-                    value="Terms"
-                    required
+                      type="checkbox"
+                      id="terms"
+                      name="terms"
+                      value="Terms"
+                      required
                     />
                     <label htmlFor="terms">
-                    Please check the box if you agree with our <a href="/public/terms.html">Terms of Use</a>
+                      Please check the box if you agree with our{" "}
+                      <a href="/public/terms.html">Terms of Use</a>
                     </label>
-                    
 
                     <button
                       type="submit"
@@ -564,9 +536,7 @@ function TopBar({ verifyLogin, loggedInUser, logoutUser, isLoggedIn , handleLogi
         </ul>
       </nav>
     );
-
   }
-  
 }
 
 function Footer() {
@@ -582,6 +552,47 @@ function Footer() {
         <i className="fas fa-angle-up"></i>
       </a>
     </footer>
+  );
+}
+
+function Footer() {
+  return (
+    <div style={{ position: "fixed",
+    bottom: "0",
+    left: "0",
+    right: "0",
+    background: "#2f3640",
+    color: "#f5f6fa",
+    padding: "0 32px",
+    borderRadius: "8px",
+    transition: "400ms" }}>
+      <header>
+        <i class="bx bx-cookie"></i>
+        <h2>Cookies Consent</h2>
+      </header>
+      <div calss="data">
+        <p> This website use cookies to help you have a better experience.</p>
+      </div>
+      <div class="buttons">
+        <button
+          className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          id="accept"
+          value=""
+          onClick={acceptCookies}
+        >
+          Accept
+        </button>
+        <button
+          className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          id="denie"
+          value=""
+          onClick={cookiesDenied}
+          style={{ float: "right" }}
+        >
+          Decline
+        </button>
+      </div>
+    </div>
   );
 }
 
