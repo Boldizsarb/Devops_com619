@@ -63,7 +63,7 @@ jobs:
     
       # Push the Nginx image to Docker Hub
       - name: Push Nginx Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/nginx:latest
+        run: docker push dapsonic/nginx:latest
     
       - name: Deploy to Azure VM
         run: ssh -o StrictHostKeyChecking=no com619@comdevops.uksouth.cloudapp.azure.com 'bash -s' < deploy_script.sh
