@@ -27,11 +27,11 @@ function Cookies() {
   return (
     <div class="popupWrapper" id="popupWrapper">
       <header>
-        <h2>Cookies Consent</h2>
+        <h2 id="">Cookies Consent</h2>
       </header>
       
       <div class="data">
-        <p>
+        <p id="cookies-info">
           We use cookies in this website to give you the best experience on our
           site.
         </p>

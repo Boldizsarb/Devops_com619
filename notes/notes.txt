@@ -3,3 +3,11 @@ idea:
 
 We can put the users as admin, customer adn external, we check these based on the domain of the email registred
 
+Translations remaining due to id issues:
+
+poi.js - button, table headers
+index.js - buttons
+forgot.mjs - buttons
+banner.js - buttons
+common.js - buttons
+

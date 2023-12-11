@@ -295,7 +295,10 @@ function Region({ title }) {
           const lon = poi.lon;
           let markerLet = [lat, lon];
           const popUpDiv = document.createElement(`div`);
-          popUpDiv.setAttribute("class", "align-items-center justify-content-between ")
+          popUpDiv.setAttribute(
+            "class",
+            "align-items-center justify-content-between "
+          );
           const name = document.createTextNode(poi.name);
           const br = document.createElement(`p`);
           popUpDiv.appendChild(name);
@@ -427,13 +430,15 @@ function Region({ title }) {
                     >
                       Name: {item.name}
                     </h3>
-                    <p>Type: {item.type}</p>
-                    <p>Country: {item.country}</p>
-                    <p>Region: {item.region}</p>
-                    <p>Lon: {item.lon}</p>
-                    <p>Lat: {item.lat}</p>
-                    <p>Description: {item.description}</p>
-                    <p>Recommendations:{item.recommendations}</p>
+                    <p id="poi-type">Type: {item.type}</p>
+                    <p id="poi-country">Country: {item.country}</p>
+                    <p id="poi-region">Region: {item.region}</p>
+                    <p id="poi-lon">Lon: {item.lon}</p>
+                    <p id="poi-lat">Lat: {item.lat}</p>
+                    <p id="poi-description">Description: {item.description}</p>
+                    <p id="poi-recommendations">
+                      Recommendations:{item.recommendations}
+                    </p>
                     <button
                       style={{ margin: `5px` }}
                       className=" d-sm-inline-block btn btn-sm btn-primary shadow-sm"
