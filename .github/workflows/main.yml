@@ -32,8 +32,10 @@ jobs:
 
       # BUild the NGINX inage
       - name: Build NGINX image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/nginx:latest -f nginx/Dockerfile ./nginx
+        run: docker build -t dapsonic/nginx:latest -f nginx/Dockerfile ./nginx
 
+      - name: List Docker images 
+        run: docker images
   
       - name: Login to DockerHub
         uses: docker/login-action@v1
