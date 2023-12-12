@@ -82,8 +82,6 @@ and encompasses all the essential environment variables necessary for establishi
 - Utilizes `chalk` to visually confirm successful operations in the console.
 - Releases the database connection back to the pool after operations are completed.
 
-## MVC Arhitecture 
-
 ## Session Management Technologies
 
 ### Technologies Used:
@@ -117,6 +115,7 @@ and encompasses all the essential environment variables necessary for establishi
 - Handles map click events to capture coordinates and display a form for adding POIs.
 - Offers functionality to upload images for POIs.
 
+## MVC Arhitecture 
 
 ### Modell
 
