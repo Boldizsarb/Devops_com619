@@ -177,8 +177,86 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 
 ### Server side POIs
 
+* The server-side architecture adheres to the Model-View-Controller (MVC) design pattern.
 * The main deviation in the server-side handling of POIs pertains to the management of images.
-* 
+* The table consists of two attributes: a primary key (ID) and the image data, which is stored as a string after conversion.
+```
+  id INT AUTO_INCREMENT PRIMARY KEY,
+      base LONGTEXT 
+```
+* In the front end, images are converted to strings using the Base64 encoding approach.
+* Canvas is utilized to dynamically resize and display loaded images while maintaining their aspect ratio. It serves as a drawing surface for image manipulation operations.
+```
+const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+```
+* The compressed image is converted to blob format, and the resulting Base64 encoded image is then transmitted to the database for storage.
+```
+canvas.toBlob(
+                  (blob) => {
+                    const compressedReader = new FileReader();
+                    compressedReader.onload = function () {
+                      const compressedBase64String =
+                        compressedReader.result.split(",")[1]; // Now you can store the compressedBase64String in your database
+                      const newImage = { base: compressedBase64String }; // Display the compressed and resized image
+                      console.log(compressedBase64String);
+                      fetch(`http://localhost:3000/image/imagesadd`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(newImage),
+                      })
+```
+* If the POI has an image ID, clicking on a marker triggers a GET request that returns JSON. The JSON response is used to extract and display the associated image as needed.
+```
+if (poi.id) {
+      fetch(`http://localhost:3000/image/images/${poi.id}`, {
+        method: "GET",
+      })
+        .then((response) => {
+          if (response.status == 404) {
+            alert("There no valid image");
+          } else if (response.status == 403) {
+            alert("You don't have permission to do that! Please LogIn!");
+          }
+          return response.json(); // Get the image data as ArrayBuffer
+        })
+        .then((data) => {
+          let basedata = data.base;
+```
+* From this JSON response, the image data is extracted as a string and then transformed back into an image for display.
+
+
+## Internationalization (i18n)
+
+* i18next, an internationalization framework, was used for multilingual translation.
+* The framework uses CDN for the back-end plug in, ie.:
+```
+<script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
+```
+* The program initializes with a default and fallback language, as well as the key JSON file for translation.
+```
+i18next.use(i18nextHttpBackend).init({
+	lng: "en", // Initial language
+	fallbackLng: "en", // Fallback language
+	debug: true, // Set to false in production
+	backend: {
+		loadPath: "/locales/{{lng}}/translation.json",
+```
+* The library utilizes IDs to map translation keys. Each HTML element's ID corresponds to a translation key that React dynamically changes based on the selected language.
+* Translation key, in json format:
+```
+  "Welcome": "Welcome",
+  "Logout": "Logout",
+```
+* HTML element: 
+```
+<span id="Welcome" className="mr-2 d-lg-inline text-gray-600 small">
+	Welcome {loggedInUser}
+</span>
+```
 
 
 ## Terms and Conditions 
@@ -189,148 +267,3 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 ### Apache Licence
 
 * The Apache License page is accessible through the sidebar, allowing users to review the license terms before utilizing our website.
-
-### Internationalization (i18n)
-
-<p>This document provides an overview of how internationalization (i18n) is implemented in the application, detailing the use of i18next for managing translations and dynamic content based on the user's language preference.</p>
-
-<h2>Overview</h2>
-<p>The application uses i18next, a powerful internationalization framework for JavaScript, to handle the translation of the user interface. This allows the application to support multiple languages, enhancing the user experience for a global audience.</p>
-
-<h2>Including i18next in the Application</h2>
-<p>The i18next framework and its HTTP backend are included in the application through script tags in the HMTL file.This inclusion is necessary for the i18n functionality to be available in the the application</p>
-
-```javascript
-<script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
-<script src="https://unpkg.com/i18next-http-backend@1.3.1/i18nextHttpBackend.min.js"></script>
-<script src="../public/scripts/languageSelector.js"></script>
-```
-
-<p> These scripts should be placed at the end of the body section of HTML file to ensure they are loaded and executed correctly</p>
-
-<h2>Requirements</h2>
-<p>i18next: The core internationalization framework.</p>
-<p>i18next-http-backend: A plugin for i18next to load translations over the network.</p>
-<p>Express Server (optional): For serving the translation files if they're static JSON files.</p>
-
-<h2>Using ID's to Map Translation Keys</h2>
-<p>One of the key aspects of implementing internationalization in the application is the mapping of HTML element IDs to translation keys. This mapping is essential for dynamic updates of text content in the UI when the language is changed</p>
-
-<h2>Principles of ID to Key Mapping</h2>
-<li>Each translatable element in the HTML should have a unique id that corresponds to a translation key in the localization files.</li>
-<li>The id should be name in a way that cleraly represents the content or purpose of the element for easier maintenace and readability.</li>
-
-<h2>Example of ID to Key Mapping</h2>
-<p>This assumes that translation keys are in "locales/en/translation.json"</p>
-
-```javascript
-{
-  "Main Page": "Main Page",
-  "All Pois (Points of Interest)": "All Pois (Points of Interest)",
-  "All Pois (Points of Interest)-loggedin": "All Pois (Points of Interest)",
-  "Users": "Users",
-  "Welcome": "Welcome",
-  "Logout": "Logout",
-  "LogIn": "LogIn",
-}
-```
-
-<p>An HTML element should have a matching ID</p>
-
-```javascript
-<span id="Welcome" className="mr-2 d-lg-inline text-gray-600 small">
-	Welcome {loggedInUser}
-</span>
-```
-
-<h2>Best Practices</h2>
-<li>Use consistent and clear naming convention for IDs and keys.</li>
-<li>Avoid using spaces or special characters in IDs like "camelCase" or "snake_case".</li>
-<li>Regularly update the translationKeys array in updateContent to reflect any changes or additions in HTML</li>
-
-<h2>How It Works</h2>
-<p>Initialization</p>
-<p>i18next is initialized with the following configuration:</p>
-
-```javascript
-i18next.use(i18nextHttpBackend).init({
-	lng: "en", // Initial language
-	fallbackLng: "en", // Fallback language
-	debug: true, // Set to false in production
-	backend: {
-		loadPath: "/locales/{{lng}}/translation.json",
-	},
-});
-```
-
-<p>This setup configures i18next to use the HTTP backend for loading translation files located in the /locales/{{lng}}/ directory.</p>
-
-<h2>Language Selector</h2>
-<p>The application includes a language selector, allowing users to switch languages. This is implemented as a dropdown in the user interface:</p>
-
-```javascript
-<select
-	id="languageSelector"
-	defaultValue="en"
-	style={{ marginLeft: "5px" }}
-	onChange={(e) => changeLanguage(e.target.value)}
->
-	<option value="en">English</option>
-	<option value="de">Deutsch</option>
-	<option value="fr">Français</option>
-	<option value="hu">Magyar</option>
-	<option value="es">Español</option>
-	<option value="pt">Português</option>
-	<option value="pl">Polski</option>
-</select>
-```
-
-<h2>Language Switching</h2>
-<p>The changeLanguage function updates i18next's current language and triggers a UI update:</p>
-
-```javascript
-function changeLanguage(lng) {
-	i18next.changeLanguage(lng, (err) => {
-		if (err) {
-			console.error("Error changing language:", err);
-			return;
-		}
-		updateContent();
-	});
-}
-```
-
-<h2>Dynamic Content Update</h2>
-<p>The updateContent function is responsible for updating the UI elements with the translated text. It iterates over the defined translation keys, finds the corresponding element by its ID and updates the content.</p>
-
-```javascript
-function updateContent() {
-	const translationKeys = [
-		"Main Page",
-		"All Pois (Points of Interest)",
-		"Users",
-		"Welcome",
-		"Logout",
-		"LogIn",
-		// ... rest of keys
-	];
-
-	translationKeys.forEach((key) => {
-		const element = document.getElementById(key);
-		if (element) {
-			if (element.tagName === "INPUT" && element.type === "text") {
-				element.setAttribute("placeholder", i18next.t(key));
-			} else if (element.tagName === "INPUT" && element.type === "submit") {
-				element.value = i18next.t(key);
-			} else {
-				element.textContent = i18next.t(key);
-			}
-		}
-	});
-}
-```
-
-<p>This funtion is triggered whenever a language change occurs, ensuring that all text content is pdated to reflect the selected language.</p>
-
-<h2>Connection with the Rest of Application</h2>
-</p>Server Setup: when using an Express server, ensure it is configured to serve the locales directory.</p>
