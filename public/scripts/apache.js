@@ -1,22 +1,26 @@
 function Apache({ title }) {
   return (
     <div className="container-fluid">
-      <h1 className="h3 mb-0 text-gray-800">
+      <h1 id="apache-license" className="h3 mb-0 text-gray-800">
         Apache License: Version 2.0, January 2004
       </h1>
       <div className="align-items-center justify-content-between">
-        <p>TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION</p>
-        <h3 style={{ fontWeight: "bold" }}>1. Definitions</h3>
-        <p>
+        <p id="terms-con-dist">
+          TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+        </p>
+        <h3 id="definitions" style={{ fontWeight: "bold" }}>
+          1. Definitions
+        </h3>
+        <p id="licence">
           <b>"License"</b> shall mean the terms and conditions for use,
           reproduction, and distribution as defined by Sections 1 through 9 of
           this document.
         </p>
-        <p>
+        <p id="licensor">
           <b>"Licensor"</b> shall mean the copyright owner or entity authorized
           by the copyright owner that is granting the License.
         </p>
-        <p>
+        <p id="legal-entity">
           <b>"Legal Entity"</b> shall mean the union of the acting entity and
           all other entities that control, are controlled by, or are under
           common control with that entity. For the purposes of this definition,
@@ -25,28 +29,28 @@ function Apache({ title }) {
           otherwise, or (ii) ownership of fifty percent (50%) or more of the
           outstanding shares, or (iii) beneficial ownership of such entity.
         </p>
-        <p>
+        <p id="you">
           <b>"You"</b> shall mean an individual or Legal Entity exercising
           permissions granted by this License.
         </p>
-        <p>
+        <p id="source">
           <b>"Source"</b> form shall mean the preferred form for making
           modifications, including but not limited to software source code,
           documentation source, and configuration files.
         </p>
-        <p>
+        <p id="object">
           <b>"Object"</b> form shall mean any form resulting from mechanical
           transformation or translation of a Source form, including but not
           limited to compiled object code, generated documentation, and
           conversions to other media types.
         </p>
-        <p>
+        <p id="work">
           <b>"Work"</b> shall mean the work of authorship, whether in Source or
           Object form, made available under the License, as indicated by a
           copyright notice that is included in or attached to the work (an
           example is provided in the Appendix below).
         </p>
-        <p>
+        <p id="der-works">
           <b>"Derivative Works"</b> shall mean any work, whether in Source or
           Object form, that is based on (or derived from) the Work and for which
           the editorial revisions, annotations, elaborations, or other
@@ -55,7 +59,7 @@ function Apache({ title }) {
           works that remain separable from, or merely link (or bind by name) to
           the interfaces of, the Work and Derivative Works thereof.
         </p>
-        <p>
+        <p id="contribution">
           <b>"Contribution"</b> shall mean any work of authorship, including the
           original version of the Work and any modifications or additions to
           that Work or Derivative Works thereof, that is intentionally submitted
@@ -70,13 +74,15 @@ function Apache({ title }) {
           but excluding communication that is conspicuously marked or otherwise
           designated in writing by the copyright owner as "Not a Contribution."
         </p>
-        <p>
+        <p id="contributor">
           <b>"Contributor"</b> shall mean Licensor and any individual or Legal
           Entity on behalf of whom a Contribution has been received by Licensor
           and subsequently incorporated within the Work.
         </p>
-        <h3 style={{ fontWeight: "bold" }}>2. Grant of Copyright License</h3>
-        <p>
+        <h3 id="grant-copyright" style={{ fontWeight: "bold" }}>
+          2. Grant of Copyright License
+        </h3>
+        <p id="subject-terms">
           Subject to the terms and conditions of this License, each Contributor
           hereby grants to You a perpetual, worldwide, non-exclusive, no-charge,
           royalty-free, irrevocable copyright license to reproduce, prepare
@@ -84,8 +90,10 @@ function Apache({ title }) {
           and distribute the Work and such Derivative Works in Source or Object
           form.
         </p>
-        <h3 style={{ fontWeight: "bold" }}>3. Grant of Patent License</h3>
-        <p>
+        <h3 id="grant-parentlicense" style={{ fontWeight: "bold" }}>
+          3. Grant of Patent License
+        </h3>
+        <p id="subject-terms-2">
           Subject to the terms and conditions of this License, each Contributor
           hereby grants to You a perpetual, worldwide, non-exclusive, no-charge,
           royalty-free, irrevocable (except as stated in this section) patent
@@ -101,33 +109,33 @@ function Apache({ title }) {
           granted to You under this License for that Work shall terminate as of
           the date such litigation is filed.
         </p>
-        <p>
+        <p id="accuracy">
           b.<b>Accuracy:</b>While we strive to provide accurate location
           information, we do not guarantee the accuracy, completeness, or
           reliability of location data.
         </p>
-        <h3 style={{ fontWeight: "bold" }}>4. Redistribution</h3>
-        <p>
+        <h3 id="redistribution" style={{ fontWeight: "bold" }}>4. Redistribution</h3>
+        <p id="reproduce">
           You may reproduce and distribute copies of the Work or Derivative
           Works thereof in any medium, with or without modifications, and in
           Source or Object form, provided that You meet the following
           conditions:
         </p>
-        <p>
+        <p id= "rep-a">
           a. You must give any other recipients of the Work or Derivative Works
           a copy of this License; and
         </p>
-        <p>
+        <p id="rep-b">
           b. You must cause any modified files to carry prominent notices
           stating that You changed the files; and
         </p>
-        <p>
+        <p id="rep-c">
           c. You must retain, in the Source form of any Derivative Works that
           You distribute, all copyright, patent, trademark, and attribution
           notices from the Source form of the Work, excluding those notices that
           do not pertain to any part of the Derivative Works; and
         </p>
-        <p>
+        <p id="rep-d">
           d. If the Work includes a "NOTICE" text file as part of its
           distribution, then any Derivative Works that You distribute must
           include a readable copy of the attribution notices contained within
@@ -144,7 +152,7 @@ function Apache({ title }) {
           additional attribution notices cannot be construed as modifying the
           License.
         </p>
-        <p>
+        <p id="add-copyright-st">
           You may add Your own copyright statement to Your modifications and may
           provide additional or different license terms and conditions for use,
           reproduction, or distribution of Your modifications, or for any such
@@ -152,8 +160,8 @@ function Apache({ title }) {
           distribution of the Work otherwise complies with the conditions stated
           in this License.
         </p>
-        <h3 style={{ fontWeight: "bold" }}>5. Submission of Contributions</h3>
-        <p>
+        <h3 id="sub-contr" style={{ fontWeight: "bold" }}>5. Submission of Contributions</h3>
+        <p id="unless-1">
           Unless You explicitly state otherwise, any Contribution intentionally
           submitted for inclusion in the Work by You to the Licensor shall be
           under the terms and conditions of this License, without any additional
@@ -161,15 +169,15 @@ function Apache({ title }) {
           supersede or modify the terms of any separate license agreement you
           may have executed with Licensor regarding such Contributions.
         </p>
-        <h3 style={{ fontWeight: "bold" }}>6. Trademarks</h3>
-        <p>
+        <h3 id="trademarks" style={{ fontWeight: "bold" }}>6. Trademarks</h3>
+        <p id="license-no-permission">
           This License does not grant permission to use the trade names,
           trademarks, service marks, or product names of the Licensor, except as
           required for reasonable and customary use in describing the origin of
           the Work and reproducing the content of the NOTICE file.
         </p>
-        <h3 style={{ fontWeight: "bold" }}>7. Disclaimer of Warranty</h3>
-        <p>
+        <h3 id="diclaimer-warranty" style={{ fontWeight: "bold" }}>7. Disclaimer of Warranty</h3>
+        <p id="applicable-law">
           Unless required by applicable law or agreed to in writing, Licensor
           provides the Work (and each Contributor provides its Contributions) on
           an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
@@ -179,8 +187,8 @@ function Apache({ title }) {
           appropriateness of using or redistributing the Work and assume any
           risks associated with Your exercise of permissions under this License.
         </p>
-        <h3 style={{ fontWeight: "bold" }}>8. Limitation of Liability</h3>
-        <p>
+        <h3 id="limit-liability-1" style={{ fontWeight: "bold" }}>8. Limitation of Liability</h3>
+        <p id="legal-theory">
           In no event and under no legal theory, whether in tort (including
           negligence), contract, or otherwise, unless required by applicable law
           (such as deliberate and grossly negligent acts) or agreed to in
@@ -192,10 +200,10 @@ function Apache({ title }) {
           any and all other commercial damages or losses), even if such
           Contributor has been advised of the possibility of such damages.
         </p>
-        <h3 style={{ fontWeight: "bold" }}>
+        <h3 id="accept-warranty" style={{ fontWeight: "bold" }}>
           9. Accepting Warranty or Additional Liability.
         </h3>
-        <p>
+        <p id="redistr">
           While redistributing the Work or Derivative Works thereof, You may
           choose to offer, and charge a fee for, acceptance of support,
           warranty, indemnity, or other liability obligations and/or rights
@@ -206,7 +214,7 @@ function Apache({ title }) {
           liability incurred by, or claims asserted against, such Contributor by
           reason of your accepting any such warranty or additional liability.
         </p>
-        <p>END OF TERMS AND CONDITIONS</p>
+        <p id="end-terms">END OF TERMS AND CONDITIONS</p>
       </div>
     </div>
   );

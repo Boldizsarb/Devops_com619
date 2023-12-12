@@ -73,7 +73,7 @@ function VerifyUser(title) {
             Verify
           </button>
           {countdown !== null ? (
-            <div>
+            <div id="countdown">
               Account has been verified. Redirecting to the Login page in{" "}
               {countdown} seconds...
             </div>
