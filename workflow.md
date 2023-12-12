@@ -5,7 +5,7 @@
 * Clone the reposatory
 * Cmd the root directory and input: docker-compose up --build
 * Once you see the sign of: app listening at http://localhost:3000 ✓
-* The Aplication can be observed on the link. 
+* The Aplication can be observed on that link. 
 
 
 ## Project  Initiation:
@@ -27,12 +27,13 @@
 
 ## Deployment with Azure: 
 
-* verify it with Olah!!
+* OLAH OLAH OLAH OLAH   
 
 
 ## Technology overview:
 
 * To enhance modularity, the project leverages ES6 JavaScript runtimes, resulting in the use of '.mjs' file extensions.
+* Babel used to compile React on the front end. 
 
 ## Containerizing the entire project using Docker:
 
@@ -63,11 +64,77 @@ excluding node modules, we enhance deployment efficiency and accelerate build ti
 and encompasses all the essential environment variables necessary for establishing a connection.
 * Additionally, a volume has been mounted to the database container to ensure data persistence beyond the container's lifecycle.
 
+## SERVER CODE SHOULD COME HERE FILIPPE FILIPPPE FILIPPPE!!!! (sicne teh mvc utulises the server code!)
+
+## MVC Arhitecture 
+
+### Modell
+
+* Interacts with the database.
+* ES6 enables the importation of the database module for establishing and terminating connections.
+* To prevent collisions or blocking the main thread, all functions are designed as asynchronous (async).
+* SQL queries are responsible for handling CRUD (Create, Read, Update, Delete) operations.
+* Every query is parameterized to mitigate the risk of SQL injection.
+```
+'DELETE FROM point_of_interest WHERE id = ?’
+```
+### Controller: 
+
+* For each static function called on the class, the initial step involves retrieving all variables from the request body.
+* It populates a new model instance with these variables, executes the HTTP request, and returns the results in the form of an object.
+* Subsequently, the results are parsed into JSON format.
+```
+res.json(pointsOfInterest);
+      or
+res.status(500).json({ error: error.message });
+```
+* This parsing applies to both the actual object and any caught errors.
+
+### Routes: 
+
+* Express.js is employed for defining and managing routes within the application.
+* Middleware is configured within the server.mjs file, and all routes are isolated and defined with their own respective prefixes.
+```
+app.use('/poi', Poirouter);
+```
+* After specifying the route path, an authentication middleware is added to manage the capabilities of various user types
+```
+router.get('/pointsOfInterest', isAuthenticated
+```
+* Then, the appropriate method is invoked from the controller to handle the specific functionality associated with that route
+```
+router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAllPointsOfInterestController);
+```
+
 ## Testing
 
 ### Swagger
 
-* Swagger option 
+* To improve accessibility, a sidebar hyperlink was added. 
+* Swagger options is used to define the metadata and sources of information required for generating the document.
+* To generate a Swagger specification for the API annotations were used in the route files, as follows: 
+
+```
+/**
+* @swagger  (Annotations)
+* /poi/pointsOfInterest:  (route)
+*   get:  (get request)
+```
+* Schema was used to describe the properties and their types for the object and then tags to categorize the APIs
+```
+/**
+ * @swagger
+ * components:
+ *  schemas:
+```
+* Each request is associated with a predefined response to provide clear and consistent descriptions.
+
+```
+*     responses:
+*       201:
+*         description: POI created successfully.
+```
+* Finally, Swagger UI transforms into an interactive format when accessed via the "/api-docs" route.
 
 
 
@@ -75,21 +142,50 @@ and encompasses all the essential environment variables necessary for establishi
 
 ### Front-end User
 
-* Renato write everything you have done with the user on the front end! 
+* User accounts are categorized into three distinct groups: guests, standard users, and administrators.
+* The front-end interface is responsive, dynamically presenting data. 
+* User types:
+1. **Guests** represent the lowest access level within. Their capabilities are limited to: 
+      1. searching for points of interest (POIs) 
+      2. utilizing the user authentication functionalities, which include login, signup, and password recovery.
+2. **Users** encompass all individuals with registered accounts who have successfully logged into the website. 
+      1. They enjoy expanded privileges, including the ability to add new points of interest (POIs), 
+      2. Access the POI page showcasing all POIs, 
+      3. view their profile page, and make edits to their personal information.
+3. **Admins** have unrestricted access and control over all website functions, 
+      1. including adding/editing POIs, 
+      2. managing user profiles, and overseeing user accounts,
+      3. they can view and delete user accounts through the users page.
+* Top and side bar are implemented to display appropriate options dinamically for each user based on their access level.
+
+* RENATO RENATO!!!!! please include code snippets and resaons why you have chose that tech or that solution!!! just choose one or two, make up something 
+
 
 ### Back-end User
 
-* Olah needs to write what you have done so far in the back end
+* Olah OLAH OLAH OLAH needs to write what you have done in the back end
 
 
 ## Point of Interest 
 
-### Cleint side Interest
+### Cleint side POIs
 
-* Renato do it 
+* Renato RENATO RENATO!! here as well, please include some tecnical explanation! how does stuff work? 
+* In the main page the poi's will be displayed in a map with some pins marking their location, they will also be displayed under the map as form of stickers with the information (this sticker are clickable redirecting the map to the selected poi).
+* It is possible to add a poi by clicking on the map and a form to enter the poi ditails will apear, after that the user will have the option to add a picture to the poi.
+* Also a page to display all the poi's was created, this page will allow the users to see all the poi's information as well as delete them.
 
-### Server side Point of Interest
+### Server side POIs
 
-* Boyszy
+* The main deviation in the server-side handling of POIs pertains to the management of images.
+* 
 
 
+## Terms and Conditions 
+
+* There are dedicated pages to present the website's terms and conditions, accessible via a mandatory checkbox in the signup form. 
+* Users must verify their agreement to these terms before completing the signup process.
+
+### Apache Licence
+
+* The Apache License page is accessible through the sidebar, allowing users to review the license terms before utilizing our website.
