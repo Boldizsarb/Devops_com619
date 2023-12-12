@@ -66,7 +66,78 @@ and encompasses all the essential environment variables necessary for establishi
 
 ## SERVER CODE SHOULD COME HERE FILIPPE FILIPPPE FILIPPPE!!!! (sicne teh mvc utulises the server code!)
 
+# Database Initialization Function Documentation
+
+### Technologies Used
+- **chalk:** For styling console outputs (e.g., green tick marks).
+- **MySQL Pooling:** Managed through `pool.mjs` for database connections.
+
+### Implementation Details
+- Establishes a connection to the database using a connection pool.
+- Checks and creates essential tables if they don't exist:
+  - **users:** Stores user information with fields like username, email, password, and verification details.
+  - **point_of_interest:** Contains details of various points of interest like name, type, country, region, and coordinates.
+  - **images:** A table dedicated to storing image data.
+  - **sessions:** Manages session data for user authentication.
+- Utilizes `chalk` to visually confirm successful operations in the console.
+- Releases the database connection back to the pool after operations are completed.
+
 ## MVC Arhitecture 
+
+
+## Session Management Technologies
+
+### Technologies Used:
+- **express-session:** Utilized for creating session objects in the application.
+- **MySQLStore (from express-mysql-session):** Deployed for storing session data.
+- **MySQL:** Database system used for persisting session information.
+
+### Implementation Details:
+1. **Session Creation:** Sessions are created using `express-session`. This facilitates the management of user states within the application.
+2. **Session Storage:** The sessions are stored in the MySQL database in a table named "sessions", managed through `MySQLStore`.
+3. **Session Contents:**
+   - Each session contains the username of the logged-in user.
+   - Sessions have an expiration date to ensure security and manage lifecycle.
+4. **Access Control:**
+   - **Admin Users:** Granted full access to all application features.
+   - **Regular Users:** Limited access to the main page and functionality to add points of interest (POIs).
+   - **Non-Logged-In Users:** Access restricted to the main page only.
+
+
+
+## Session Management Technologies
+
+### Technologies Used:
+- **express-session:** Utilized for creating session objects in the application.
+- **MySQLStore (from express-mysql-session):** Deployed for storing session data.
+- **MySQL:** Database system used for persisting session information.
+
+### Implementation Details:
+1. **Session Creation:** Sessions are created using `express-session`. This facilitates the management of user states within the application.
+2. **Session Storage:** The sessions are stored in the MySQL database in a table named "sessions", managed through `MySQLStore`.
+3. **Session Contents:**
+   - Each session contains the username of the logged-in user.
+   - Sessions have an expiration date to ensure security and manage lifecycle.
+4. **Access Control:**
+   - **Admin Users:** Granted full access to all application features.
+   - **Regular Users:** Limited access to the main page and functionality to add points of interest (POIs).
+   - **Non-Logged-In Users:** Access restricted to the main page only.
+
+
+# Region Function Documentation
+
+### Technologies Used
+- **React:** Manages state and lifecycle with hooks (`useState`, `useEffect`).
+- **Leaflet.js:** For map functionalities and interactions.
+- **Geolocation API:** To retrieve user's current location.
+- **Fetch API:** For server communication on user's location.
+
+### Implementation Details
+- Initializes a map using Leaflet.js.
+- Retrieves user's location and updates map view and markers accordingly.
+- Handles map click events to capture coordinates and display a form for adding POIs.
+- Offers functionality to upload images for POIs.
+
 
 ### Modell
 
