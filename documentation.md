@@ -111,8 +111,8 @@ app.use(session({
 const sessionStore = new (MySQLStore(session))({
     clearExpired: true,// Clear expired sessions automatically
     expiration: 86400000,// Set the session expiration time to 24 hours (in milliseconds)
-    checkExpirationInterval: 3600000,
-    createDatabaseTable: true,
+    checkExpirationInterval: 3600000,// Check for session expiration every 1 hour (in milliseconds)
+    createDatabaseTable: true, // Create the necessary database table to store sessions
       }, 
     pool);
    ```
