@@ -5,9 +5,14 @@ We can put the users as admin, customer adn external, we check these based on th
 
 Translations remaining due to id issues:
 
-poi.js - button, table headers
+poi.js - buttons, table headers
 index.js - buttons
 forgot.mjs - buttons
 banner.js - buttons
 common.js - buttons
+profile.js - paragraphs in function
+users.js - buttons, table headers
+verificationcode.mjs - buttons, one div
+verifyemail.mjs - placeholders, button
+apache.js - whole
 
