@@ -189,3 +189,148 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 ### Apache Licence
 
 * The Apache License page is accessible through the sidebar, allowing users to review the license terms before utilizing our website.
+
+### Internationalization (i18n)
+
+<p>This document provides an overview of how internationalization (i18n) is implemented in the application, detailing the use of i18next for managing translations and dynamic content based on the user's language preference.</p>
+
+<h2>Overview</h2>
+<p>The application uses i18next, a powerful internationalization framework for JavaScript, to handle the translation of the user interface. This allows the application to support multiple languages, enhancing the user experience for a global audience.</p>
+
+<h2>Including i18next in the Application</h2>
+<p>The i18next framework and its HTTP backend are included in the application through script tags in the HMTL file.This inclusion is necessary for the i18n functionality to be available in the the application</p>
+
+```javascript
+<script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
+<script src="https://unpkg.com/i18next-http-backend@1.3.1/i18nextHttpBackend.min.js"></script>
+<script src="../public/scripts/languageSelector.js"></script>
+```
+
+<p> These scripts should be placed at the end of the body section of HTML file to ensure they are loaded and executed correctly</p>
+
+<h2>Requirements</h2>
+<p>i18next: The core internationalization framework.</p>
+<p>i18next-http-backend: A plugin for i18next to load translations over the network.</p>
+<p>Express Server (optional): For serving the translation files if they're static JSON files.</p>
+
+<h2>Using ID's to Map Translation Keys</h2>
+<p>One of the key aspects of implementing internationalization in the application is the mapping of HTML element IDs to translation keys. This mapping is essential for dynamic updates of text content in the UI when the language is changed</p>
+
+<h2>Principles of ID to Key Mapping</h2>
+<li>Each translatable element in the HTML should have a unique id that corresponds to a translation key in the localization files.</li>
+<li>The id should be name in a way that cleraly represents the content or purpose of the element for easier maintenace and readability.</li>
+
+<h2>Example of ID to Key Mapping</h2>
+<p>This assumes that translation keys are in "locales/en/translation.json"</p>
+
+```javascript
+{
+  "Main Page": "Main Page",
+  "All Pois (Points of Interest)": "All Pois (Points of Interest)",
+  "All Pois (Points of Interest)-loggedin": "All Pois (Points of Interest)",
+  "Users": "Users",
+  "Welcome": "Welcome",
+  "Logout": "Logout",
+  "LogIn": "LogIn",
+}
+```
+
+<p>An HTML element should have a matching ID</p>
+
+```javascript
+<span id="Welcome" className="mr-2 d-lg-inline text-gray-600 small">
+	Welcome {loggedInUser}
+</span>
+```
+
+<h2>Best Practices</h2>
+<li>Use consistent and clear naming convention for IDs and keys.</li>
+<li>Avoid using spaces or special characters in IDs like "camelCase" or "snake_case".</li>
+<li>Regularly update the translationKeys array in updateContent to reflect any changes or additions in HTML</li>
+
+<h2>How It Works</h2>
+<p>Initialization</p>
+<p>i18next is initialized with the following configuration:</p>
+
+```javascript
+i18next.use(i18nextHttpBackend).init({
+	lng: "en", // Initial language
+	fallbackLng: "en", // Fallback language
+	debug: true, // Set to false in production
+	backend: {
+		loadPath: "/locales/{{lng}}/translation.json",
+	},
+});
+```
+
+<p>This setup configures i18next to use the HTTP backend for loading translation files located in the /locales/{{lng}}/ directory.</p>
+
+<h2>Language Selector</h2>
+<p>The application includes a language selector, allowing users to switch languages. This is implemented as a dropdown in the user interface:</p>
+
+```javascript
+<select
+	id="languageSelector"
+	defaultValue="en"
+	style={{ marginLeft: "5px" }}
+	onChange={(e) => changeLanguage(e.target.value)}
+>
+	<option value="en">English</option>
+	<option value="de">Deutsch</option>
+	<option value="fr">Français</option>
+	<option value="hu">Magyar</option>
+	<option value="es">Español</option>
+	<option value="pt">Português</option>
+	<option value="pl">Polski</option>
+</select>
+```
+
+<h2>Language Switching</h2>
+<p>The changeLanguage function updates i18next's current language and triggers a UI update:</p>
+
+```javascript
+function changeLanguage(lng) {
+	i18next.changeLanguage(lng, (err) => {
+		if (err) {
+			console.error("Error changing language:", err);
+			return;
+		}
+		updateContent();
+	});
+}
+```
+
+<h2>Dynamic Content Update</h2>
+<p>The updateContent function is responsible for updating the UI elements with the translated text. It iterates over the defined translation keys, finds the corresponding element by its ID and updates the content.</p>
+
+```javascript
+function updateContent() {
+	const translationKeys = [
+		"Main Page",
+		"All Pois (Points of Interest)",
+		"Users",
+		"Welcome",
+		"Logout",
+		"LogIn",
+		// ... rest of keys
+	];
+
+	translationKeys.forEach((key) => {
+		const element = document.getElementById(key);
+		if (element) {
+			if (element.tagName === "INPUT" && element.type === "text") {
+				element.setAttribute("placeholder", i18next.t(key));
+			} else if (element.tagName === "INPUT" && element.type === "submit") {
+				element.value = i18next.t(key);
+			} else {
+				element.textContent = i18next.t(key);
+			}
+		}
+	});
+}
+```
+
+<p>This funtion is triggered whenever a language change occurs, ensuring that all text content is pdated to reflect the selected language.</p>
+
+<h2>Connection with the Rest of Application</h2>
+</p>Server Setup: when using an Express server, ensure it is configured to serve the locales directory.</p>
