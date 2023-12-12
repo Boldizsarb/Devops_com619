@@ -108,6 +108,8 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 
 ## Testing
 
+### Automated Testing
+
 ### Swagger
 
 * To improve accessibility, a sidebar hyperlink was added. 
