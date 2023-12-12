@@ -33,7 +33,7 @@ docker run -d \
 
 # Wait for MySQL to fully start
 echo "Waiting for MySQL to start..."
-sleep 30
+sleep 60
 
 # Start application container
 docker run -d --name myapp --network=devops-net --restart unless-stopped -p 3000:3000 $IMAGE_APP
