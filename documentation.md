@@ -138,6 +138,66 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 ```
 * Finally, Swagger UI transforms into an interactive format when accessed via the "/api-docs" route.
 
+## Front-End
+
+### Design and Responsiveness
+To achieve a professional-looking website, we have opted to utilize a bootstrap template for both design and responsiveness. By employing this template, we can easily incorporate jQuery and effortlessly manipulate the entire website.
+
+The website's pages will be fully responsive, automatically adjusting the size of all elements based on the screen size, ensuring that all content is properly visible.
+* The sidebar will feature a button that enables users to expand or shrink its size according to their preference.
+
+* When users scroll to the bottom of the page, a button will appear, facilitating their swift return to the top of the page, particularly when the top bar is no longer accessible. 
+* The top bar will include a button that is exclusively visible on smaller screen sizes, allowing users to toggle the visibility of the sidebar, providing them with enhanced control over their browsing experience.
+
+### React
+In order to enhance user experience, we have implemented the use of React to render the content of our pages. By leveraging JavaScript to handle data transmission to and from the database, we ensure that all functionalities are readily accessible to the user. This approach enables us to provide a faster and safer experience while utilizing minimal resources. Additionally, we have developed a separate "common.js" file to streamline the management of common components across all pages, such as the topbar, sidebar, and footer.
+
+* To utilize React, it is essential to import the React library and its corresponding file into the HTML page:
+```
+<script
+      type="text/javascript"
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+></script>
+<script
+      type="text/javascript"
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+></script>
+<script
+      type="text/javascript"
+      src="https://unpkg.com/babel-standalone@6/babel.min.js"
+></script>
+
+<script type="text/babel" src="scripts/index.js"></script>
+```
+* Afterward, it is necessary to generate a basic div element and assign it a unique identifier so that we can retrieve it within the reac.js file:
+
+```
+<div id="root"></div>
+```
+There is no further action required on the actual HTML page now, as all modifications will occur in the React file. Although a few div elements have been created, their purpose is solely to ensure the proper placement of each page element.
+
+* In the React file, it is necessary to identify the appropriate div element where the information will be displayed. Subsequently, a function should be assigned to handle all interactions and render the desired content.
+
+```
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Region title="Search by region" />);
+```
+
+In this instance, we are examining the index page, which will serve as the platform for showcasing and managing user interactions with the map and points of interest (POIs). Each functionality possesses its own distinct purpose, enabling the application to effectively communicate with the database and accurately present all relevant information to the user.
+
+```
+function recommend(id)
+function sharePoi(id)
+async function fetchImage(poi)
+function searchByRegion()
+function takeMeThere(lon, lat)
+```
+Once the data has been retrieved and manipulated, we utilize a return statement to exhibit all the desired content on the page.
+```
+return()
+```
 
 
 ## User
@@ -159,8 +219,130 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
       2. managing user profiles, and overseeing user accounts,
       3. they can view and delete user accounts through the users page.
 * Top and side bar are implemented to display appropriate options dinamically for each user based on their access level.
+Let us examine the operational features for creating an account.
+* When the user selects the button located on the top bar to initiate the signup process, a form will promptly appear, prompting the user to input their username, email address, and password. Additionally, a second password field will be presented to ensure the user does not mistakenly enter an incorrect password. 
+```
+<div className="form-group">
+      <input
+            type="text"
+            className="form-control form-control-user"
+            placeholder="Enter Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            />
+      <input
+            type="email"
+            className="form-control form-control-user"
+            placeholder="Enter Email Address "
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+      />
+      <input
+            type="password"
+            className="form-control form-control-user"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+      />
+      <input
+            type="password"
+            className="form-control form-control-user"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+      />
+      <button
+            type="submit"
+            className="btn btn-primary btn-user btn-block"
+      >
+            Sign Up
+      </button>
+      {error && <p className="error">{error}</p>}
+</div>
+```
+Each input element is equipped with several attributes to enhance its functionality and user experience. 
+* Firstly, the type attribute ensures that the input is validated, secured, and restricts the user from entering incorrect data. 
+* Secondly, the className attribute is utilized to improve the visual appearance of the input elements. 
+* Thirdly, the placeholder attribute is employed to display a text prompt, guiding the user on what information should be entered into the input field. 
+* Additionally, the value attribute is associated with a globally created variable that stores the user's data, which is initially empty. 
+* The onChange function is responsible for updating this global variable, ensuring that it contains the most up-to-date values entered by the user. 
+* Lastly, the inputs can be marked as required, which prevents the user from submitting the form without providing all the necessary data. 
+Once the user clicks the "Sign up" button and all the aforementioned checks are successfully verified, the program will invoke a function to handle the subsequent steps.
 
-* RENATO RENATO!!!!! please include code snippets and resaons why you have chose that tech or that solution!!! just choose one or two, make up something 
+```
+const handleSignUp = ()
+```
+
+This function is designed to perform several checks before proceeding with specific actions. It will only proceed if all the checks pass, and it will throw errors if any of the tests fail.
+* Firstly, it will verify if the password and confirm password inputs match. This ensures that the user has entered the correct password.
+```
+if (password !== confirmPassword) {
+      setError("Passwords don't match!");
+      return;
+}
+```
+* Next, it will double-check if the user has entered actual values, preventing them from entering only an empty space. This ensures that the inputs are not left blank.
+```
+if (!username.trim() || !email.trim() || !password.trim()) {
+      setError("Please fill in all fields");
+      return;
+}
+```
+* Once all these checks are completed, the function will create a JSON variable that contains the three inputs. This variable will be used to send the data to the database.
+```
+const data = { username, email, password };
+```
+* Before adding a new user to the database, the function will utilize this data to check if the username is already being used by someone else. This step is taken to prevent multiple users from having the same username.
+```
+fetch("/user/checkusername", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+})
+```
+The data is being passed in the body as JSON, which is a safer approach compared to passing the data in the actual path. This method helps prevent random attacks by unauthorized individuals.
+
+Upon receiving the response from the fetch request, the system will verify the success of the process by reading the response code that was sent back. Based on this code, an appropriate message will be displayed to the user indicating whether the process was successful or not.
+
+In this particular example, the system will first check for the existence of the user. If the fetch request returns a successful response, it will then proceed to call another fetch request to add the new user.
+```
+.then((response) => {
+      if (response.ok) {
+      // If the username is available, send a POST request to the server to create a new user
+            fetch("/user/signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+            })
+            .then((response) => {
+              if (response.ok) {
+                // If the user was created successfully, redirect to the login page
+                window.location.href = "/login";
+              }
+            })
+            .then(() => {
+              // Handle successful signup
+              setError("");
+            })
+            .catch((error) => {
+              setError(error.message);
+            });
+      } else {
+          setError("Username is already taken!");
+      }
+})
+.catch((error) => {
+      setError(error.message);
+});
+```
 
 
 ### Back-end User
@@ -172,10 +354,67 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 
 ### Cleint side POIs
 
-* Renato RENATO RENATO!! here as well, please include some tecnical explanation! how does stuff work? 
 * In the main page the poi's will be displayed in a map with some pins marking their location, they will also be displayed under the map as form of stickers with the information (this sticker are clickable redirecting the map to the selected poi).
 * It is possible to add a poi by clicking on the map and a form to enter the poi ditails will apear, after that the user will have the option to add a picture to the poi.
 * Also a page to display all the poi's was created, this page will allow the users to see all the poi's information as well as delete them.
+
+As the user clicks on the map to add a poi a form with all the poi details will be displayed.
+```
+<form id="poi-form">
+      <h6>Please enter the details of the POI you wich to add<h6>
+      <input 
+            type="text"
+            id="name" 
+            name="name" 
+            placeholder="Please enter the Name" 
+            class="form-control form-control-user required">
+      <input 
+            type="text" 
+            id="type" 
+            name="type" 
+            placeholder="Please enter the Type" 
+            class="form-control form-control-user required">
+      <input 
+            type="text" 
+            id="country" 
+            name="country" 
+            placeholder="Please enter the Country" 
+            class="form-control form-control-user required">
+      <input 
+            type="text" 
+            id="region" 
+            name="region" 
+            placeholder="Please enter the Region" 
+            class="form-control form-control-user required">
+      <textarea 
+            id="description" 
+            name="description" 
+            placeholder="Describe the place" class="form-control form-control-user required">
+      </textarea>
+            <button 
+            id="submit" 
+            type="submit" 
+            class="btn btn-primary btn-user btn-block">
+      Submit
+      </button>
+</form>
+```
+
+The current procedure bears a striking resemblance to the previous user signup process, with the exception that after the user submits the points of interest (POIs) details, a second form will appear, enabling the user to include an image for the POI. Once the user has interacted with both forms, the program will commence data verification. 
+
+Initially, it will thoroughly examine for any empty fields.
+```
+if (
+      name.trim() == "" ||
+      type.trim() == "" ||
+      country.trim() == "" ||
+      region.trim() == "" ||
+      description.trim() == ""
+)
+```
+If this verification is successful, the program will proceed to verify whether the user has included a picture or not. In the event that the user has opted not to include a picture, the program will collect the relevant data and store it in a JSON variable before sending it to the database. Conversely, if the user has chosen to upload a picture, the program will execute a different set of instructions.
+
+Initially, the image will be retrieved and subsequently, in order to save it in the database, it is necessary to convert it into a base64 string. The details of this procedure will be elucidated in the server-side session. Once this process is finalized, the image will be stored in the database and its corresponding ID will be retrieved for the purpose of linking the image with the point of interest (POI).
 
 ### Server side POIs
 
