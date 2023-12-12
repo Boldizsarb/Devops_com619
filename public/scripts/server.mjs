@@ -46,9 +46,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-    /////////////////////////////////changes//////////////////////////////
-
 app.post('/location', (req, res) => {
     const { latitude, longitude } = req.body;
 
@@ -62,10 +59,6 @@ app.post('/location', (req, res) => {
 
     res.json({ message: 'Location stored successfully.' });
 });
-
-
-    /////////////////////////////////changes//////////////////////////////
-
 
 app.use('/user', UserRoute);
 app.use('/poi', Poirouter);
@@ -151,13 +144,13 @@ app.get("/login", (req, res) => {
     res.redirect( "/public/login.html"); 
 });
 
-//app.get("/pois", (req, res) => {
- //   res.redirect("/public/pois.html");
-//});
+app.get("/pois", (req, res) => {
+    res.redirect("/public/pois.html");
+});
 
-//app.get("/users", (req, res) => {
-//    res.redirect("/public/users.html");
-//});
+app.get("/users", (req, res) => {
+    res.redirect("/public/users.html");
+});
 app.get("/verificationcode", (req, res) => {
     const verificationCode = req.query.code;
     res.redirect(`/public/verificationcode.html?code=${verificationCode}`);

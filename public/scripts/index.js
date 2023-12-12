@@ -37,8 +37,8 @@ function Region({ title }) {
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include', // if you're using session cookies
-          body: JSON.stringify({ lat, lon }), // Sending lat and lon in the request body
+          credentials: 'include',
+          body: JSON.stringify({ lat, lon }),
         });
     
         if (response.ok) {
