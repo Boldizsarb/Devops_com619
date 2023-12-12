@@ -10,7 +10,7 @@ docker pull $IMAGE_APP
 docker pull $IMAGE_NGINX
 
 # Stop and remove existing containers
-
+docker network create devops-net || true
 docker stop myapp nginx || true
 docker rm myapp nginx || true
 

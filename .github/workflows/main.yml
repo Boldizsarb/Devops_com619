@@ -55,19 +55,21 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup SSH Connection
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          if [ $? -ne 0 ]; then echo "Writing key failed"; exit 1; fi
-          chmod 600 ~/.ssh/id_rsa
-          if [ $? -ne 0 ]; then echo "Chmod failed"; exit 1; fi
-          ssh-keyscan -H comdevops.uksouth.cloudapp.azure.com >> ~/.ssh/known_hosts
-          if [ $? -ne 0 ]; then echo "Ssh-keyscan failed"; exit 1; fi
-
+          mkdir -p $HOME/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/id_rsa
+          chmod 600 $HOME/.ssh/id_rsa
+          ssh-keyscan -H comdevops.uksouth.cloudapp.azure.com >> $HOME/.ssh/known_hosts
+      
+      - name: Copy NGINX configuration to VM
+        run: |
+          scp -i $HOME/.ssh/id_rsa -o "StrictHostKeyChecking=no" ./nginx/nginx.conf com619@comdevops.uksouth.cloudapp.azure.com:/home/com619/nginx.conf
+      
       - name: Check SSH Key Line Count
         run: wc -l ~/.ssh/id_rsa
 
       - name: Check SSH Key Character Count
         run: wc -m ~/.ssh/id_rsa
+      
         
       - name: Deploy to Azure VM
         run: |
