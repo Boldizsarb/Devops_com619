@@ -18,6 +18,9 @@ docker rm myapp nginx || true
 # Start application container
 docker run -d --name myapp --network=devops-net --restart unless-stopped -p 3000:3000 $IMAGE_APP
 
+# Waiting for the application to start
+sleep 10
+
 # Start NGINX container
 docker run -d --name nginx --network=devops-net --restart unless-stopped -p 80:80 -p 443:443 \
   -v "/etc/letsencrypt:/etc/letsencrypt/" \
