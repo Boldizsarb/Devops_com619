@@ -89,7 +89,7 @@ and encompasses all the essential environment variables necessary for establishi
 
 ### Implementation Details:
 1. **Session Creation:** Sessions are created using `express-session`. This facilitates the management of user states within the application.
-'''
+```
 app.use(session({
     name: 'session_name',
     secret: 'developer',
@@ -104,10 +104,10 @@ app.use(session({
     },
     credentials: true, // Allows credentials (cookies) to be sent with cross-origin requests
 }));
-'''
+```
 
 2. **Session Storage:** addter the sessions beeing created they are stored the MySQL database in a table named "sessions", managed through `MySQLStore`.
-'''
+```
 const sessionStore = new (MySQLStore(session))({
     clearExpired: true,
     expiration: 86400000,
@@ -115,7 +115,7 @@ const sessionStore = new (MySQLStore(session))({
     createDatabaseTable: true,
       }, 
     pool);
-    '''
+   ```
 3. **Session Contents:**
    - Each session contains the username of the logged-in user.
    - Sessions have an expiration date to ensure security and manage lifecycle.
