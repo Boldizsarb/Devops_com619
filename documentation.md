@@ -109,8 +109,8 @@ app.use(session({
 2. **Session Storage:** addter the sessions beeing created they are stored the MySQL database in a table named "sessions", managed through `MySQLStore`.
 ```
 const sessionStore = new (MySQLStore(session))({
-    clearExpired: true,
-    expiration: 86400000,
+    clearExpired: true,// Clear expired sessions automatically
+    expiration: 86400000,// Set the session expiration time to 24 hours (in milliseconds)
     checkExpirationInterval: 3600000,
     createDatabaseTable: true,
       }, 
