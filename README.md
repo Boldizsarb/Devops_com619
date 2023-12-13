@@ -1,8 +1,6 @@
 # Devops_com619
 
-## Point of intrest app
-
-### This application allows a user to:
+## This application allows a user to:
 * Optionally, store a Point of Interest along with an image.
 * If the user has an account, they can retrieve a list of all stored Points of Interest from the database.
 * The application offers flexibility by allowing users to switch between multiple languages.
@@ -19,3 +17,7 @@
  ```
 * Once you see the sign of: app listening at http://localhost:3000 ✓
 * The Aplication can be observed on that link.
+
+
+* youtube video explaining the work done:
+* documentation of the project
