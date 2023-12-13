@@ -236,7 +236,7 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
 
 			<hr className="sidebar-divider" />
 			<li className="nav-item">
-				<a className="nav-link" href="/api-docs">
+				<a className="nav-link" href="https://my.pingdom.com/app/reports/uptime#check=12833055&daterange=7days&tab=result_tab&checkName=Azure%20Cloudapp%20Uksouth%20Comdevops">
 					<i className="fas fa-fw fa-wrench"></i>
 					<span>Monitoring</span>
 				</a>
