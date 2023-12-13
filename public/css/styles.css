@@ -78,7 +78,6 @@
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
 }
-
 *,
 *::before,
 *::after {
@@ -90,6 +89,8 @@
     scroll-behavior: smooth;
   }
 }
+
+
 
 body {
   margin: 0;
@@ -103,6 +104,8 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+
 
 hr {
   margin: 1rem 0;
@@ -645,8 +648,10 @@ progress {
 @media (min-width: 576px) {
   .container-sm, .container {
     max-width: 540px;
-  }
+  } 
 }
+
+
 @media (min-width: 768px) {
   .container-md, .container-sm, .container {
     max-width: 720px;

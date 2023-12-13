@@ -65,6 +65,7 @@ app.use('/poi', Poirouter);
 app.use('/image', ImageRouter);
 app.use(express.static("publid"));
 app.use("/public", express.static('./public/'));
+app.use("/locales", express.static("public/locales"));
 
 
 ///// sswagger
