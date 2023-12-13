@@ -7,7 +7,7 @@
 * If the user have a acount, it can get a list with all Point of intrests stored in the database
 * The aplication is flexible allowing the users to change in to multiple lenguages
 
-![Content of the POI table.](./public/img/home_page.png "Content of the homepage."
+![Content of the POI table.](./public/img/home_page.png "Content of the homepage.")
  ## How do i get started?
  * Clone the reposatory
  ```
