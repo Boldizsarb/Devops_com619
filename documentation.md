@@ -164,6 +164,11 @@ const sessionStore = new (MySQLStore(session))({
    - Sessions have an expiration date to ensure security and manage lifecycle.
 4. **Access Control:**
    - **Tokenization:**  User sessions are encrypted before being stored in the database and decrypted when retrieved to safeguard users' sensitive information.
+   - Technology used: JSON Web Tokens: https://jwt.io/introduction
+      ```
+      const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: EXPIRES_IN });
+            res.status(200).json({ message: "Login successful!", token, user: { 
+      ```
    - **Admin Users:** Granted full access to all application features.
    - **Regular Users:** Limited access to the main page and functionality to add points of interest (POIs).
    - **Non-Logged-In Users:** Access restricted to the main page only.
