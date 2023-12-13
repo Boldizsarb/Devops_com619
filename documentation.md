@@ -1,14 +1,26 @@
 # Documentation 
 
-# Content
+## Content:
+1. [Link to Section 1](#section1)
+2. [Project  Initiation](#section2)
+3. [Devops Development Practices](#section3)
+4. [Deployment with Azure](#section4)
+5. [Technology overview](#section5)
+6. [Containerizing](#section6)
+7. [Database](#section7)
+8. [Sessions](#section8)
+9. [Location](#section9)
+10. [MVC Arhitecture](#section10)
+11. [Testing](#section11)
+12. [Front-End](#section12)
+13. [Users](#section13)
+14. [Point of Interest](#section14)
+15. [Internationalization (i18n)](#section15)
+16. [Terms and Conditions](#section16)
 
-1. 
 
 
-
-
-
-## 1. Running the Project:
+## 1. Running the Project: <a id="section1"></a>
 
 * Clone the reposatory
 * Cmd the root directory and input: docker-compose up --build
@@ -16,7 +28,7 @@
 * The Aplication can be observed on that link. 
 
 
-## 2. project  Initiation:
+## 2. Project  Initiation:   <a id="section2"></a>
 
 * Formation of a cross-functional DevOps team with a focus on role distribution.
 * Definition of project objectives, encompassing a preliminary identification of the technological stack to be utilized.
@@ -25,7 +37,7 @@
 * Adoption of the Apache license for project licensing and intellectual property management.
 * Construction of a feature list and project plan utilizing a visual Kanban approach within the Agile framework using GitHub projects.
 
-## 3. Devops Development Practices: 
+## 3. Devops Development Practices: <a id="section3"></a>
 
 * Agile development facilitated rapid changes, while parallel programming allowed the team to work on different components simultaneously with minimal conflicts or issues.
 
@@ -53,17 +65,17 @@
 * Visualizing individual team member tasks is achieved using GitHub Projects for clear project management and progress tracking.
 * https://github.com/users/Boldizsarb/projects/5/views/1?layout=board
 
-## 4. Deployment with Azure: 
+## 4. Deployment with Azure:  <a id="section4"></a>
 
 * OLAH OLAH OLAH OLAH   
 
 
-## 5. Technology overview:
+## 5. Technology overview:  <a id="section5"></a>
 
 * To enhance modularity, the project leverages ES6 JavaScript runtimes, resulting in the use of '.mjs' file extensions.
 * Babel used to compile React on the front end. 
 
-## 6. Containerizing the entire project using Docker:
+## 6. Containerizing the entire project using Docker:   <a id="section6"></a>
 
 ### Dockerfile: 
 * Upon the compilation of the Docker image, the Dockerfile assumes responsibility for defining the command-line instructions for executing the containerized application.
@@ -94,7 +106,7 @@ and encompasses all the essential environment variables necessary for establishi
 
 
 
-## 7. Database 
+## 7. Database   <a id="section7"></a>
 
 ### Technologies Used
 - **MySQL Pooling:** Managed through `pool.mjs` for database connections.
@@ -135,7 +147,7 @@ MYSQL_USER='devops'
  connection.release();
 ```
 
-## 8. Session Management Technologies
+## 8. Session Management Technologies  <a id="section8"></a>
 
 ### Technologies Used:
 - **express-session:** Utilized for creating session objects in the application.
@@ -186,7 +198,7 @@ const sessionStore = new (MySQLStore(session))({
    - **Non-Logged-In Users:** Access restricted to the main page only.
 
 
-## 9. Region Function Documentation
+## 9. Region Function Documentation     <a id="section9"></a>
 ### Technologies Used
 - **Leaflet.js:** For map functionalities and interactions.
 - **Geolocation API:** To retrieve user's current location.
@@ -195,9 +207,15 @@ const sessionStore = new (MySQLStore(session))({
 ### Implementation Details
 - Initializes a map using Leaflet.js.
 - Retrieves user's location and updates map view and markers accordingly, if the location is denied pins the location at the predifined location of "[51.05, -0.72]"(please note that if the location is not allowed the yellow man icon will not appear in the map).
+```
+ async function successFunction(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+```
+![Location marker.](./public/img/yellowman.png "Location marker.")
 - If agreed by the user the map will store the users location in a session;
 
-## 10. MVC Arhitecture 
+## 10. MVC Arhitecture    <a id="section10"></a>
 
 ### Modell
 
@@ -237,7 +255,7 @@ router.get('/pointsOfInterest', isAuthenticated
 router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAllPointsOfInterestController);
 ```
 
-## 11. Testing
+## 11. Testing    <a id="section11"></a>
 
 ### Automated Testing
 
@@ -270,7 +288,7 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 ```
 * Finally, Swagger UI transforms into an interactive format when accessed via the "/api-docs" route.
 
-## 12. Front-End
+## 12. Front-End    <a id="section12"></a>
 
 ### Design and Responsiveness
 To achieve a professional-looking website, we have opted to utilize a bootstrap template for both design and responsiveness. By employing this template, we can easily incorporate jQuery and effortlessly manipulate the entire website.
@@ -336,7 +354,7 @@ return()
 ```
 
 
-## 13. Users
+## 13. Users     <a id="section13"></a>
 
 ### Front-end User
 
@@ -486,7 +504,7 @@ In this particular example, the system will first check for the existence of the
 * Olah OLAH OLAH OLAH needs to write what you have done in the back end
 
 
-## 14. Point of Interest 
+## 14. Point of Interest     <a id="section14"></a>
 
 ### Cleint side POIs
 
@@ -606,7 +624,7 @@ if (poi.id) {
 * From this JSON response, the image data is extracted as a string and then transformed back into an image for display.
 
 
-## 15. Internationalization (i18n)
+## 15. Internationalization (i18n)     <a id="section15"></a>
 
 * i18next, an internationalization framework, was used for multilingual translation.
 * The framework uses CDN for the back-end plug in, ie.:
@@ -636,7 +654,7 @@ i18next.use(i18nextHttpBackend).init({
 ```
 
 
-## 16. Terms and Conditions 
+## 16. Terms and Conditions      <a id="section16"></a>
 
 * There are dedicated pages to present the website's terms and conditions, accessible via a mandatory checkbox in the signup form. 
 * Users must verify their agreement to these terms before completing the signup process.
