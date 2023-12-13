@@ -1,5 +1,13 @@
 # Documentation 
 
+# Content
+
+1. 
+
+
+
+
+
 ## 1. Running the Project:
 
 * Clone the reposatory
@@ -115,9 +123,13 @@ MYSQL_USER='devops'
 - Checks and creates essential tables if they don't exist:
 - Servercheck.mjs contains all the database configuration
   - **users:** Stores user information with fields like username, email, password, and verification details.
+  - Content: ![Content of the user table.](./public/img/usertable.png "Content of the user table.")
   - **point_of_interest:** Contains details of various points of interest like name, type, country, region, and coordinates.
+  - Content: ![Content of the POI table.](./public/img/poitable.png "Content of the POI table.")
   - **images:** A table dedicated to storing image data.
+  - Content: ![Content of the Image table.](./public/img/imagetable.png "Content of the Image table.")
   - **sessions:** Manages session data for user authentication.
+  - Content: ![Content of the Sessions table.](./public/img/sessiontable.png "Content of the Sessions table.")
 - Releases the database connection back to the pool after operations are completed.
 ```
  connection.release();
