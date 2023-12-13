@@ -3,9 +3,9 @@
 ## Point of intrest app
 
 ### This application allows a user to:
-* Store a Point of intrest, opcionaly adding an image
-* If the user have a acount, it can get a list with all Point of intrests stored in the database
-* The aplication is flexible allowing the users to change in to multiple lenguages
+* Optionally, store a Point of Interest along with an image.
+* If the user has an account, they can retrieve a list of all stored Points of Interest from the database.
+* The application offers flexibility by allowing users to switch between multiple languages.
 
 ![Content of the POI table.](./public/img/home_page.png "Content of the homepage.")
  ## How do i get started?
