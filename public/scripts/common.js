@@ -67,19 +67,22 @@ function AppWidget({ area }) {
 	const [loggedInUser, setLoggedInUser] = React.useState("");
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-	async function verifyLogin(event) {
-		const loggeduser = await fetch(`http://localhost:3000/user/verifylogin`);
-		const user = await loggeduser.json();
-		if (user.username) {
-			//event.preventDefault();
-			setLoggedInUser(user.username);
-			setIsLoggedIn(true);
-		} else {
-			//event.preventDefault();
-			setLoggedInUser("");
-			setIsLoggedIn(false);
-		}
-	}
+  
+  async function verifyLogin(event) {
+    const loggeduser = await fetch(`http://localhost:3000/user/verifylogin`);
+    const user = await loggeduser.json();
+    if(user.username){
+      //event.preventDefault();
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
+      setLoggedInUser(user.username);
+      setIsLoggedIn(true);
+    }else{
+      //event.preventDefault();
+      setLoggedInUser("");
+      setIsLoggedIn(false);
+    }
+    
+  }
 
 	function handleLogin(username, password) {
 		const loginDetails = { username, password };

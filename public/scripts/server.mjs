@@ -7,11 +7,7 @@ import path from 'path';
 import session from 'express-session';
 import pool from './pool.mjs';
 import MySQLStore from 'express-mysql-session';
-import { fileURLToPath } from "url";
-import * as jwtUtils from '../../middleware/jwtUtils.mjs';
-import { DateTime } from "luxon";
 import bodyParser from "body-parser";
-
 
 
 import swaggerJSDoc from "swagger-jsdoc";
@@ -49,6 +45,21 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.post('/location', (req, res) => {
+    const { latitude, longitude } = req.body;
+
+    // Set location data in a cookie
+    res.cookie('locationCookie', JSON.stringify({ latitude, longitude }), {
+        maxAge: 3600000, // 1 hour in milliseconds
+        sameSite: true,
+        secure: false, // Set to true if using https
+        httpOnly: true,
+    });
+
+    res.json({ message: 'Location stored successfully.' });
+});
+
 app.use('/user', UserRoute);
 app.use('/poi', Poirouter);
 app.use('/image', ImageRouter);
@@ -83,8 +94,6 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
-
-
 
 app.get("/", (req, res) => {
     res.redirect( "/public/index.html");
@@ -136,11 +145,11 @@ app.get("/login", (req, res) => {
     res.redirect( "/public/login.html"); 
 });
 
-app.get("/pois", (req, res) =>{
+app.get("/pois", (req, res) => {
     res.redirect("/public/pois.html");
 });
 
-app.get("/users", (req, res) =>{
+app.get("/users", (req, res) => {
     res.redirect("/public/users.html");
 });
 app.get("/verificationcode", (req, res) => {
