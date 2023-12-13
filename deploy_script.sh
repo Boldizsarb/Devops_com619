@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Navigate to the directory containing your docker-compose.yml file
+cd "$(dirname "$0")"
+
 # Pull the latest version of your application image
 docker pull dapsonic/devops_com619-devops:latest
 

@@ -1,5 +1,5 @@
 # Devops_com619
-Devopers
+Developers
 
 The guest can search for a POI.  get a result but can not add to the list of POI 
 The user can add, search and upload pictures to the POI, edit his profile
