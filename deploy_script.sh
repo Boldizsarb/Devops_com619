@@ -4,7 +4,7 @@ set -e
 # Environment variables
 IMAGE_APP="dapsonic/devops_com619-devops:latest"
 IMAGE_NGINX="dapsonic/devops_com619-nginx:latest"
-MYSQL_APP="mysql:5.7" 
+MYSQL_APP="dapsonic/mysql:5.7" 
 
 # Pull the latest version of your application and NGINX images
 docker pull $MYSQL_APP
