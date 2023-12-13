@@ -26,7 +26,6 @@ function Users({ title }) {
         alert("No users to display");
       }
       else if (response.status == 403) {
-        alert("Forbidden");
         window.location.href = "http://localhost:3000/public/index.html";
       }
       return response.json();
