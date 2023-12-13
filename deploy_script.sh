@@ -1,48 +1,50 @@
 #!/bin/bash
 set -e
 
-# Pull the latest version of your application image
-docker pull dapsonic/devops_com619-devops:latest
-docker pull dapsonic/mynginx:latest
+# Environment variables
+IMAGE_APP="dapsonic/devops_com619-devops:latest"
+IMAGE_NGINX="dapsonic/devops_com619-nginx:latest"
+MYSQL_APP="dapsonic/mysql:5.7" 
 
-# Pull the MySQL image
-docker pull mysql:5.7
+# Pull the latest version of your application and NGINX images
+docker pull $MYSQL_APP
+docker pull $IMAGE_APP
+docker pull $IMAGE_NGINX
 
-# Stop existing containers (if any)
-docker stop myapp-db || true && docker rm myapp-db || true
-docker stop myapp || true && docker rm myapp || true
+# Create a network for the application
+docker network create devops-net || true
 
-# Start MySQL container
-docker run -d --name myapp-db -e MYSQL_ROOT_PASSWORD=devops -e MYSQL_DATABASE=myappdb -p 3306:3306 mysql:5.7
+# Create or ensure the volume exists
+docker volume create mysql-data || true
+
+# Stop and remove existing containers
+docker stop myapp nginx mysql-devops || true
+docker rm myapp nginx mysql-devops || true
+
+# Start MYSQL database
+docker run -d \
+  --name mysql-devops \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=devops \
+  -e MYSQL_USER=devops \
+  -e MYSQL_PASSWORD=devops \
+  -p 3306:3306 \
+  -v mysql-data:/var/lib/mysql \
+  $MYSQL_APP
+
+# Wait for MySQL to fully start
+echo "Waiting for MySQL to start..."
+sleep 60
 
 # Start application container
-docker run -d --name myapp --link myapp-db:mysql -p 3000:3000 dapsonic/devops_com619-devops:latest
+docker run -d --name myapp --network=devops-net --restart unless-stopped -p 3000:3000 $IMAGE_APP
 
-# Start the Nginx container
-docker run -d --name nginx -p 80:80 -p 443:443 dapsonic/nginx:latest
-
-# Wait for the services to start
+# Waiting for the application to start
+echo "Waiting for the application to start..."
 sleep 10
 
-# Stop Nginx if it's running to free up port 80
-#docker stop nginx || true && docker rm nginx || true
-
-# Run Certbot container to obtain certificates
-#docker run --rm \
-#  -v "/etc/letsencrypt:/etc/letsencrypt" \
-#  -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
-#  -p 80:80 \
-#  certbot/certbot certonly \
-#  --standalone \
-#  --preferred-challenges http \
-#  --agree-tos \
-#  --email 5giwao61@solent.ac.uk \
-#  -d comdevops.uksouth.cloudapp.azure.com
-
-# Start Nginx container with mounted volumes for SSL
-docker run -d --name nginx -p 80:80 -p 443:443 \
-  -v "/etc/letsencrypt:/etc/letsencrypt" \
-  -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
+# Start NGINX container
+docker run -d --name nginx --network=devops-net --restart unless-stopped -p 80:80 -p 443:443 \
+  -v "/etc/letsencrypt:/etc/letsencrypt/" \
   -v "/home/com619/nginx.conf:/etc/nginx/nginx.conf" \
-  nginx:latest
-
+  $IMAGE_NGINX

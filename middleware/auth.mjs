@@ -1,35 +1,35 @@
+import userModel from '../Models/userModel.mjs';
 export const isAuthenticated = (req, res, next) => {
-    // Check if the user is authenticated
-    // If authenticated, call next()
-    // If not, redirect to login 
-    if (req.isAuthenticated()) {
+    if (req.session.username) {
         return next();
     }
     res.status(403).send({ msg: 'You are not authorized to view this page!' });
-    res.redirect('/');
 };
-
 export const isAdmin = (req, res, next) => {
-    // Check if the user is an admin
-    // If admin, call next()
-    // If not, redirect to login
-    if (req.user.permission_level === PERMISSION_LEVELS.ADMIN) {
-        return next();
+    if (req.session.username) {
+        const userInstance = new userModel();
+        userInstance.getUserByUsername(req.session.username).then((user) => {
+            if (user && user.permission_level === 'admin') {
+                return next();
+            } else {
+                return res.status(403).send({ msg: 'You are not authorized to view this page!' });
+            }
+        }).catch((error) => {
+            return res.status(500).send({ msg: 'Internal server error' });
+        });
+    } else {
+        return res.status(403).send({ msg: 'You are not authorized to view this page!' });
     }
-    res.status(403).send({ msg: 'You are not authorized to view this page!' });
-    res.redirect('/login');
 };
-
 export const sessionsAuth = (req, res, next) => {
     if (req.session.username) {
-        return res.status(200).send({ msg: "Logged in already.", user: req.session.username });
+        return next();
     } else {
         req.session.username = {
             id: "user_object.id",
             name: "username",
             expiry: "expireTime"
         };
-        next();
-        return res.status(200).send({ msg: "Session created", user: req.session.username });
+        return next();
     }
-}
+};

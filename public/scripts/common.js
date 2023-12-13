@@ -67,18 +67,21 @@ function AppWidget({ area }) {
   const [loggedInUser, setLoggedInUser] = React.useState("");
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
+  
   async function verifyLogin(event) {
     const loggeduser = await fetch(`http://localhost:3000/user/verifylogin`);
     const user = await loggeduser.json();
-    if (user.username) {
+    if(user.username){
       //event.preventDefault();
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
       setLoggedInUser(user.username);
       setIsLoggedIn(true);
-    } else {
+    }else{
       //event.preventDefault();
       setLoggedInUser("");
       setIsLoggedIn(false);
     }
+    
   }
 
   function handleLogin(username, password) {
@@ -245,7 +248,7 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
 
       <hr className="sidebar-divider" />
       <li className="nav-item">
-        <a id="Monitoring" className="nav-link" href="/api-docs">
+        <a id="Monitoring" className="nav-link" href="https://my.pingdom.com/app/reports/uptime#check=12833055&daterange=7days&tab=result_tab&checkName=Azure%20Cloudapp%20Uksouth%20Comdevops">
           <i className="fas fa-fw fa-wrench"></i>
           <span>Monitoring</span>
         </a>
