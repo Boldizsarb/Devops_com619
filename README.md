@@ -21,4 +21,4 @@
 
 ## Documentation
 * youtube video explaining the work done:
-* documentation of the project
+* [a relative link](documentation.md) documentation of the project
