@@ -1,4 +1,4 @@
-# Workflow
+# Documentation 
 
 ## Running the Project:
 
@@ -64,7 +64,100 @@ excluding node modules, we enhance deployment efficiency and accelerate build ti
 and encompasses all the essential environment variables necessary for establishing a connection.
 * Additionally, a volume has been mounted to the database container to ensure data persistence beyond the container's lifecycle.
 
-## SERVER CODE SHOULD COME HERE FILIPPE FILIPPPE FILIPPPE!!!! (sicne teh mvc utulises the server code!)
+
+
+## Database 
+
+### Technologies Used
+- **MySQL Pooling:** Managed through `pool.mjs` for database connections.
+```
+const pool = mysql.createPool({
+  host: HOST || 'mysql',
+  user: USER || 'devops',
+  password: PASSWORD || 'devops',
+  database: DATABASE || 'devops',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
+```
+* The program is designed for modularity, with components being exported and imported as needed.
+- ENV file: 
+- In local development, sensitive information is stored in a .env file, while in production (hosted environment), GitHub secrets are used for secure configuration.
+```
+MYSQL_HOST='mysql'
+MYSQL_USER='devops'
+```
+
+
+### Implementation Details
+- Establishes a connection to the database using a connection pool.
+- Checks and creates essential tables if they don't exist:
+- Servercheck.mjs contains all the database configuration
+  - **users:** Stores user information with fields like username, email, password, and verification details.
+  - **point_of_interest:** Contains details of various points of interest like name, type, country, region, and coordinates.
+  - **images:** A table dedicated to storing image data.
+  - **sessions:** Manages session data for user authentication.
+- Releases the database connection back to the pool after operations are completed.
+```
+ connection.release();
+```
+
+## Session Management Technologies
+
+### Technologies Used:
+- **express-session:** Utilized for creating session objects in the application.
+- **MySQLStore (from express-mysql-session):** Deployed for storing session data.
+- **MySQL:** Database system used for persisting session information.
+
+### Implementation Details:
+1. **Session Creation:** Sessions are created using `express-session`. This facilitates the management of user states within the application.
+```
+app.use(session({
+    name: 'session_name',
+    secret: 'developer',
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore, // Use a store to store session data 
+    cookie: { 
+        maxAge: 3600000, // 1 hour in milliseconds
+        sameSite: true,
+        secure: false, // Set to true if using https
+        httpOnly: true,
+    },
+    credentials: true, // Allows credentials (cookies) to be sent with cross-origin requests
+}));
+```
+
+2. **Session Storage:** addter the sessions beeing created they are stored the MySQL database in a table named "sessions", managed through `MySQLStore`.
+```
+const sessionStore = new (MySQLStore(session))({
+    clearExpired: true,// Clear expired sessions automatically
+    expiration: 86400000,// Set the session expiration time to 24 hours (in milliseconds)
+    checkExpirationInterval: 3600000,// Check for session expiration every 1 hour (in milliseconds)
+    createDatabaseTable: true, // Create the necessary database table to store sessions
+      }, 
+    pool);
+   ```
+3. **Session Contents:**
+   - Each session contains the username of the logged-in user.
+   - Sessions have an expiration date to ensure security and manage lifecycle.
+4. **Access Control:**
+   - **Admin Users:** Granted full access to all application features.
+   - **Regular Users:** Limited access to the main page and functionality to add points of interest (POIs).
+   - **Non-Logged-In Users:** Access restricted to the main page only.
+
+
+## Region Function Documentation
+### Technologies Used
+- **Leaflet.js:** For map functionalities and interactions.
+- **Geolocation API:** To retrieve user's current location.
+- **Fetch API:** For server communication on user's location.
+
+### Implementation Details
+- Initializes a map using Leaflet.js.
+- Retrieves user's location and updates map view and markers accordingly, if the location is denied pins the location at the predifined location of "[51.05, -0.72]"(please note that if the location is not allowed the yellow man icon will not appear in the map).
+- If agreed by the user the map will store the users location in a session;
 
 ## MVC Arhitecture 
 
@@ -112,6 +205,7 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 
 ### Swagger
 
+* Documentation available at: http://localhost:3000/api-docs/
 * To improve accessibility, a sidebar hyperlink was added. 
 * Swagger options is used to define the metadata and sources of information required for generating the document.
 * To generate a Swagger specification for the API annotations were used in the route files, as follows: 
