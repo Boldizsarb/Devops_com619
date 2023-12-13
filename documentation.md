@@ -1,6 +1,6 @@
 # Documentation 
 
-## Running the Project:
+## 1. Running the Project:
 
 * Clone the reposatory
 * Cmd the root directory and input: docker-compose up --build
@@ -8,7 +8,7 @@
 * The Aplication can be observed on that link. 
 
 
-## Project  Initiation:
+## 2. project  Initiation:
 
 * Formation of a cross-functional DevOps team with a focus on role distribution.
 * Definition of project objectives, encompassing a preliminary identification of the technological stack to be utilized.
@@ -17,25 +17,45 @@
 * Adoption of the Apache license for project licensing and intellectual property management.
 * Construction of a feature list and project plan utilizing a visual Kanban approach within the Agile framework using GitHub projects.
 
-## Planning: 
+## 3. Devops Development Practices: 
+
+* Agile development facilitated rapid changes, while parallel programming allowed the team to work on different components simultaneously with minimal conflicts or issues.
+
+### Preparation 
 
 * Conducting research to identify and assess the requisite technologies for the successful implementation of the project.
 * Formulating a comprehensive meeting strategy, including the establishment of project timelines and milestones.
 * Setting up objectives and deliverables for each sprint.
 * Devising a schedule for regular weekly meetings, employing the Scrum Daily Standup format, to facilitate discussions concerning project progress, obstacles encountered, and future plans.
 
+### Sprint Planing 
 
-## Deployment with Azure: 
+* Creating a clear project plan involves defining the required features and assigning tasks to each team member.
+* Setting deadlines for task completion is essential for effective project management.
+* Conducting testing by a team member who did not work on a specific feature helps ensure thorough quality control and identifies potential issues or bugs.
+
+### Sprint 
+
+* Present the current work for feedback.
+* In a retrospective meeting, review feedback, identify potential changes, and take action accordingly.
+-----------------------------------------------------------------------------------------
+
+### Kanban 
+
+* Visualizing individual team member tasks is achieved using GitHub Projects for clear project management and progress tracking.
+* https://github.com/users/Boldizsarb/projects/5/views/1?layout=board
+
+## 4. Deployment with Azure: 
 
 * OLAH OLAH OLAH OLAH   
 
 
-## Technology overview:
+## 5. Technology overview:
 
 * To enhance modularity, the project leverages ES6 JavaScript runtimes, resulting in the use of '.mjs' file extensions.
 * Babel used to compile React on the front end. 
 
-## Containerizing the entire project using Docker:
+## 6. Containerizing the entire project using Docker:
 
 ### Dockerfile: 
 * Upon the compilation of the Docker image, the Dockerfile assumes responsibility for defining the command-line instructions for executing the containerized application.
@@ -66,7 +86,7 @@ and encompasses all the essential environment variables necessary for establishi
 
 
 
-## Database 
+## 7. Database 
 
 ### Technologies Used
 - **MySQL Pooling:** Managed through `pool.mjs` for database connections.
@@ -103,7 +123,7 @@ MYSQL_USER='devops'
  connection.release();
 ```
 
-## Session Management Technologies
+## 8. Session Management Technologies
 
 ### Technologies Used:
 - **express-session:** Utilized for creating session objects in the application.
@@ -143,12 +163,13 @@ const sessionStore = new (MySQLStore(session))({
    - Each session contains the username of the logged-in user.
    - Sessions have an expiration date to ensure security and manage lifecycle.
 4. **Access Control:**
+   - **Tokenization:**  User sessions are encrypted before being stored in the database and decrypted when retrieved to safeguard users' sensitive information.
    - **Admin Users:** Granted full access to all application features.
    - **Regular Users:** Limited access to the main page and functionality to add points of interest (POIs).
    - **Non-Logged-In Users:** Access restricted to the main page only.
 
 
-## Region Function Documentation
+## 9. Region Function Documentation
 ### Technologies Used
 - **Leaflet.js:** For map functionalities and interactions.
 - **Geolocation API:** To retrieve user's current location.
@@ -159,77 +180,7 @@ const sessionStore = new (MySQLStore(session))({
 - Retrieves user's location and updates map view and markers accordingly, if the location is denied pins the location at the predifined location of "[51.05, -0.72]"(please note that if the location is not allowed the yellow man icon will not appear in the map).
 - If agreed by the user the map will store the users location in a session;
 
-# Database Initialization Function Documentation
-
-### Technologies Used
-- **MySQL Pooling:** Managed through `pool.mjs` for database connections.
-
-### Implementation Details
-- Establishes a connection to the database using a connection pool.
-- Checks and creates essential tables if they don't exist:
-  - **users:** Stores user information with fields like username, email, password, and verification details.
-  - **point_of_interest:** Contains details of various points of interest like name, type, country, region, and coordinates.
-  - **images:** A table dedicated to storing image data.
-  - **sessions:** Manages session data for user authentication.
-- Releases the database connection back to the pool after operations are completed.
-
-## Session Management Technologies
-
-### Technologies Used:
-- **express-session:** Utilized for creating session objects in the application.
-- **MySQLStore (from express-mysql-session):** Deployed for storing session data.
-- **MySQL:** Database system used for persisting session information.
-
-### Implementation Details:
-1. **Session Creation:** Sessions are created using `express-session`. This facilitates the management of user states within the application.
-```
-app.use(session({
-    name: 'session_name',
-    secret: 'developer',
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore, // Use a store to store session data 
-    cookie: { 
-        maxAge: 3600000, // 1 hour in milliseconds
-        sameSite: true,
-        secure: false, // Set to true if using https
-        httpOnly: true,
-    },
-    credentials: true, // Allows credentials (cookies) to be sent with cross-origin requests
-}));
-```
-
-2. **Session Storage:** addter the sessions beeing created they are stored the MySQL database in a table named "sessions", managed through `MySQLStore`.
-```
-const sessionStore = new (MySQLStore(session))({
-    clearExpired: true,// Clear expired sessions automatically
-    expiration: 86400000,// Set the session expiration time to 24 hours (in milliseconds)
-    checkExpirationInterval: 3600000,// Check for session expiration every 1 hour (in milliseconds)
-    createDatabaseTable: true, // Create the necessary database table to store sessions
-      }, 
-    pool);
-   ```
-3. **Session Contents:**
-   - Each session contains the username of the logged-in user.
-   - Sessions have an expiration date to ensure security and manage lifecycle.
-4. **Access Control:**
-   - **Admin Users:** Granted full access to all application features.
-   - **Regular Users:** Limited access to the main page and functionality to add points of interest (POIs).
-   - **Non-Logged-In Users:** Access restricted to the main page only.
-
-
-# Region Function Documentation
-### Technologies Used
-- **Leaflet.js:** For map functionalities and interactions.
-- **Geolocation API:** To retrieve user's current location.
-- **Fetch API:** For server communication on user's location.
-
-### Implementation Details
-- Initializes a map using Leaflet.js.
-- Retrieves user's location and updates map view and markers accordingly, if the location is denied pins the location at the predifined location of "[51.05, -0.72]"(please note that if the location is not allowed the yellow man icon will not appear in the map).
-- If agreed by the user the map will store the users location in a session;
-
-## MVC Arhitecture 
+## 10. MVC Arhitecture 
 
 ### Modell
 
@@ -269,7 +220,7 @@ router.get('/pointsOfInterest', isAuthenticated
 router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAllPointsOfInterestController);
 ```
 
-## Testing
+## 11. Testing
 
 ### Automated Testing
 
@@ -302,7 +253,7 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 ```
 * Finally, Swagger UI transforms into an interactive format when accessed via the "/api-docs" route.
 
-## Front-End
+## 12. Front-End
 
 ### Design and Responsiveness
 To achieve a professional-looking website, we have opted to utilize a bootstrap template for both design and responsiveness. By employing this template, we can easily incorporate jQuery and effortlessly manipulate the entire website.
@@ -314,7 +265,11 @@ The website's pages will be fully responsive, automatically adjusting the size o
 * The top bar will include a button that is exclusively visible on smaller screen sizes, allowing users to toggle the visibility of the sidebar, providing them with enhanced control over their browsing experience.
 
 ### React
-In order to enhance user experience, we have implemented the use of React to render the content of our pages. By leveraging JavaScript to handle data transmission to and from the database, we ensure that all functionalities are readily accessible to the user. This approach enables us to provide a faster and safer experience while utilizing minimal resources. Additionally, we have developed a separate "common.js" file to streamline the management of common components across all pages, such as the topbar, sidebar, and footer.
+
+* React is utilized to render page content for an improved user experience.
+* JavaScript manages database communication, ensuring accessibility of all features.
+* This approach prioritizes speed, security, and resource efficiency.
+* A "common.js" file centralizes common components (e.g., topbar, sidebar, footer) for streamlined management across all pages.
 
 * To utilize React, it is essential to import the React library and its corresponding file into the HTML page:
 ```
@@ -364,7 +319,7 @@ return()
 ```
 
 
-## User
+## 13. Users
 
 ### Front-end User
 
@@ -514,7 +469,7 @@ In this particular example, the system will first check for the existence of the
 * Olah OLAH OLAH OLAH needs to write what you have done in the back end
 
 
-## Point of Interest 
+## 14. Point of Interest 
 
 ### Cleint side POIs
 
@@ -634,7 +589,7 @@ if (poi.id) {
 * From this JSON response, the image data is extracted as a string and then transformed back into an image for display.
 
 
-## Internationalization (i18n)
+## 15. Internationalization (i18n)
 
 * i18next, an internationalization framework, was used for multilingual translation.
 * The framework uses CDN for the back-end plug in, ie.:
@@ -664,7 +619,7 @@ i18next.use(i18nextHttpBackend).init({
 ```
 
 
-## Terms and Conditions 
+## 16. Terms and Conditions 
 
 * There are dedicated pages to present the website's terms and conditions, accessible via a mandatory checkbox in the signup form. 
 * Users must verify their agreement to these terms before completing the signup process.
@@ -672,3 +627,4 @@ i18next.use(i18nextHttpBackend).init({
 ### Apache Licence
 
 * The Apache License page is accessible through the sidebar, allowing users to review the license terms before utilizing our website.
+
