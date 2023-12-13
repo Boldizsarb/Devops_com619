@@ -29,6 +29,7 @@ docker run -d \
   -e MYSQL_USER=devops \
   -e MYSQL_PASSWORD=devops \
   -p 3306:3306 \
+  -v mysql-data:/var/lib/mysql \
   $MYSQL_APP
 
 # Wait for MySQL to fully start
