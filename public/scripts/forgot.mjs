@@ -35,39 +35,38 @@ function ForgotPasswordForm(title) {
   };
 
   return (
-    <div className="container-fluid">     
-        <div className="d-sm-flex align-items-center justify-content-between mb-4">
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="newPassword">New Password</label>
-            <input
-              type="password"
-              name="newPassword"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-control form-control-user"
-            />
-            <br />
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="form-control form-control-user"
-            />
-            <br />
-            <button
-              type="submit"
-              className="btn btn-primary btn-user btn-block"
-            >
-              Reset Password
-            </button>
-            <p>{message}</p>
-          </form>
-        </div>
+    <div className="container-fluid">
+      <div className="d-sm-flex align-items-center justify-content-between mb-4">
+        <form onSubmit={handleSubmit}>
+          <label  htmlFor="newPassword">New Password</label>
+          <input
+            id="New Password"
+            type="password"
+            name="newPassword"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="form-control form-control-user"
+          />
+          <br />
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            id="Confirm Password"
+            type="password"
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="form-control form-control-user"
+          />
+          <br />
+          <button id="reset-password-button" type="submit" className="btn btn-primary btn-user btn-block">
+            Reset Password
+          </button>
+          <p>{message}</p>
+        </form>
+      </div>
     </div>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<ForgotPasswordForm title="Reset Password"/>);
+root.render(<ForgotPasswordForm title="Reset Password" />);

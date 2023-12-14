@@ -64,9 +64,9 @@ function Users({ title }) {
     <table id="table_id" className="display table" style={{ width: `100%` }}>
       <thead>
         <tr>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Permission</th>
+          <th id="users-username">Username</th>
+          <th id="users-email">Email</th>
+          <th id="users-level">Permission</th>
           <th></th>
           <th></th>
         </tr>

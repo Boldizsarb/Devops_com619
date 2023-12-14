@@ -42,21 +42,25 @@ function LoadProfile({ getUserDetails, title, editUser }) {
       return response;
     })
     .then((data) => {
-      console.log(data); 
-      document.getElementById("profileContent").innerHTML =
-      `<div key=${data.id}>
-      <p><b>Username:</b> ${data.username}</p>
-      <p><b>Email:</b> ${data.email}</p>
-      <p><b>Level:</b> ${data.permission_level}</p>
+      console.log(data);
+      document.getElementById(
+        "profileContent"
+      ).innerHTML = `<div key=${data.id}>
+      <p id="profile-username"><b>Username:</b> ${data.username}</p>
+      <p id="profile-email"><b>Email:</b> ${data.email}</p>
+      <p id="profile-level"><b>Level:</b> ${data.permission_level}</p>
       <p>
       </p>
-    </div>`
+    </div>`;
     });
 
   return (
     <div>
       <h3>{title}</h3>
-      <div className="d-sm-flex align-items-center mb-4" id="profileContent"></div>
+      <div
+        className="d-sm-flex align-items-center mb-4"
+        id="profileContent"
+      ></div>
     </div>
   );
 }
