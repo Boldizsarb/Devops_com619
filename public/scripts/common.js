@@ -72,12 +72,10 @@ function AppWidget({ area }) {
     const loggeduser = await fetch(`http://localhost:3000/user/verifylogin`);
     const user = await loggeduser.json();
     if(user.username){
-      //event.preventDefault();
       localStorage.setItem("loggedInUser", JSON.stringify(user));
       setLoggedInUser(user.username);
       setIsLoggedIn(true);
     }else{
-      //event.preventDefault();
       setLoggedInUser("");
       setIsLoggedIn(false);
     }
@@ -121,12 +119,9 @@ function AppWidget({ area }) {
 
       if (response.ok) {
         // Logout successful
-        //setIsLoggedIn(false);
-        //setCurrentUser(null);
         alert("You have been logged out.");
         // Optionally redirect to login page or home page
         window.location.reload();
-        //window.location.href = '/'; // change '/login' to your login route if it's different
       } else {
         throw new Error("Logout failed");
       }
@@ -394,7 +389,7 @@ function TopBar({
                 Welcome {loggedInUser}
               </span>
               <img
-                class="img-profile rounded-circle"
+                className="img-profile rounded-circle"
                 src="../public/img/undraw_profile.svg"
               ></img>
             </a>
@@ -473,7 +468,7 @@ function TopBar({
               </a>
               <a
                 id="Reset Password"
-                class="dropdown-item text-center small text-gray-500"
+                className="dropdown-item text-center small text-gray-500"
                 href="/public/verify.html"
               >
                 Reset Password

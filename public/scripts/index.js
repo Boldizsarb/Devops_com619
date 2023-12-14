@@ -152,17 +152,17 @@ function Region({ title }) {
 
               <h6 id="poidetails-input">Please enter the details of the POI you wich to add<h6>
 
-                <input type="text" id="name" name="name" placeholder="Please enter the Name" class="form-control form-control-user required">
+                <input type="text" id="name" name="name" placeholder="Please enter the Name" className="form-control form-control-user required">
 
-                <input type="text" id="type" name="type" placeholder="Please enter the Type" class="form-control form-control-user required">
+                <input type="text" id="type" name="type" placeholder="Please enter the Type" className="form-control form-control-user required">
 
-                <input type="text" id="country" name="country" placeholder="Please enter the Country" class="form-control form-control-user required">
+                <input type="text" id="country" name="country" placeholder="Please enter the Country" className="form-control form-control-user required">
 
-                <input type="text" id="region" name="region" placeholder="Please enter the Region" class="form-control form-control-user required">
+                <input type="text" id="region" name="region" placeholder="Please enter the Region" className="form-control form-control-user required">
 
-                <textarea id="description" name="description" placeholder="Describe the place" class="form-control form-control-user required"></textarea>
+                <textarea id="description" name="description" placeholder="Describe the place" className="form-control form-control-user required"></textarea>
 
-                <button id="submit" type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
+                <button id="submit" type="submit" className="btn btn-primary btn-user btn-block">Submit</button>
 
             </form> `;
  
@@ -180,9 +180,9 @@ function Region({ title }) {
 
                       <input type='file' id='imageInput' /><br>
 
-                      <button id='uploadBtn' value='Upload' class="btn btn-primary btn-user">upload</button>
+                      <button id='uploadBtn' value='Upload' className="btn btn-primary btn-user">upload</button>
 
-                      <button id='no' value='no' class="btn btn-primary btn-user " >No </button>
+                      <button id='no' value='no' className="btn btn-primary btn-user " >No </button>
 
                     </div>`;
  
@@ -873,7 +873,7 @@ function Region({ title }) {
 
 					poi.map((item) => (
 
-						<div class="col-xl-3 col-md-6">
+						<div className="col-xl-3 col-md-6">
 
 							<div className="card bg-gradient-dark text-white shadow">
 
