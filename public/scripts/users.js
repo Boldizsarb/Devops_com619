@@ -43,15 +43,6 @@ function Users({ title }) {
       <td>
         <button
           className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-          id="editUser"
-          onClick={() => editUser(item.id)}
-        >
-          Edit
-        </button>
-      </td>
-      <td>
-        <button
-          className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
           id="deletUser"
           onClick={() => deleteUser(item.id)}
         >
@@ -68,7 +59,6 @@ function Users({ title }) {
           <th id="users-email">Email</th>
           <th id="users-level">Permission</th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tfoot>
@@ -76,7 +66,6 @@ function Users({ title }) {
           <th>Username</th>
           <th>Email</th>
           <th>Permission</th>
-          <th></th>
           <th></th>
         </tr>
       </tfoot>

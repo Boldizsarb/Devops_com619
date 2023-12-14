@@ -20,9 +20,6 @@ function Pois({ title }) {
     });
   }
 
-  function sharePoi(id) {
-    alert("shared");
-  }
 
 
   function deletePoi(id) {
@@ -72,7 +69,6 @@ function Pois({ title }) {
               <th>Rec</th>
               <th></th>
               <th></th>
-              <th></th>
             </tr>
           </thead>
           <tfoot>
@@ -83,7 +79,6 @@ function Pois({ title }) {
               <th>Region</th>
               <th>Description</th>
               <th>Rec</th>
-              <th></th>
               <th></th>
               <th></th>
             </tr>
@@ -103,11 +98,7 @@ function Pois({ title }) {
                       Recommend
                     </button>
                   </td>
-                  <td>
-                    <button className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="shareBtn" onClick={() => sharePoi(item.id)}>
-                      Share
-                    </button>
-                  </td>
+
                   <td>
                     <button className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="detePoi" onClick={() => deletePoi(item.id)}>
                       Delete
