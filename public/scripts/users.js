@@ -17,7 +17,7 @@ function Users({ title }) {
     alert("Edited");
   }
 
-  fetch(`http://comdevops.uksouth.cloudapp.azure.com/user/all`, {
+  fetch(`https://comdevops.uksouth.cloudapp.azure.com/user/all`, {
     method: "GET"
   })
     //.then((response) =>response.json())

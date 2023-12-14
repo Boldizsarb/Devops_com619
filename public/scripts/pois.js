@@ -6,7 +6,7 @@ function Pois({ title }) {
     const poi = {
       poi_id: id,
   };
-    fetch(`http://comdevops.uksouth.cloudapp.azure.com/poi/recommend`, {
+    fetch(`https://comdevops.uksouth.cloudapp.azure.com/poi/recommend`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ function Pois({ title }) {
 
 
   function deletePoi(id) {
-    fetch(`http://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest/${id}`, {
+    fetch(`https://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest/${id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -37,7 +37,7 @@ function Pois({ title }) {
   }
 
   function getAllPoi(){
-    fetch(`http://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest`, {
+    fetch(`https://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest`, {
       method: "GET",
     })
       //.then((response) =>response.json())
@@ -46,7 +46,7 @@ function Pois({ title }) {
           alert("No Poi's to display");
         }
         else if (response.status == 403) {
-          window.location.href = "http://comdevops.uksouth.cloudapp.azure.com/public/index.html";
+          window.location.href = "https://comdevops.uksouth.cloudapp.azure.com/public/index.html";
         }
         return response.json();
       })

@@ -282,7 +282,7 @@ function Region({ title }) {
 
 					const sendPoi = async () => {
 
-						fetch(`http://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest`, {
+						fetch(`https://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest`, {
 
 							method: "POST",
 
@@ -404,7 +404,7 @@ function Region({ title }) {
 
 											console.log(compressedBase64String);
 
-											fetch(`http://comdevops.uksouth.cloudapp.azure.com/image/imagesadd`, {
+											fetch(`https://comdevops.uksouth.cloudapp.azure.com/image/imagesadd`, {
 
 												method: "POST",
 
@@ -554,7 +554,7 @@ function Region({ title }) {
 
 		};
 
-		fetch(`http://comdevops.uksouth.cloudapp.azure.com/poi/recommend`, {
+		fetch(`https://comdevops.uksouth.cloudapp.azure.com/poi/recommend`, {
 
 			method: "POST",
 
@@ -594,7 +594,7 @@ function Region({ title }) {
 
 		if (poi.id) {
 
-			fetch(`http://comdevops.uksouth.cloudapp.azure.com/image/images/${poi.id}`, {
+			fetch(`https://comdevops.uksouth.cloudapp.azure.com/image/images/${poi.id}`, {
 
 				method: "GET",
 
@@ -725,7 +725,7 @@ function Region({ title }) {
 
 			fetch(
 
-				`http://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterestByRegion/${regionName}`,
+				`https://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterestByRegion/${regionName}`,
 
 				{
 

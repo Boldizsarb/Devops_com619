@@ -23,7 +23,7 @@ export const sendPasswordResetEmail = {
         subject: 'Password Reset',  
         text: `Hi ${username}! \n
         You are receiving this because you (or someone else) has requested the rest of the password for your account.\n
-        Please click on the following link to reset your password: http://comdevops.uksouth.cloudapp.azure.com/reset-password?token=${token}\n
+        Please click on the following link to reset your password: https://comdevops.uksouth.cloudapp.azure.com/reset-password?token=${token}\n
         If you did not request this, please ignore this email and your password will remain unchanged.\n`
     };
     try {
@@ -45,7 +45,7 @@ export const sendConfirmationEmail = {
       text: `Hi ${username}! \n
       You are receiving this because you (or someone else) has requested the confirmation of your email for your account.\n\n
       Please click on the following link to confirm your email: ${verificationCode}\n\n
-      or click this link http://comdevops.uksouth.cloudapp.azure.com/verificationcode?code=${verificationCode}\n
+      or click this link https://comdevops.uksouth.cloudapp.azure.com/verificationcode?code=${verificationCode}\n
       If you did not request this, please ignore this email and your email will remain unchanged.\n`
     };
     try {

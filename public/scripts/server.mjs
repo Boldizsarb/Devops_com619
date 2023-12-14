@@ -83,7 +83,7 @@ const swaggerOptions = {
                 url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
             },
             servers: [
-                {url: 'http://comdevops.uksouth.cloudapp.azure.com/'}
+                {url: 'https://comdevops.uksouth.cloudapp.azure.com/'}
             ]
         }
     },
