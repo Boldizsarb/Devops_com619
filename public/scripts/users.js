@@ -4,7 +4,7 @@ function Users({ title }) {
   const [user, setUsers] = React.useState([]);
 
   function deleteUser(id) {
-    fetch(`http://comdevops.uksouth.cloudapp.azure.com/user/users/${id}`, {
+    fetch(`https://comdevops.uksouth.cloudapp.azure.com/user/users/${id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -26,7 +26,7 @@ function Users({ title }) {
         alert("No users to display");
       }
       else if (response.status == 403) {
-        window.location.href = "http://comdevops.uksouth.cloudapp.azure.com/public/index.html";
+        window.location.href = "https://comdevops.uksouth.cloudapp.azure.com/public/index.html";
       }
       return response.json();
     })
