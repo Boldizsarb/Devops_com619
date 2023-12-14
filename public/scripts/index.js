@@ -853,7 +853,7 @@ function Region({ title }) {
 
 			</div>
 
-			`
+			
 
 			<div className="d-sm-flex align-items-center mb-4">
 
