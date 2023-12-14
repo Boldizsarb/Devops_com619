@@ -282,7 +282,7 @@ function Region({ title }) {
 
 					const sendPoi = async () => {
 
-						fetch(`https://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest`, {
+						fetch(`http://localhost:3000/poi/pointsOfInterest`, {
 
 							method: "POST",
 
@@ -404,7 +404,7 @@ function Region({ title }) {
 
 											console.log(compressedBase64String);
 
-											fetch(`https://comdevops.uksouth.cloudapp.azure.com/image/imagesadd`, {
+											fetch(`http://localhost:3000/image/imagesadd`, {
 
 												method: "POST",
 
@@ -554,7 +554,7 @@ function Region({ title }) {
 
 		};
 
-		fetch(`https://comdevops.uksouth.cloudapp.azure.com/poi/recommend`, {
+		fetch(`http://localhost:3000/poi/recommend`, {
 
 			method: "POST",
 
@@ -594,7 +594,7 @@ function Region({ title }) {
 
 		if (poi.id) {
 
-			fetch(`https://comdevops.uksouth.cloudapp.azure.com/image/images/${poi.id}`, {
+			fetch(`http://localhost:3000/image/images/${poi.id}`, {
 
 				method: "GET",
 
@@ -725,7 +725,7 @@ function Region({ title }) {
 
 			fetch(
 
-				`https://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterestByRegion/${regionName}`,
+				`http://localhost:3000/poi/pointsOfInterestByRegion/${regionName}`,
 
 				{
 
@@ -799,13 +799,14 @@ function Region({ title }) {
 
 	};
  
+const {t} = useTranslation();
 	return (
 
 		<div className="container-fluid">
 
 			<div>
 
-				<h1 className="h3 mb-0 text-gray-800">{title}</h1>
+				<h1 className="h3 mb-0 text-gray-800" id="Search-by-region">Search by Region</h1>
 
 				<div className="d-sm-flex align-items-center justify-content-between mb-4">
 
@@ -817,7 +818,7 @@ function Region({ title }) {
 
 							className="form-control bg-light border-0 small"
 
-							placeholder="Search for a Region"
+							placeholder={t('searchValue')}
 
 							aria-label="Search"
 
@@ -873,7 +874,7 @@ function Region({ title }) {
 
 					poi.map((item) => (
 
-						<div class="col-xl-3 col-md-6">
+						<div className="col-xl-3 col-md-6">
 
 							<div className="card bg-gradient-dark text-white shadow">
 
@@ -969,4 +970,4 @@ function Region({ title }) {
  
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<Region title="Search by region" />);
+root.render(<Region id="Search-by-region" title="Search by region" />);

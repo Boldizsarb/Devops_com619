@@ -69,15 +69,13 @@ function AppWidget({ area }) {
 
   
   async function verifyLogin(event) {
-    const loggeduser = await fetch(`https://comdevops.uksouth.cloudapp.azure.com/user/verifylogin`);
+    const loggeduser = await fetch(`http://localhost:3000/user/verifylogin`);
     const user = await loggeduser.json();
     if(user.username){
-      //event.preventDefault();
       localStorage.setItem("loggedInUser", JSON.stringify(user));
       setLoggedInUser(user.username);
       setIsLoggedIn(true);
     }else{
-      //event.preventDefault();
       setLoggedInUser("");
       setIsLoggedIn(false);
     }
@@ -111,7 +109,7 @@ function AppWidget({ area }) {
 
   async function logoutUser(setIsLoggedIn, setCurrentUser) {
     try {
-      const response = await fetch("https://comdevops.uksouth.cloudapp.azure.com/user/logout", {
+      const response = await fetch("/user/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,12 +119,9 @@ function AppWidget({ area }) {
 
       if (response.ok) {
         // Logout successful
-        //setIsLoggedIn(false);
-        //setCurrentUser(null);
         alert("You have been logged out.");
         // Optionally redirect to login page or home page
         window.location.reload();
-        //window.location.href = '/'; // change '/login' to your login route if it's different
       } else {
         throw new Error("Logout failed");
       }
@@ -229,7 +224,7 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
           <hr className="sidebar-divider" />
 
           <li className="nav-item">
-            <a id="Users" className="nav-link" href="https://comdevops.uksouth.cloudapp.azure.com/public/users.html">
+            <a id="Users" className="nav-link" href="/public/users.html">
               <i className="fas fa-fw fa-table"></i>
               <span>Users</span>
             </a>
@@ -256,7 +251,7 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
 
       <hr className="sidebar-divider" />
       <li className="nav-item">
-        <a id="Apache Licence" className="nav-link" href="https://comdevops.uksouth.cloudapp.azure.com/public/apache.html">
+        <a id="Apache Licence" className="nav-link" href="/public/apache.html">
           <i className="fas fa-fw fa-wrench"></i>
           <span>Apache Licence</span>
         </a>
@@ -308,7 +303,7 @@ function TopBar({
     const data = { username, email, password };
 
     // Send a POST request to the server user validation
-    fetch("https://comdevops.uksouth.cloudapp.azure.com/user/checkusername", {
+    fetch("/user/checkusername", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -318,7 +313,7 @@ function TopBar({
       .then((response) => {
         if (response.ok) {
           // If the username is available, send a POST request to the server to create a new user
-          fetch("https://comdevops.uksouth.cloudapp.azure.com/user/signup", {
+          fetch("/user/signup", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -373,6 +368,12 @@ function TopBar({
       >
         <option value="en">English</option>
         <option value="de">Deutsch</option>
+        <option value="it">Italian</option>
+        <option value="ar">Arabic</option>
+        <option value="pt">Portugese</option>
+        <option value="pl">Polish</option>
+        <option value="es">Espanol</option>
+        <option value="hu">Hungarian</option>
       </select>
 
       {isLoggedIn ? (
@@ -394,7 +395,7 @@ function TopBar({
                 Welcome {loggedInUser}
               </span>
               <img
-                class="img-profile rounded-circle"
+                className="img-profile rounded-circle"
                 src="../public/img/undraw_profile.svg"
               ></img>
             </a>
@@ -473,8 +474,8 @@ function TopBar({
               </a>
               <a
                 id="Reset Password"
-                class="dropdown-item text-center small text-gray-500"
-                href="https://comdevops.uksouth.cloudapp.azure.com/public/verify.html"
+                className="dropdown-item text-center small text-gray-500"
+                href="/public/verify.html"
               >
                 Reset Password
               </a>
@@ -554,7 +555,7 @@ function TopBar({
                       htmlFor="terms"
                     >
                       Please check the box if you agree with our{" "}
-                      <a id="Termsofuse" href="https://comdevops.uksouth.cloudapp.azure.com/public/terms.html">
+                      <a id="Termsofuse" href="/public/terms.html">
                         Terms of Use
                       </a>
                     </label>
