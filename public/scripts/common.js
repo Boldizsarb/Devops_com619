@@ -240,15 +240,7 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
           <span>Swagger API</span>
         </a>
       </li>
-
-      <hr className="sidebar-divider" />
-      <li className="nav-item">
-        <a id="Monitoring" className="nav-link" href="https://my.pingdom.com/app/reports/uptime#check=12833055&daterange=7days&tab=result_tab&checkName=Azure%20Cloudapp%20Uksouth%20Comdevops">
-          <i className="fas fa-fw fa-wrench"></i>
-          <span>Monitoring</span>
-        </a>
-      </li>
-
+ 
       <hr className="sidebar-divider" />
       <li className="nav-item">
         <a id="Apache Licence" className="nav-link" href="https://comdevops.uksouth.cloudapp.azure.com/public/apache.html">
