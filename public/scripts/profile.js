@@ -5,12 +5,12 @@ function Profile({ title }) {
 
   async function getUserDetails() {
     const username = await (
-      await fetch(`http://localhost:3000/user/verifylogin`)
+      await fetch(`http://comdevops.uksouth.cloudapp.azure.com/user/verifylogin`)
     ).json();
     if (username.username) {
       const userDetails = await (
         await fetch(
-          `http://localhost:3000/user/users/username/${username.username}`
+          `http://comdevops.uksouth.cloudapp.azure.com/user/users/username/${username.username}`
         )
       ).json();
       if (userDetails) {

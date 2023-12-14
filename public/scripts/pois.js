@@ -46,7 +46,7 @@ function Pois({ title }) {
           alert("No Poi's to display");
         }
         else if (response.status == 403) {
-          window.location.href = "http://localhost:3000/public/index.html";
+          window.location.href = "http://comdevops.uksouth.cloudapp.azure.com/public/index.html";
         }
         return response.json();
       })
