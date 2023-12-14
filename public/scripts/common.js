@@ -69,7 +69,7 @@ function AppWidget({ area }) {
 
   
   async function verifyLogin(event) {
-    const loggeduser = await fetch(`http://localhost:3000/user/verifylogin`);
+    const loggeduser = await fetch(`https://comdevops.uksouth.cloudapp.azure.com/user/verifylogin`);
     const user = await loggeduser.json();
     if(user.username){
       localStorage.setItem("loggedInUser", JSON.stringify(user));
@@ -84,7 +84,7 @@ function AppWidget({ area }) {
 
   function handleLogin(username, password) {
     const loginDetails = { username, password };
-    fetch("/user/login", {
+    fetch("https://comdevops.uksouth.cloudapp.azure.com/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +109,7 @@ function AppWidget({ area }) {
 
   async function logoutUser(setIsLoggedIn, setCurrentUser) {
     try {
-      const response = await fetch("/user/logout", {
+      const response = await fetch("https://comdevops.uksouth.cloudapp.azure.com/user/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -214,7 +214,7 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
             <a
               id="All Pois (Points of Interest)-loggedin"
               className="nav-link"
-              href="/public/pois.html"
+              href="https://comdevops.uksouth.cloudapp.azure.com/public/pois.html"
             >
               <i className="fas fa-fw fa-table"></i>
               <span>All Poi's</span>
@@ -224,7 +224,7 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
           <hr className="sidebar-divider" />
 
           <li className="nav-item">
-            <a id="Users" className="nav-link" href="/public/users.html">
+            <a id="Users" className="nav-link" href="https://comdevops.uksouth.cloudapp.azure.com/public/users.html">
               <i className="fas fa-fw fa-table"></i>
               <span>Users</span>
             </a>
@@ -251,7 +251,7 @@ function SideBar({ verifyLogin, loggedInUser, isLoggedIn }) {
 
       <hr className="sidebar-divider" />
       <li className="nav-item">
-        <a id="Apache Licence" className="nav-link" href="/public/apache.html">
+        <a id="Apache Licence" className="nav-link" href="https://comdevops.uksouth.cloudapp.azure.com/public/apache.html">
           <i className="fas fa-fw fa-wrench"></i>
           <span>Apache Licence</span>
         </a>
@@ -303,7 +303,7 @@ function TopBar({
     const data = { username, email, password };
 
     // Send a POST request to the server user validation
-    fetch("/user/checkusername", {
+    fetch("https://comdevops.uksouth.cloudapp.azure.com/user/checkusername", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -313,7 +313,7 @@ function TopBar({
       .then((response) => {
         if (response.ok) {
           // If the username is available, send a POST request to the server to create a new user
-          fetch("/user/signup", {
+          fetch("https://comdevops.uksouth.cloudapp.azure.com/user/signup", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -475,7 +475,7 @@ function TopBar({
               <a
                 id="Reset Password"
                 className="dropdown-item text-center small text-gray-500"
-                href="/public/verify.html"
+                href="https://comdevops.uksouth.cloudapp.azure.com/public/verify.html"
               >
                 Reset Password
               </a>
@@ -555,7 +555,7 @@ function TopBar({
                       htmlFor="terms"
                     >
                       Please check the box if you agree with our{" "}
-                      <a id="Termsofuse" href="/public/terms.html">
+                      <a id="Termsofuse" href="https://comdevops.uksouth.cloudapp.azure.com/public/terms.html">
                         Terms of Use
                       </a>
                     </label>
