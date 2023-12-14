@@ -799,7 +799,6 @@ function Region({ title }) {
 
 	};
  
-const {t} = useTranslation();
 	return (
 
 		<div className="container-fluid">
@@ -818,7 +817,7 @@ const {t} = useTranslation();
 
 							className="form-control bg-light border-0 small"
 
-							placeholder={t('searchValue')}
+							placeholder="Search by region"
 
 							aria-label="Search"
 
