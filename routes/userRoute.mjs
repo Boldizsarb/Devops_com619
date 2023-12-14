@@ -17,9 +17,9 @@ const router = express.Router();
   })();
 
 
-  router.get('/all', userController.getAllUsersController);
+  router.get('/all',isAdmin, userController.getAllUsersController);
   router.post('/signup', userController.addUserController); 
-  router.delete('/users/:userId', userController.deleteUserController); 
+  router.delete('/users/:userId',isAdmin, userController.deleteUserController); 
   router.get('/users/username/:username', userController.getUserByUsernameController);
   router.get('/verifylogin', userController.verifyLogin);
   router.post('/login', userController.login);

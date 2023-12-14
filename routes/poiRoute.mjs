@@ -4,7 +4,7 @@ import PointsOfInterestController from '../Controllers/poiControl.mjs';
 import { isAuthenticated, isAdmin } from '../middleware/auth.mjs';
 
 
-router.get('/pointsOfInterest',PointsOfInterestController.getAllPointsOfInterestController);
+router.get('/pointsOfInterest',isAuthenticated,PointsOfInterestController.getAllPointsOfInterestController);
 
 router.get('/pointsOfInterestByRegion/:region', PointsOfInterestController.getPointOfInterestByRegionController);
 
@@ -12,7 +12,7 @@ router.get('/pointsOfInterestByRegion/:region', PointsOfInterestController.getPo
 
 router.post('/pointsOfInterest', PointsOfInterestController.addPointOfInterestController);
 
-router.delete('/pointsOfInterest/:id',PointsOfInterestController.deletePointOfInterestController);
+router.delete('/pointsOfInterest/:id',isAdmin ,PointsOfInterestController.deletePointOfInterestController);
 
 router.get('/pointsOfInterest/recommendations/:recommendations', PointsOfInterestController.getPointsOfInterestByRecommendationsController);
 
