@@ -1,6 +1,8 @@
 import userModel from '../Models/userModel.mjs';
 export const isAuthenticated = (req, res, next) => {
+    console.log(`i am here ${req.session.username}`);
     if (req.session.username) {
+        console.log(`i am here ${req.session.username}`);
         return next();
     }
     res.status(403).send({ msg: 'You are not authorized to view this page!' });
