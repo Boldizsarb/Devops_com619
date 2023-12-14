@@ -456,8 +456,7 @@ function Region({ title }) {
 
 															)
 
-															.openPopup();
-
+															
 													});
 
 												} else if (response.status === 401) {
