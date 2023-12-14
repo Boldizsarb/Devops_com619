@@ -44,7 +44,7 @@ function VerifyUser(title) {
 
     if (countdown === 0) {
       clearInterval(intervalId);
-      window.location.href = "/login"; // Redirect when countdown reaches 0
+      window.location.href = "/"; // Redirect when countdown reaches 0
     }
 
     return () => clearInterval(intervalId);
