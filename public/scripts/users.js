@@ -4,7 +4,7 @@ function Users({ title }) {
   const [user, setUsers] = React.useState([]);
 
   function deleteUser(id) {
-    fetch(`http://localhost:3000/user/users/${id}`, {
+    fetch(`http://comdevops.uksouth.cloudapp.azure.com/user/users/${id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -17,7 +17,7 @@ function Users({ title }) {
     alert("Edited");
   }
 
-  fetch(`http://localhost:3000/user/all`, {
+  fetch(`http://comdevops.uksouth.cloudapp.azure.com/user/all`, {
     method: "GET"
   })
     //.then((response) =>response.json())
@@ -26,7 +26,7 @@ function Users({ title }) {
         alert("No users to display");
       }
       else if (response.status == 403) {
-        window.location.href = "http://localhost:3000/public/index.html";
+        window.location.href = "http://comdevops.uksouth.cloudapp.azure.com/public/index.html";
       }
       return response.json();
     })

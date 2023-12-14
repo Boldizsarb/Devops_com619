@@ -69,7 +69,7 @@ function AppWidget({ area }) {
 
   
   async function verifyLogin(event) {
-    const loggeduser = await fetch(`http://localhost:3000/user/verifylogin`);
+    const loggeduser = await fetch(`http://comdevops.uksouth.cloudapp.azure.com/user/verifylogin`);
     const user = await loggeduser.json();
     if(user.username){
       //event.preventDefault();

@@ -83,7 +83,7 @@ const swaggerOptions = {
                 url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
             },
             servers: [
-                {url: 'http://localhost:3000'}
+                {url: 'http://comdevops.uksouth.cloudapp.azure.com/'}
             ]
         }
     },
@@ -99,17 +99,11 @@ app.get("/", (req, res) => {
     res.redirect( "/public/index.html");
 });
 
-app.get("/login", (req, res) => {
-    res.redirect( "/public/login.html"); 
-});
 
 app.get("/verify", (req, res) =>{
     res.redirect("/public/verify.html");
 });
 
-app.get("/signup", (req, res) => {
-    res.redirect("/public/signup.html");
-});
 
 app.get("/verifyEmail", (req, res) => {
     res.redirect("/public/verifyEmail.html");

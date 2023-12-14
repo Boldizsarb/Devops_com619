@@ -6,7 +6,7 @@ function Pois({ title }) {
     const poi = {
       poi_id: id,
   };
-    fetch(`http://localhost:3000/poi/recommend`, {
+    fetch(`http://comdevops.uksouth.cloudapp.azure.com/poi/recommend`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ function Pois({ title }) {
 
 
   function deletePoi(id) {
-    fetch(`http://localhost:3000/poi/pointsOfInterest/${id}`, {
+    fetch(`http://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest/${id}`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
@@ -37,7 +37,7 @@ function Pois({ title }) {
   }
 
   function getAllPoi(){
-    fetch(`http://localhost:3000/poi/pointsOfInterest`, {
+    fetch(`http://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest`, {
       method: "GET",
     })
       //.then((response) =>response.json())
