@@ -33,7 +33,6 @@ function Pois({ title }) {
     });
   }
 
-  function getAllPoi(){
     fetch(`https://comdevops.uksouth.cloudapp.azure.com/poi/pointsOfInterest`, {
       method: "GET",
     })
@@ -50,7 +49,6 @@ function Pois({ title }) {
       .then((data) => {
         setPoi(data);
       });
-  }
   
   
   /////////////////////////////////////////////// (13) till here
