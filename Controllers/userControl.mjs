@@ -225,6 +225,7 @@ class userController {
   static verifyLogin(req, res) {
     if (req.session) {
       const username = req.session.username;
+      console.log("I AM HERE!!!!!!!!!!", req.session);
       console.log("Session:", req.session);
       console.log(username);
       res.json({ username: username });
