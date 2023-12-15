@@ -426,7 +426,7 @@ return()
       1. including adding/editing POIs, 
       2. managing user profiles, and overseeing user accounts,
       3. they can view and delete user accounts through the users page.
-* Top and side bar are implemented to display appropriate options dinamically for each user based on their access level.
+* Top and side bar are implemented to display appropriate options dynamically for each user based on their access level.
 Let us examine the operational features for creating an account.
 * When the user selects the button located on the top bar to initiate the signup process, a form will promptly appear, prompting the user to input their username, email address, and password. Additionally, a second password field will be presented to ensure the user does not mistakenly enter an incorrect password. 
 ```
