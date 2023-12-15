@@ -4,6 +4,7 @@
 * Optionally, store a Point of Interest along with an image.
 * If the user has an account, they can retrieve a list of all stored Points of Interest from the database.
 * The application offers flexibility by allowing users to switch between multiple languages.
+* Video is available at: https://www.youtube.com/watch?v=1hUGi53_KE4&ab_channel=BoyszyDon
  
  ## How do i get started?
  * Clone the reposatory

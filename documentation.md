@@ -22,6 +22,7 @@
 
 ## 1. Running the Project: <a id="section1"></a>
 
+* Video is available at: https://www.youtube.com/watch?v=1hUGi53_KE4&ab_channel=BoyszyDon
 * Clone the reposatory
 * Cmd the root directory and input: docker-compose up --build
 * Once you see the sign of: app listening at http://localhost:3000 ✓
