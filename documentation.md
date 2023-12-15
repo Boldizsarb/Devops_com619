@@ -125,9 +125,13 @@ excluding node modules, we enhance deployment efficiency and accelerate build ti
 * This docker-compose architecture allows the entire application and its dependencies to be run portably through Docker while maintaining security, persistency of data and automated certificate renewal.
 * The configurations also facilitate communication between the containers ensuring proper startup order.
 * This configuration file establishes four containers: Which includes:
+
       - The Application: which builds from the Dockerfile and runs the Node.js app. This depends on MYSQL , env vars and waits for MySQL to be ready before starting the app.
+
       - NGINX: Using reverse proxy using Nginx. Port Mapping for HTTP/HTTPS. This volume maps SSL certificate files from the host. Depends on the app container.
+
       - Certbot: This automatically renews SSL certificates with Certbot. Volume gives access to renewal folders and allows renewed certificates to be saved externally. Dependson Nginx.
+      
       - Volumes: This named the volumes mapped to local host directories externally preserving the database files, SSL certificates and otherpersistent data needed between container rebuilds.
 * The database container initiates after the project container 
 ```
