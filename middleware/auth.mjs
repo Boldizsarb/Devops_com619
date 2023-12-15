@@ -1,14 +1,14 @@
 import userModel from '../Models/userModel.mjs';
 export const isAuthenticated = (req, res, next) => {
-    console.log(`i am here !!!!!!!!!!!!!!!!!!!!! ${req.session.username}`);
+    console.log(`i am here ! ${req.session.username}`);
     if (req.session.username) {
-        console.log(`i am here 2 !!!!!!!!!!!!!!!!!!!!!!!!!!! ${req.session.username}`);
+        console.log(`i am here 2 ! ${req.session.username}`);
         return next();
     }
     res.status(403).send({ msg: 'You are not authorized to view this page!' });
 };
 export const isAdmin = (req, res, next) => {
-	console.log(`i am here 3 !!!!!!!!!!!!!!!!!!!!!!!!!!! ${req.session.username}`);
+	console.log(`i am here 3 ! ${req.session.username}`);
 	if (req.session.username) {
         	const userInstance = new userModel();
 		userInstance.getUserByUsername(req.session.username).then((user) => {

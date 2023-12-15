@@ -13,7 +13,7 @@ function VerifyUser(title) {
     const data = { verificationCode };
 
     // Send a POST request to the server to verify the code
-    fetch("/user/verify-account", {
+    fetch("https://comdevops.uksouth.cloudapp.azure.com/user/verify-account", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

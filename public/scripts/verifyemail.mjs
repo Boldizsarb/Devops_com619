@@ -5,7 +5,7 @@ function EmailVerification(title) {
     const data = { email };
 
     // Send a POST request to the server to verify the email
-    fetch("/user/forgot-password", {
+    fetch("https://comdevops.uksouth.cloudapp.azure.com/user/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -13,7 +13,7 @@ function ForgotPasswordForm(title) {
       //Extract the token from the URL
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("token");
-      const response = await fetch("/user/reset-password", {
+      const response = await fetch("https://comdevops.uksouth.cloudapp.azure.com/user/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -24,7 +24,7 @@ function ForgotPasswordForm(title) {
       });
       if (response.ok) {
         setMessage("Password reset successful!");
-        window.location.href = "/login";
+        window.location.href = "/";
       } else {
         setMessage("Password reset failed!");
       }
