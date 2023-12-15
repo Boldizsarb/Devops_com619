@@ -1,7 +1,7 @@
 # Documentation 
 
 ## Content:
-1. [Link to Section 1](#section1)
+1. [Running the Project](#section1)
 2. [Project  Initiation](#section2)
 3. [Devops Development Practices](#section3)
 4. [Deployment with Azure](#section4)
@@ -252,7 +252,7 @@ const sessionStore = new (MySQLStore(session))({
 ![Location marker.](./public/img/yellowman.png "Location marker.")
 - If agreed by the user the map will store the users location in a session;
 
-## 10. MVC Arhitecture    <a id="section10"></a>
+## 10. MVC Architecture    <a id="section10"></a>
 
 ### Model
 
