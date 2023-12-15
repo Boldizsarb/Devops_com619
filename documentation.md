@@ -67,7 +67,33 @@
 
 ## 4. Deployment with Azure:  <a id="section4"></a>
 
-* OLAH OLAH OLAH OLAH   
+- **Technology Employed**: Evaluated the necessary technologies, including Docker, Nginx, and SSL certificates.
+
+### Github workflow
+
+### Docker
+
+- **Docker Volumes**: Mapped local directories to Docker container volumes to ensure SSL certificates were properly loaded by Nginx.
+
+### Azure
+
+- **Azure Configuration**: Configured the Azure virtual machine to run the Dockerized application.
+- **DNS and IP Setup**: Configured DNS settings and public IP address in Azure to match the SSL certificate's domain.
+- **Firewall Configuration**: Configured the Azure firewall to allow traffic on port 443 for secure HTTPS connections.
+
+### SSL 
+- **Self-Signed SSL**: Created a self-signed SSL certificate using OpenSSL to secure local development.
+- **Let's Encrypt Certificate**: Obtained a free Let’s Encrypt certificate from the Internet Security Research Group (ISRG)
+
+### NGINX
+
+- **HTTPS Redirection**: Set up Nginx to redirect HTTP traffic to HTTPS to ensure secure connections.
+- **Nginx Configuration**: Configured Nginx to use SSL by setting up the correct paths to the certificate (`cert.pem`) and key (`key.pem`) for local deployment.
+
+### Troubleshooting 
+
+- **Troubleshooting**: Addressed various issues such as file not found errors, incorrect MIME types, and SSL protocol errors. Adjusted Docker volume mappings and Nginx configurations as needed.
+- **Testing**: Continuously tested the secure connection in the browser, ensuring the HTTPS protocol was effective, and troubleshooting any connection errors.
 
 
 ## 5. Technology overview:  <a id="section5"></a>
@@ -506,7 +532,7 @@ In this particular example, the system will first check for the existence of the
 
 ## 14. Point of Interest     <a id="section14"></a>
 
-### Cleint side POIs
+### Client side POIs
 
 * In the main page the poi's will be displayed in a map with some pins marking their location, they will also be displayed under the map as form of stickers with the information (this sticker are clickable redirecting the map to the selected poi).
 * It is possible to add a poi by clicking on the map and a form to enter the poi ditails will apear, after that the user will have the option to add a picture to the poi.
@@ -627,6 +653,15 @@ if (poi.id) {
 ## 15. Internationalization (i18n)     <a id="section15"></a>
 
 * i18next, an internationalization framework, was used for multilingual translation.
+* 8 different languages were added:
+      - English (en)
+      - Spanish (es)
+      - Hungarian(hu)
+      - German (de)
+      - Polish (pl)
+      - Portuguese (pt)
+      - Italian (it)
+      - Arabic (ar).
 * The framework uses CDN for the back-end plug in, ie.:
 ```
 <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>
@@ -643,14 +678,33 @@ i18next.use(i18nextHttpBackend).init({
 * The library utilizes IDs to map translation keys. Each HTML element's ID corresponds to a translation key that React dynamically changes based on the selected language.
 * Translation key, in json format:
 ```
-  "Welcome": "Welcome",
-  "Logout": "Logout",
+  "Welcome": Bienvenido",
+  "Logout": "Cerrar sesión",
 ```
 * HTML element: 
 ```
 <span id="Welcome" className="mr-2 d-lg-inline text-gray-600 small">
 	Welcome {loggedInUser}
 </span>
+```
+* To allow users to view the site in different languages, a dropdown menu was added to the header containing all translated languages:
+
+```jsx
+      <select
+        id="languageSelector"
+        defaultValue="en"
+        style={{ marginLeft: "5px" }}
+        onChange={(e) => changeLanguage(e.target.value)}
+      >
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italian</option>
+        <option value="ar">Arabic</option>
+        <option value="pt">Portugese</option>
+        <option value="pl">Polish</option>
+        <option value="es">Espanol</option>
+        <option value="hu">Hungarian</option>
+      </select>
 ```
 
 
@@ -661,5 +715,135 @@ i18next.use(i18nextHttpBackend).init({
 
 ### Apache Licence
 
+* The project has the Apache 2.0 license that governs usage and distribution of the project.
+
 * The Apache License page is accessible through the sidebar, allowing users to review the license terms before utilizing our website.
+
+### Definitions
+
+* Definitions: Defines terminology used in the license like "License", "Licensor", "Contributions", etc.
+```
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+```
+* Grant of Copyright License: Grants users a perpetual, worldwide license to reproduce, distribute, publicly display/perform the project.
+```
+      Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+```
+
+* Grant of Patent License
+Grants patent license to make/use the project excluding litigation cases.
+```
+      Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+```
+
+* Redistribution: Allows redistributing the work provided copyright notices are retained.
+```
+      Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+```
+
+
+* Submission of Contributions: States that contributions are under terms of license without additional terms unless explicitly stated.
+```
+      Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions
+```
+
+* Disclaimer of Warranty: Disclaims warranties, users use software at their own risk.   
+```
+      Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+```
+
+* Limitation of Liability: Limits contributors' liability from damages arising from using software.
+```
+      Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+```
+
+* Accepting Warranty or Additional Liability: Gives users right to offer support/warranty but only on their own behalf.
+```
+      Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+```
+Overall this covers licensing of IP, liability, distribution rights and protects contributors. Users must comply with terms here to use, modify and share the project permissibly.
 
