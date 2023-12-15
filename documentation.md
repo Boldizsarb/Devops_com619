@@ -71,6 +71,28 @@
 - **Technology Employed**: Evaluated the necessary technologies, including Docker, Nginx, and SSL certificates.
 
 ### Github workflow
+The sections as explained below:
+```
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+```
+This part specifies that the actions should be triggered on any `push` or `pull request` made to the `main` branch.
+
+In the `jobs` sections, one or more jobs will be executed. In this section, I am using one job named `build`:
+```
+build:
+```
+The build job contains the `runs-on` section which specifies what type of environment the job will runs in and `ubuntu-latest` was choosen for the virtual machine.
+The `steps` section is where the actual steps of the job are defined. It contains multiple steps that perform various actions, like cloning the repository, installing dependencies, building the application, and running tests.
+The `publish_to_docker` job is triggered only if a push is made to a branch called main. It pushes the Docker container to DockerHub after building.
+The `deploy` job is triggered only after the `publish_to_docker` job is successful. It deploys the containerized application to a Virtual Machine on Azure.
+**NOTE**: `secrets` was used in the workflow and this was used to store sensitive information such as the DockerHub credentials and the SSH keys used to connect to Azure VM.
+
 
 ### Docker
 
@@ -81,15 +103,27 @@
 - **Azure Configuration**: Configured the Azure virtual machine to run the Dockerized application.
 - **DNS and IP Setup**: Configured DNS settings and public IP address in Azure to match the SSL certificate's domain.
 - **Firewall Configuration**: Configured the Azure firewall to allow traffic on port 443 for secure HTTPS connections.
+Azure was used becasue of the flexibility and scalability. RockyLinux was used as the operating system, we chose the size of the disk, the RAM and other configurations.
 
 ### SSL 
 - **Self-Signed SSL**: Created a self-signed SSL certificate using OpenSSL to secure local development.
-- **Let's Encrypt Certificate**: Obtained a free Let’s Encrypt certificate from the Internet Security Research Group (ISRG)
+- **Let's Encrypt Certificate**: Obtained a free Let’s Encrypt certificate from the Internet Security Research Group (ISRG).
 
 ### NGINX
 
 - **HTTPS Redirection**: Set up Nginx to redirect HTTP traffic to HTTPS to ensure secure connections.
 - **Nginx Configuration**: Configured Nginx to use SSL by setting up the correct paths to the certificate (`cert.pem`) and key (`key.pem`) for local deployment.
+
+### Deploy Script
+- **Bash**: The deploy script is using bash technology to enter commands on the VM CLI. The script is executed on the Azure VM during deployment. It performs the following steps:
+>1. Pull the latest Docker images for the application, NGINX, and MySQL.
+>2. Create a Docker network called `devops-net`.
+>3. Create a Docker volume called `mysql-data`.
+>4. Stop and remove existing containers (`myapp`, `nginx`, and `mysql-devops`).
+>5. Start a MySQL container `(mysql-devops)`, setting up the necessary environment variables and port bindings.
+>6. Wait for the MySQL container to fully start.
+>7. Start the application container `(myapp)` and wait for it to start.
+>Start the NGINX container `(nginx)` with the appropriate configuration and mounted files.
 
 ### Troubleshooting 
 
@@ -294,7 +328,54 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 
 ## 11. Testing    <a id="section11"></a>
 
-### Automated Testing
+### Unit Testing
+**Installation**:
+
+- * Installed the Jest package by running the command npm `install jest --save-dev`.
+- * Added the line `"test": "jest"` to the "scripts" section in the package.json file. This allows to run the tests locally by typing `npm test`.
+**Test File Structure**:
+
+- * Created the following test files: `generate.test.mjs`,` poiModel.test.mjs`, `server.test.mjs`, `serverCheck.test.mjs`, `user.test.mjs`.
+Inside each test file, imported the module or component needed to test. In `poiModel.test.mjs`, PointsOfInterestModel was imported from '../Models/poiModel.mjs'.
+**Mocking Dependencies**:
+
+Testing required mocking external dependencies, jest.mock() function was used. In the provided code, the 'pool' object is mocked using jest.`mock('../public/scripts/pool.mjs', () => { ... })`.
+**Describe and Define Test Suites**:
+
+Used the `describe()` function to group related tests. In the code, the tests for the Points Of Interest Model are grouped within describe`('Points Of Interest Model Tests', () => { ... })`.
+Inside each test suite, `it()` or `test()` functions was used to define individual test cases. Providing a description of the test case and a handler function that contains the test logic.
+**Test Assertions**:
+
+Inside each test case, use the `expect()` function to make assertions and test expected results against actual results.
+You can use various methods provided by Jest's expect API, such as `.toBe()`, `.toEqual()`, `.toHaveBeenCalledWith()`.
+Asynchronous Testing:
+
+In the case of asynchronous tests, use async/await syntax or return a promise to handle asynchronous behavior.
+Test Cleanup:
+
+Use the afterEach() function to perform any cleanup or reset operations between each test case. For example, in the provided code, jest.clearAllMocks() is called after each test case.
+Here's an example structure for your documentation:
+
+**Steps**
+Installation
+To perform unit testing in your application, you need to install the Jest package. You can do this by running the following command:
+
+npm install jest --save-dev
+Next, open your package.json file and add the following line to the "scripts" section:
+
+"test": "jest"
+Now, whenever you type npm test in the command line, Jest will run your tests locally.
+
+> **Test File Structure**
+For organizing the tests, separate test files were created for different components or modules. Here is an example file structure:
+
+generate.test.mjs
+poiModel.test.mjs
+server.test.mjs
+serverCheck.test.mjs
+user.test.mjs
+
+
 
 ### Swagger
 
@@ -560,61 +641,70 @@ In this particular example, the system will first check for the existence of the
 * The userModel encapsulates all database operations related to users. It handles CRUD, password security, finding user records.
 * The generateToken and emailController modules contain reusable logic for security tokens and sending emails.
 
-      * **User Model**
-            The userModel handles all database operations related to users:
-            ```
-                  // Get all users
-                  async getAllUsers() 
+>>1 **User Model**
+      The userModel handles all database operations related to users:
+      ```
+            // Get all users
+            async getAllUsers() 
 
-                  // Add a new user 
-                  async addUser(username, email, password, permissionLevel, verificationCode, verificationExpires)
+            // Add a new user 
+            async addUser(username, email, password, permissionLevel, verificationCode, verificationExpires)
 
-                  // Delete a user
-                  async deleteUser(userId)  
+            // Delete a user
+            async deleteUser(userId)  
+                  
+      ```
+      It handles CRUD operations, password hashing, finding users, and other user related db queries.
 
-                  // Get user by username
-                  async getUserByUsername(username)
+>>2 **User Controller**
+      The userController contains route handlers:
+      ```
+            // Signup  
+            static async addUserController(req, res)  
 
-                  // Validate user password  
-                  async validateUserPassword(username, plainPassword) 
+      ```
+      It gets data from requests, creates user model instances, handles business logic and sends responses.
 
-                  // Other helper functions for sessions, password reset, email verification etc
-            ```
-            It handles CRUD operations, password hashing, finding users, and other user related db queries.
+>>3 **User Router**
+      The userRouter sets up API endpoint routes:
+      ```
+            router.post('/signup', userController.addUser)
 
-      * **User Controller**
-            The userController contains route handlers:
-            ```
-                  // Signup  
-                  static async addUserController(req, res)  
+            // Auth middleware
+            router.post('/logout', isAuthenticated, userController.logout)
+      ```
+      It handles routing, authentication, and connects requests to the appropriate controller logic.
 
-                  // Login
-                  static async login(req, res)
+>>4 **EmailController**
+      This is the controller that sets up the email communication between the user and the app:
+      ```
+            // Sending the reset password
+            export const sendPasswordResetEmail = {
+    
+            };
 
-                  // Logout
-                  static async logout(req, res)
+            // Sending the confirmation password
+            export const sendConfirmationEmail = {
 
-                  // Reset Password 
-                  static async forgotPassword(req, res)
+            };
 
-                  // Email Verification
-                  static async verifyAccount(req, res)
-            ```
-            It gets data from requests, creates user model instances, handles business logic and sends responses.
-            
-      * **User Router**
-            The userRouter sets up API endpoint routes:
-            ```
-                  router.post('/signup', userController.addUser)
+      ```
+      It uses `Nodemailer`` framework in Javascript to send emails to the user.
 
-                  router.post('/login', userController.login)
+>>5 **TokenGenerator**
+      A class used for generating JWT tokens. Contains methods like `generateAccessToken` and `verifyToken`.
+      ```
+            // Generate a unique token 
+            export function generateToken() {
+    
+            };
+            // Generates the verification code token 
+            export function generateVerificationCode() {
 
-                  router.get('/verify', userController.verify) 
+            }; 
+      ```
+      It uses crypto to generate the token and also uses Maths to generate a random number.
 
-                  // Auth middleware
-                  router.post('/logout', isAuthenticated, userController.logout)
-            ```
-            It handles routing, authentication, and connects requests to the appropriate controller logic.
 
 ## 14. Point of Interest     <a id="section14"></a>
 
@@ -710,7 +800,7 @@ canvas.toBlob(
                         compressedReader.result.split(",")[1]; // Now you can store the compressedBase64String in your database
                       const newImage = { base: compressedBase64String }; // Display the compressed and resized image
                       console.log(compressedBase64String);
-                      fetch(`http://localhost:3000/image/imagesadd`, {
+              fetch(`http://localhost:3000/image/imagesadd`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(newImage),
