@@ -126,13 +126,13 @@ excluding node modules, we enhance deployment efficiency and accelerate build ti
 * The configurations also facilitate communication between the containers ensuring proper startup order.
 * This configuration file establishes four containers: Which includes:
 
-- **The Application**: which builds from the Dockerfile and runs the Node.js app. This depends on MYSQL , env vars and waits for MySQL to be ready before starting the app.
+      * **The Application**: which builds from the Dockerfile and runs the Node.js app. This depends on MYSQL , env vars and waits for MySQL to be ready before starting the app.
 
-- **NGINX**: Using reverse proxy using Nginx. Port Mapping for HTTP/HTTPS. This volume maps SSL certificate files from the host. Depends on the app container.
+      * **NGINX**: Using reverse proxy using Nginx. Port Mapping for HTTP/HTTPS. This volume maps SSL certificate files from the host. Depends on the app container.
 
-- **Certbot**: This automatically renews SSL certificates with Certbot. Volume gives access to renewal folders and allows renewed certificates to be saved externally. Dependson Nginx.
+      * **Certbot**: This automatically renews SSL certificates with Certbot. Volume gives access to renewal folders and allows renewed certificates to be saved externally. Dependson Nginx.
       
-- **Volumes**: This named the volumes mapped to local host directories externally preserving the database files, SSL certificates and otherpersistent data needed between container rebuilds.
+      * **Volumes**: This named the volumes mapped to local host directories externally preserving the database files, SSL certificates and otherpersistent data needed between container rebuilds.
 * The database container initiates after the project container 
 ```
  depends_on:
@@ -254,7 +254,7 @@ const sessionStore = new (MySQLStore(session))({
 
 ## 10. MVC Arhitecture    <a id="section10"></a>
 
-### Modell
+### Model
 
 * Interacts with the database.
 * ES6 enables the importation of the database module for establishing and terminating connections.
@@ -392,6 +392,23 @@ return()
 
 
 ## 13. Users     <a id="section13"></a>
+
+### Key Features
+
+1. **User Registration**: Users can create new accounts by providing a username, email, and password.
+2. **Email Verification**: After registration, a verification code is sent to the user's email for account verification.
+3. **Login**: Users can log in using their username and password.
+4. **Password Reset**: If a user forgets their password, they can reset it using a token sent to their email.
+5. **User Authentication and Verification**: The system includes user authentication and verification using JWT and verification codes.
+
+
+### Tools Used
+
+- **Bcrypt**
+- **Nodemailer**
+- **JWT**
+- **Crypto**
+
 
 ### Front-end User
 
