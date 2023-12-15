@@ -581,6 +581,7 @@ In this particular example, the system will first check for the existence of the
                   // Other helper functions for sessions, password reset, email verification etc
             ```
             It handles CRUD operations, password hashing, finding users, and other user related db queries.
+
       * **User Controller**
             The userController contains route handlers:
             ```
@@ -600,6 +601,7 @@ In this particular example, the system will first check for the existence of the
                   static async verifyAccount(req, res)
             ```
             It gets data from requests, creates user model instances, handles business logic and sends responses.
+            
       * **User Router**
             The userRouter sets up API endpoint routes:
             ```
