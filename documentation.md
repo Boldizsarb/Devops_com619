@@ -91,7 +91,7 @@ The build job contains the `runs-on` section which specifies what type of enviro
 The `steps` section is where the actual steps of the job are defined. It contains multiple steps that perform various actions, like cloning the repository, installing dependencies, building the application, and running tests.
 The `publish_to_docker` job is triggered only if a push is made to a branch called main. It pushes the Docker container to DockerHub after building.
 The `deploy` job is triggered only after the `publish_to_docker` job is successful. It deploys the containerized application to a Virtual Machine on Azure.
-**NOTE**: `secrets` was used in the workflow and this was used to store sensitive information such as the DockerHub credentials and the SSH keys used to connect to Azure VM.
+* **NOTE**: `secrets` was used in the workflow and this was used to store sensitive information such as the DockerHub credentials and the SSH keys used to connect to Azure VM.
 
 
 ### Docker
@@ -160,13 +160,13 @@ excluding node modules, we enhance deployment efficiency and accelerate build ti
 * The configurations also facilitate communication between the containers ensuring proper startup order.
 * This configuration file establishes four containers: Which includes:
 
-      * **The Application**: which builds from the Dockerfile and runs the Node.js app. This depends on MYSQL , env vars and waits for MySQL to be ready before starting the app.
+    **The Application**: which builds from the Dockerfile and runs the Node.js app. This depends on MYSQL , env vars and waits for MySQL to be ready before starting the app.
 
-      * **NGINX**: Using reverse proxy using Nginx. Port Mapping for HTTP/HTTPS. This volume maps SSL certificate files from the host. Depends on the app container.
+    **NGINX**: Using reverse proxy using Nginx. Port Mapping for HTTP/HTTPS. This volume maps SSL certificate files from the host. Depends on the app container.
 
-      * **Certbot**: This automatically renews SSL certificates with Certbot. Volume gives access to renewal folders and allows renewed certificates to be saved externally. Dependson Nginx.
+    **Certbot**: This automatically renews SSL certificates with Certbot. Volume gives access to renewal folders and allows renewed certificates to be saved externally. Dependson Nginx.
       
-      * **Volumes**: This named the volumes mapped to local host directories externally preserving the database files, SSL certificates and otherpersistent data needed between container rebuilds.
+    **Volumes**: This named the volumes mapped to local host directories externally preserving the database files, SSL certificates and otherpersistent data needed between container rebuilds.
 * The database container initiates after the project container 
 ```
  depends_on:
@@ -331,12 +331,13 @@ router.get('/pointsOfInterest', isAuthenticated,PointsOfInterestController.getAl
 ### Unit Testing
 **Installation**:
 
-- * Installed the Jest package by running the command npm `install jest --save-dev`.
-- * Added the line `"test": "jest"` to the "scripts" section in the package.json file. This allows to run the tests locally by typing `npm test`.
+- Installed the Jest package by running the command npm `install jest --save-dev`.
+- Added the line `"test": "jest"` to the "scripts" section in the package.json file. This allows to run the tests locally by typing `npm test`.
 **Test File Structure**:
 
-- * Created the following test files: `generate.test.mjs`,` poiModel.test.mjs`, `server.test.mjs`, `serverCheck.test.mjs`, `user.test.mjs`.
+- Created the following test files: `generate.test.mjs`,` poiModel.test.mjs`, `server.test.mjs`, `serverCheck.test.mjs`, `user.test.mjs`.
 Inside each test file, imported the module or component needed to test. In `poiModel.test.mjs`, PointsOfInterestModel was imported from '../Models/poiModel.mjs'.
+
 **Mocking Dependencies**:
 
 Testing required mocking external dependencies, jest.mock() function was used. In the provided code, the 'pool' object is mocked using jest.`mock('../public/scripts/pool.mjs', () => { ... })`.
@@ -344,6 +345,7 @@ Testing required mocking external dependencies, jest.mock() function was used. I
 
 Used the `describe()` function to group related tests. In the code, the tests for the Points Of Interest Model are grouped within describe`('Points Of Interest Model Tests', () => { ... })`.
 Inside each test suite, `it()` or `test()` functions was used to define individual test cases. Providing a description of the test case and a handler function that contains the test logic.
+
 **Test Assertions**:
 
 Inside each test case, use the `expect()` function to make assertions and test expected results against actual results.
@@ -351,29 +353,22 @@ You can use various methods provided by Jest's expect API, such as `.toBe()`, `.
 Asynchronous Testing:
 
 In the case of asynchronous tests, use async/await syntax or return a promise to handle asynchronous behavior.
-Test Cleanup:
+
+**Test Cleanup**:
 
 Use the afterEach() function to perform any cleanup or reset operations between each test case. For example, in the provided code, jest.clearAllMocks() is called after each test case.
 Here's an example structure for your documentation:
 
-**Steps**
-Installation
-To perform unit testing in your application, you need to install the Jest package. You can do this by running the following command:
 
-npm install jest --save-dev
-Next, open your package.json file and add the following line to the "scripts" section:
-
-"test": "jest"
-Now, whenever you type npm test in the command line, Jest will run your tests locally.
 
 > **Test File Structure**
 For organizing the tests, separate test files were created for different components or modules. Here is an example file structure:
 
-generate.test.mjs
-poiModel.test.mjs
-server.test.mjs
-serverCheck.test.mjs
-user.test.mjs
+>>1. generate.test.mjs
+>>2. poiModel.test.mjs
+>>3. server.test.mjs
+>>4. serverCheck.test.mjs
+>>5. user.test.mjs
 
 
 
@@ -641,7 +636,7 @@ In this particular example, the system will first check for the existence of the
 * The userModel encapsulates all database operations related to users. It handles CRUD, password security, finding user records.
 * The generateToken and emailController modules contain reusable logic for security tokens and sending emails.
 
->>1 **User Model**
+>1 **User Model**
       The userModel handles all database operations related to users:
       ```
             // Get all users
@@ -656,7 +651,7 @@ In this particular example, the system will first check for the existence of the
       ```
       It handles CRUD operations, password hashing, finding users, and other user related db queries.
 
->>2 **User Controller**
+>2 **User Controller**
       The userController contains route handlers:
       ```
             // Signup  
@@ -665,7 +660,7 @@ In this particular example, the system will first check for the existence of the
       ```
       It gets data from requests, creates user model instances, handles business logic and sends responses.
 
->>3 **User Router**
+>3 **User Router**
       The userRouter sets up API endpoint routes:
       ```
             router.post('/signup', userController.addUser)
@@ -675,7 +670,7 @@ In this particular example, the system will first check for the existence of the
       ```
       It handles routing, authentication, and connects requests to the appropriate controller logic.
 
->>4 **EmailController**
+>4 **EmailController**
       This is the controller that sets up the email communication between the user and the app:
       ```
             // Sending the reset password
@@ -691,7 +686,7 @@ In this particular example, the system will first check for the existence of the
       ```
       It uses `Nodemailer`` framework in Javascript to send emails to the user.
 
->>5 **TokenGenerator**
+>5 **TokenGenerator**
       A class used for generating JWT tokens. Contains methods like `generateAccessToken` and `verifyToken`.
       ```
             // Generate a unique token 
