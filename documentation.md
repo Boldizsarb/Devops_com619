@@ -555,8 +555,64 @@ In this particular example, the system will first check for the existence of the
 
 ### Back-end User
 
-* Olah OLAH OLAH OLAH needs to write what you have done in the back end
+* The userRouter handles requests and routes them to the appropriate userController functions. 
+* The userController contains the route handlers which get request data, create userModel instances, execute business logic, and return responses.
+* The userModel encapsulates all database operations related to users. It handles CRUD, password security, finding user records.
+* The generateToken and emailController modules contain reusable logic for security tokens and sending emails.
 
+      * **User Model**
+            The userModel handles all database operations related to users:
+            ```
+                  // Get all users
+                  async getAllUsers() 
+
+                  // Add a new user 
+                  async addUser(username, email, password, permissionLevel, verificationCode, verificationExpires)
+
+                  // Delete a user
+                  async deleteUser(userId)  
+
+                  // Get user by username
+                  async getUserByUsername(username)
+
+                  // Validate user password  
+                  async validateUserPassword(username, plainPassword) 
+
+                  // Other helper functions for sessions, password reset, email verification etc
+            ```
+            It handles CRUD operations, password hashing, finding users, and other user related db queries.
+      * **User Controller**
+            The userController contains route handlers:
+            ```
+                  // Signup  
+                  static async addUserController(req, res)  
+
+                  // Login
+                  static async login(req, res)
+
+                  // Logout
+                  static async logout(req, res)
+
+                  // Reset Password 
+                  static async forgotPassword(req, res)
+
+                  // Email Verification
+                  static async verifyAccount(req, res)
+            ```
+            It gets data from requests, creates user model instances, handles business logic and sends responses.
+      * **User Router**
+            The userRouter sets up API endpoint routes:
+            ```
+                  router.post('/signup', userController.addUser)
+
+                  router.post('/login', userController.login)
+
+                  router.get('/verify', userController.verify) 
+
+                  // Auth middleware
+                  router.post('/logout', isAuthenticated, userController.logout)
+            ```
+            It handles routing, authentication, and connects requests to the appropriate controller logic.
 
 ## 14. Point of Interest     <a id="section14"></a>
 
